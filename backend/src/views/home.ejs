@@ -19,26 +19,26 @@
             <th>Id</th>
             <th>Name</th>
             <th>City</th>
-            <th>Sex</th>
+            <th>Gender</th>
             <th>Action</th>
         </tr>
         <% for (var i=0; i<users.length; i++) { %>
         <tr>
-            <td><%= users[i].id %></td>
-            <td><%= users[i].name %></td>
+            <td><%= users[i].user_id %></td>
+            <td><%= users[i].firstname + " " + users[i].lastname %></td>
             <td><%= users[i].city %></td>
             <%
-                if (users[i].sex) 
+                if (users[i].gender == 1) 
             { %>
                 <td>Male</td>
             <% } else { %>
                 <td>Female</td>
             <% } %>
             <td>
-                <form action="/edit/<%= users[i].id %>" method="get">
+                <form action="/edit/<%= users[i].user_id %>" method="get">
                     <button>Edit</button>
                 </form>
-                <form action="/delete/<%= users[i].id %>" method="post">
+                <form action="/delete/<%= users[i].user_id %>" method="post">
                     <button>Delete</button>
                 </form>
             </td>

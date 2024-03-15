@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/css/film.css">
+</head>
+<body>
+    <h2>List films</h2>
+
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+        <% for (var i=0; i<films.length; i++) { %>
+        <tr>
+            <td><%= films[i].film_id %></td>
+            <td><%= films[i].title %></td>
+            <td>
+                <form action="/edit/<%= films[i].film_id %>" method="get">
+                    <button>Edit</button>
+                </form>
+                <form action="/delete/<%= films[i].film_id %>" method="post">
+                    <button>Delete</button>
+                </form>
+            </td>
+        </tr>
+        <% } %>
+    </table>
+
+</body>
+</html>
