@@ -1,7 +1,7 @@
 const conn = require("../config/database")
 
 const getAllFilms = async () => {
-    [result, field] = await conn.query("select * from films")
+    [result, field] = await conn.query("select * from films where deleted = 0")
     return result
 }
 
@@ -15,7 +15,7 @@ const getFilmById = async (film_id) => {
 
 const insertFilm = async (film) => {
     await conn.query(
-        "insert into films values (?, ?, ?, ?, ?, ?, ?, ?)",
+        "insert into films(title, description, release_date, language_id, director, actor, length, classify_id) values (?, ?, ?, ?, ?, ?, ?, ?)",
         [
             film.title,
             film.description,
@@ -48,8 +48,7 @@ const updateFilmById = async (film) => {
 
 const deleteFilmById = async (film_id) => {
     await conn.query(
-        "delete from films where film_id = ?",
-        [film_id]
+        "update films set deleted = 1"
     )
 }
 

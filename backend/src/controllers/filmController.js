@@ -1,23 +1,23 @@
 const film = require("../services/filmService")
 
 const getFilm = async (req, res) => {
-    result = film.getAllFilms()
+    result = await film.getAllFilms()
     return res.render('film.ejs', { films: result })
 }
 
 const postFilm = async (req, res) => {
-    film.insertFilm(req.body)
-    return res.redirect('film.ejs')
+    await film.insertFilm(req.body)
+    return res.redirect('/film')
 }
 
 const updateFilm = async (req, res) => {
-    film.updateFilmById(req.body)
-    return res.redirect('film.ejs')
+    await film.updateFilmById(req.body)
+    return res.redirect('/film')
 }
 
 const deleteFilm = async (req, res) => {
-    film.deleteFilmById(req.params.film_id)
-    return res.redirect('film.ejs')
+    await film.deleteFilmById(req.params.film_id)
+    return res.redirect('/film')
 }
 
 module.exports = {
