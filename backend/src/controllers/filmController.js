@@ -20,9 +20,18 @@ const deleteFilm = async (req, res) => {
     return res.redirect('/film')
 }
 
+const getFilmAPI = async (req, res) => {
+    let films = await film.getAllFilmsAPI()
+    res.status(200).json({
+        message: "success",
+        data: films
+    })
+}
+
 module.exports = {
     getFilm,
     postFilm,
     updateFilm,
-    deleteFilm
+    deleteFilm,
+    getFilmAPI
 }
