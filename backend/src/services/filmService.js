@@ -48,19 +48,14 @@ const updateFilmById = async (film) => {
 
 const deleteFilmById = async (film_id) => {
     await conn.query(
-        "update films set deleted = 1"
+        "update films set deleted = 1 where film_id = ?",
+        [film_id]
     )
-}
-
-const getAllFilmsAPI = async () => {
-    [result, field] = await conn.query("select * from films where deleted = 0")
-    return result
 }
 
 module.exports = {
     getAllFilms,
     insertFilm,
     updateFilmById,
-    deleteFilmById,
-    getAllFilmsAPI
+    deleteFilmById
 }
