@@ -31,11 +31,19 @@ const getUserById = async (user_id) => {
         'select * from users where user_id = ?',
         [user_id]
     )
-    return result
+    return result[0]
+}
+
+const updateRefreshToken = async (user_id, refresh_token) => {
+    await conn.query(
+        'update users set refresh_token = ? where user_id = ?',
+        [refresh_token, user_id]
+    )
 }
 
 module.exports = {
     insertUser,
     getUserByEmail,
-    getUserById
+    getUserById,
+    updateRefreshToken
 }
