@@ -25,13 +25,11 @@ const postUser = async (req, res) => {
     user['created_at'] = now
     user['updated_at'] = now
 
-    const createUser = await User.insertUser(user)
+    await User.insertUser(user)
+    res.status(400).json({
+        message: "error to create new account"
+    })
 
-    if (!createUser) {
-        res.status(400).json({
-            message: "error to create new account"
-        })
-    }
 
     return res.status(200).json({
         message: "success"
