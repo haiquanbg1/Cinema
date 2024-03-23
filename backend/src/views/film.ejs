@@ -7,13 +7,23 @@
     <link rel="stylesheet" href="/css/film.css">
 </head>
 <body>
+<style>
+    .form-popup {
+        display: none;
+        position: fixed;
+        bottom: 200px;
+        right: 600px;
+        border: 3px solid #f1f1f1;
+        z-index: 9;
+    }
+</style>
+</body>
+<body>
 
-    <ul>
-        <li><a class="active" href="/film">Film</a></li>
-        <li><a href="/showtime">Showtime</a></li>
-    </ul>
 
-    <form action="film/post" method="post">
+
+<div class="form-popup" id="myForm">
+    <form action="/film/post" method="post">
         <label for="title">title:</label>
         <input type="text" name="title" id="title"><br>
         <label for="description">description:</label>
@@ -32,6 +42,13 @@
         <input type="number" name="classify_id" id="classify_id"><br>
         <input type="submit" value="enter">
     </form>
+</div>
+
+
+    <ul>
+        <li><a class="active" href="/film">Film</a></li>
+        <li><a href="/showtime">Showtime</a></li>
+    </ul>
 
     <h2>List films</h2>
     <table>
@@ -45,16 +62,22 @@
             <td><%= films[i].film_id %></td>
             <td><%= films[i].title %></td>
             <td>
-                <form action="/edit/<%= films[i].film_id %>" method="get">
-                    <button>Edit</button>
-                </form>
-                <form action="/film/delete/<%= films[i].film_id %>" method="post">
+                <div class="edit" id="editdb">
+                   <button class="edit" onclick="openForm()">Edit</button>
+                </div>
+                <div action="/film/delete/<%= films[i].film_id %>" method="post">
                     <button>Delete</button>
-                </form>
+                </div>
             </td>
         </tr>
         <% } %>
     </table>
+
+<script>
+    function openForm() {
+        document.getElementById("myForm").style.display = "block";
+    }
+</script>
 
 </body>
 </html>

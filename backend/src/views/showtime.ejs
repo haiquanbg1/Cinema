@@ -7,24 +7,35 @@
     <link rel="stylesheet" href="/css/showtime.css">
 </head>
 <body>
-
+<style>
+    .form-popup {
+        display: none;
+        position: fixed;
+        bottom: 200px;
+        right: 600px;
+        border: 3px solid #f1f1f1;
+        z-index: 9;
+    }
+</style>
     <ul>
         <li><a href="/film">Film</a></li>
         <li><a class="active" href="/showtime">Showtime</a></li>
     </ul>
 
-    <form action="/showtime/post" method="post">
-        <label for="film_id">film:</label>
-        <input type="number" name="film_id" id="film_id"><br>
-        <label for="cinema_id">cinema:</label>
-        <input type="number" name="cinema_id" id="cinema_id"><br>
-        <label for="time">time:</label>
-        <input type="datetime-local" name="time" id="time"><br>
-        <label for="price">price:</label>
-        <input type="number" name="price" id="price"><br>
-        <input type="submit" value="enter">
-    </form>
 
+    <div class="form-popup" id="myForm">
+        <form action="/showtime/post" method="post">
+            <label for="film_id">film:</label>
+            <input type="number" name="film_id" id="film_id"><br>
+            <label for="cinema_id">cinema:</label>
+            <input type="number" name="cinema_id" id="cinema_id"><br>
+            <label for="time">time:</label>
+            <input type="datetime-local" name="time" id="time"><br>
+            <label for="price">price:</label>
+            <input type="number" name="price" id="price"><br>
+            <input type="submit" value="enter">
+        </form>
+    </div>
     <h2>List showtimes</h2>
     <table>
         <tr>
@@ -43,9 +54,9 @@
             <td><%= showtimes[i].time %></td>
             <td><%= showtimes[i].price %></td>
             <td>
-                <form action="/showtime/update" method="get">
-                    <button>Edit</button>
-                </form>
+                <div class="edit" id="editdb">
+                    <button class="edit" onclick="openForm()">Edit</button>
+                </div>
                 <form action="/showtime/delete/<%= showtimes[i].showtime_id %>" method="post">
                     <button>Delete</button>
                 </form>
@@ -53,6 +64,10 @@
         </tr>
         <% } %>
     </table>
-
+    <script>
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+        }
+    </script>
 </body>
 </html>
