@@ -7,35 +7,39 @@
     <link rel="stylesheet" href="/css/film.css">
 </head>
 <body>
-
-<div class="form-popup" id="myForm">
-    <form action="/film/post" method="post">
-        <label for="title">title:</label>
-        <input type="text" name="title" id="title"><br>
-        <label for="description">description:</label>
-        <input type="text" name="description" id="description"><br>
-        <label for="release_date">release date:</label>
-        <input type="date" name="release_date" id="release_date"><br>
-        <label for="language_id">language id:</label>
-        <input type="number" name="language_id" id="language_id"><br>
-        <label for="director">director:</label>
-        <input type="text" name="director" id="director"><br>
-        <label for="actor">actor:</label>
-        <input type="text" name="actor" id="actor"><br>
-        <label for="length">length:</label>
-        <input type="number" name="length" id="length"><br>
-        <label for="classify_id">classify id:</label>
-        <input type="number" name="classify_id" id="classify_id"><br>
-        <input type="submit" value="enter">
-    </form>
-</div>
-
-
+</body>
+<body>
     <ul>
         <li><a class="active" href="/film">Film</a></li>
         <li><a href="/showtime">Showtime</a></li>
     </ul>
-
+    <button class="open-button" onclick="openAddForm()">Add</button>
+    <div class="form-popup" id="addForm">
+        <form action="/film/update" method="post">
+            <label for="title">title:</label>
+            <input type="text" name="title" id="title" ><br>
+            <label for="description">description:</label>
+            <input type="text" name="description" id="description" ><br>
+            <label for="release_date">release date:</label>
+            <input type="date" name="release_date" id="release_date" ><br>
+            <label for="language_id">language id:</label>
+            <input type="number" name="language_id" id="language_id" ><br>
+            <label for="director">director:</label>
+            <input type="text" name="director" id="director" ><br>
+            <label for="actor">actor:</label>
+            <input type="text" name="actor" id="actor" ><br>
+            <label for="length">length:</label>
+            <input type="number" name="length" id="length" ><br>
+            <label for="classify_id">classify id:</label>
+            <input type="number" name="classify_id" id="classify_id" ><br>
+            <input type="submit" value="enter">
+        </form>
+    </div>
+    <script >
+        function openAddForm() {
+            document.getElementById("addForm").style.display = "block";
+        }
+    </script>
     <h2>List films</h2>
     <table>
         <tr>
@@ -44,26 +48,45 @@
             <th>Action</th>
         </tr>
         <% for (var i=0; i<films.length; i++) { %>
+            <div class="form-popup" id="myForm">
+                <form action="/film/update" method="post" >
+                    <label for="title">title:</label>
+                    <input type="text" name="title" id="title" value="<%= films[i].title %>"><br>
+                    <label for="description">description:</label>
+                    <input type="text" name="description" id="description" value="<%= films[i].description %>"><br>
+                    <label for="release_date">release date:</label>
+                    <input type="date" name="release_date" id="release_date" value="<%= films[i].release_date %>"><br>
+                    <label for="language_id">language id:</label>
+                    <input type="number" name="language_id" id="language_id" value="<%= films[i].language_id %>"><br>
+                    <label for="director">director:</label>
+                    <input type="text" name="director" id="director" value="<%= films[i].director %>"><br>
+                    <label for="actor">actor:</label>
+                    <input type="text" name="actor" id="actor" value="<%= films[i].actor %>"><br>
+                    <label for="length">length:</label>
+                    <input type="number" name="length" id="length" value="<%= films[i].length %>"><br>
+                    <label for="classify_id">classify id:</label>
+                    <input type="number" name="classify_id" id="classify_id" value="<%= films[i].classify_id %>"><br>
+                    <input type="submit" value="enter">
+                </form>
+            </div>
         <tr>
             <td><%= films[i].film_id %></td>
             <td><%= films[i].title %></td>
             <td>
                 <div class="edit" id="editdb">
-                   <button class="edit" onclick="openForm('myForm')">Edit</button>
+                    <button class="edit" onclick="openForm()">Edit </button>
                 </div>
-                <div action="/film/delete/<%= films[i].film_id %>" method="post">
+                <form action="/film/delete/<%= films[i].film_id %>" method="post">
                     <button>Delete</button>
-                </div>
+                </form>
             </td>
         </tr>
         <% } %>
     </table>
-
 <script>
     function openForm(form) {
         document.getElementById(form).style.display = "block";
     }
 </script>
-
 </body>
 </html>
