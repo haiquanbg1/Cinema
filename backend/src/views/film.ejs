@@ -7,20 +7,6 @@
     <link rel="stylesheet" href="/css/film.css">
 </head>
 <body>
-<style>
-    .form-popup {
-        display: none;
-        position: fixed;
-        bottom: 200px;
-        right: 600px;
-        border: 3px solid #f1f1f1;
-        z-index: 9;
-    }
-</style>
-</body>
-<body>
-
-
 
 <div class="form-popup" id="myForm">
     <form action="/film/post" method="post">
@@ -63,7 +49,7 @@
             <td><%= films[i].title %></td>
             <td>
                 <div class="edit" id="editdb">
-                   <button class="edit" onclick="openForm()">Edit</button>
+                   <button class="edit" onclick="openForm('myForm')">Edit</button>
                 </div>
                 <div action="/film/delete/<%= films[i].film_id %>" method="post">
                     <button>Delete</button>
@@ -74,8 +60,8 @@
     </table>
 
 <script>
-    function openForm() {
-        document.getElementById("myForm").style.display = "block";
+    function openForm(form) {
+        document.getElementById(form).style.display = "block";
     }
 </script>
 

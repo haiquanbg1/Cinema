@@ -21,7 +21,7 @@ const getAllShowtimes = async () => {
 
 const getShowtimeById = async (showtime_id) => {
     [result, field] = await conn.query(
-        'select * from showtimes where showtime_id = ?',
+        'select * from showtimes where showtime_id = ? and time >= now()',
         [showtime_id]
     )
     return result[0]
@@ -47,10 +47,19 @@ const updateShowTimeById = async (showtime) => {
     )
 }
 
+const getShowtimeByFilmId = async (film_id) => {
+    [result, field] = await conn.query(
+        'select * from showtimes where film_id = ? and time >= now()',
+        [film_id]
+    )
+    return result
+}
+
 module.exports = {
     insertShowtime,
     getAllShowtimes,
     getShowtimeById,
     updateShowTimeById,
-    deleteShowtimeById
+    deleteShowtimeById,
+    getShowtimeByFilmId
 }

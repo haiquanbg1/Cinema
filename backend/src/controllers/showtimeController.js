@@ -20,9 +20,18 @@ const deleteShowtime = async (req, res) => {
     return res.redirect('/showtime')
 }
 
+const getShowtimeByFilmId = async (req, res) => {
+    result = await Showtime.getShowtimeByFilmId(req.body.film_id)
+    return res.status(200).json({
+        message: 'success',
+        data: result
+    })
+}
+
 module.exports = {
     getShowtime,
     postShowtime,
     updateShowtime,
-    deleteShowtime
+    deleteShowtime,
+    getShowtimeByFilmId
 }

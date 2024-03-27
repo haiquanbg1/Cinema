@@ -158,8 +158,15 @@ const refreshToken = async (req, res) => {
     })
 }
 
+const getUserByAccessToken = async (req, res) => {
+    return res.json({
+        user: req.user,
+    })
+}
+
 module.exports = {
     postUser,
     getUser,
-    refreshToken
+    refreshToken,
+    getUserByAccessToken
 }
