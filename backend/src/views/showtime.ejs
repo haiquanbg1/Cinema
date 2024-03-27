@@ -22,11 +22,12 @@
         <input type="datetime-local" name="time" id="time"><br>
         <label for="price">price:</label>
         <input type="number" name="price" id="price"><br>
-        <input type="submit" value="enter">
+        <input type="submit" value="add">
     </form>
 </div>
 <script >
     function openAddForm() {
+        document.getElementById("myForm").style.display = "none";
         document.getElementById("addForm").style.display = "block";
     }
 </script>
@@ -42,7 +43,8 @@
         </tr>
         <% for (var i=0; i<showtimes.length; i++) { %>
             <div class="form-popup" id="myForm">
-                <form action="/showtime/post" method="post">
+                <form action="/showtime/update" method="post">
+                    <input class="hidden" type="text" name="showtime_id" id="showtime_id" value="<%= showtimes[i].showtime_id %>"><br>
                     <label for="film_id">film:</label>
                     <input type="number" name="film_id" id="film_id" value="<%= showtimes[i].film_id %>"><br>
                     <label for="cinema_id">cinema:</label>
@@ -51,7 +53,7 @@
                     <input type="datetime-local" name="time" id="time" value="<%= showtimes[i].time %>"><br>
                     <label for="price">price:</label>
                     <input type="number" name="price" id="price" value="<%= showtimes[i].price %>"><br>
-                    <input type="submit" value="enter">
+                    <input type="submit" value="update">
                 </form>
             </div>
         <tr>
@@ -73,6 +75,7 @@
     </table>
     <script>
         function openForm() {
+            document.getElementById("addForm").style.display = "none";
             document.getElementById("myForm").style.display = "block";
         }
     </script>

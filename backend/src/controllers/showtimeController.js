@@ -2,6 +2,11 @@ const Showtime = require("../services/showtimeService")
 
 const getShowtime = async (req, res) => {
     result = await Showtime.getAllShowtimes()
+    for (var i = 0; i < result.length; i++) {
+        let date = result[i].time
+        date.setHours(date.getHours() + 7)
+        result[i].time = date.toISOString().replace('T', ' ').substr(0, 19)
+    }
     return res.render("showtime.ejs", { showtimes: result })
 }
 
@@ -11,7 +16,7 @@ const postShowtime = async (req, res) => {
 }
 
 const updateShowtime = async (req, res) => {
-    await Showtime.updateShowTimeById(res.body)
+    await Showtime.updateShowTimeById(req.body)
     return res.redirect('/showtime')
 }
 

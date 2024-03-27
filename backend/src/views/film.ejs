@@ -15,7 +15,7 @@
     </ul>
     <button class="open-button" onclick="openAddForm()">Add</button>
     <div class="form-popup" id="addForm">
-        <form action="/film/update" method="post">
+        <form action="/film/post" method="post">
             <label for="title">title:</label>
             <input type="text" name="title" id="title" ><br>
             <label for="description">description:</label>
@@ -32,11 +32,12 @@
             <input type="number" name="length" id="length" ><br>
             <label for="classify_id">classify id:</label>
             <input type="number" name="classify_id" id="classify_id" ><br>
-            <input type="submit" value="enter">
+            <input type="submit" value="add">
         </form>
     </div>
     <script >
         function openAddForm() {
+            document.getElementById('myForm').style.display = "none";
             document.getElementById("addForm").style.display = "block";
         }
     </script>
@@ -50,6 +51,7 @@
         <% for (var i=0; i<films.length; i++) { %>
             <div class="form-popup" id="myForm">
                 <form action="/film/update" method="post" >
+                    <input class="hidden" type="text" name="film_id" id="film_id" value="<%= films[i].film_id %>"><br>
                     <label for="title">title:</label>
                     <input type="text" name="title" id="title" value="<%= films[i].title %>"><br>
                     <label for="description">description:</label>
@@ -66,7 +68,7 @@
                     <input type="number" name="length" id="length" value="<%= films[i].length %>"><br>
                     <label for="classify_id">classify id:</label>
                     <input type="number" name="classify_id" id="classify_id" value="<%= films[i].classify_id %>"><br>
-                    <input type="submit" value="enter">
+                    <input type="submit" value="update">
                 </form>
             </div>
         <tr>
@@ -84,8 +86,9 @@
         <% } %>
     </table>
 <script>
-    function openForm(form) {
-        document.getElementById(form).style.display = "block";
+    function openForm() {
+        document.getElementById("addForm").style.display = "none";
+        document.getElementById('myForm').style.display = "block";
     }
 </script>
 </body>

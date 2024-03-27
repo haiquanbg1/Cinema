@@ -3,6 +3,11 @@ const Film = require("../services/filmService")
 // Use for BackEnd
 const getFilm = async (req, res) => {
     result = await Film.getAllFilms()
+    for (var i = 0; i < result.length; i++) {
+        let date = result[i].release_date
+        date.setHours(date.getHours() + 7)
+        result[i].release_date = date.toISOString().replace('T', ' ').substr(0, 10)
+    }
     return res.render('film.ejs', { films: result })
 }
 
@@ -12,6 +17,7 @@ const postFilm = async (req, res) => {
 }
 
 const updateFilm = async (req, res) => {
+    console.log(req.body)
     await Film.updateFilmById(req.body)
     return res.redirect('/film')
 }
