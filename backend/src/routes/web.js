@@ -9,6 +9,12 @@ router.post("/film/update", film.updateFilm)
 router.post("/film/post", film.postFilm)
 router.post("/film/delete/:film_id", film.deleteFilm)
 
+router.get('/', (req, res) => {
+    res.json({
+        message: 'quandz'
+    })
+})
+
 // CRUD showtime
 router.get("/showtime", showtime.getShowtime)
 router.post("/showtime/post", showtime.postShowtime)

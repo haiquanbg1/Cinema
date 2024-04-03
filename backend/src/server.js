@@ -17,6 +17,6 @@ app.use(cors())
 app.use("/", routes)
 app.use("/api/ver1/", api)
 
-app.listen(port, host, () => {
-    console.log(`http://${host}:${port}`)
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`)
 })
