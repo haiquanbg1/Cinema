@@ -6,17 +6,18 @@ const router = express.Router()
 const middleware = require('../middlewares/auth')
 
 const isAuth = middleware.isAuth
-router.post('/refresh', user.refreshToken)
+router.post('/refresh_token', user.refreshToken)
 
 //film
 router.get('/film', film.getFilmAPI)
 
 // user
 router.post('/user/register', user.postUser)
-router.get('/user/login', user.getUser)
+router.post('/user/login', user.getUser)
 router.get('/user', isAuth, user.getUserByAccessToken)
 
 // showtime
-router.get('/showtimeByFilmId', isAuth, showtime.getShowtimeByFilmId)
+router.get('/showtime', isAuth, showtime.getShowtimeByFilmId)
+// router.get('/showtime/showtimeId:showtimeId', showtime.getSho)
 
 module.exports = router

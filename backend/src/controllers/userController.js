@@ -26,10 +26,6 @@ const postUser = async (req, res) => {
     user['updated_at'] = now
 
     await User.insertUser(user)
-    res.status(400).json({
-        message: "error to create new account"
-    })
-
 
     return res.status(200).json({
         message: "success"
@@ -81,7 +77,7 @@ const getUser = async (req, res) => {
         dataForAccessToken,
         refreshTokenSecret,
         refreshTokenLife,
-    ) // tạo 1 refresh token ngẫu nhiên
+    ) // tạo 1 refresh token
     if (!user.refresh_token) {
         // Nếu user này chưa có refresh token thì lưu refresh token đó vào database
         await User.updateRefreshToken(user.user_id, refresh_token)

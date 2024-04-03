@@ -47,10 +47,10 @@ const updateShowTimeById = async (showtime) => {
     )
 }
 
-const getShowtimeByFilmId = async (film_id) => {
+const getShowtimeByFilmId = async (film_id, city_id) => {
     [result, field] = await conn.query(
-        'select * from showtimes where film_id = ? and time >= now()',
-        [film_id]
+        'select st.*, c.name from showtimes st inner join cinemas c on c.cinema_id = st.cinema_id where st.film_id = ? and st.time >= now() and c.city_id = ?',
+        [film_id, city_id]
     )
     return result
 }
