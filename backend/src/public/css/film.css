@@ -68,3 +68,12 @@ td form {
 .hidden {
     display: none;
 }
+
+.add-form-popup {
+    display: none;
+    position: fixed;
+    bottom: 200px;
+    right: 800px;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+}

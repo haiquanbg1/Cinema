@@ -11,8 +11,8 @@
         <li><a href="/film">Film</a></li>
         <li><a class="active" href="/showtime">Showtime</a></li>
     </ul>
-<button class="open-button" onclick="openAddForm()">Add</button>
-<div class="form-popup" id="addForm">
+    <button class="open-button" onclick="openAddForm()">Add</button>
+    <div class="add-form-popup" id="addForm">
     <form action="/showtime/post" method="post">
         <label for="film_id">film:</label>
         <input type="number" name="film_id" id="film_id"><br>
@@ -24,13 +24,13 @@
         <input type="number" name="price" id="price"><br>
         <input type="submit" value="add">
     </form>
-</div>
-<script >
+    </div>
+    <script >
     function openAddForm() {
-        document.getElementById("myForm").style.display = "none";
+        // document.getElementById("myForm").style.display = "none";
         document.getElementById("addForm").style.display = "block";
     }
-</script>
+    </script>
     <h2>List showtimes</h2>
     <table>
         <tr>
@@ -63,7 +63,7 @@
             <td><%= showtimes[i].time %></td>
             <td><%= showtimes[i].price %></td>
             <td>
-                <div action="" id="editdb">
+                <div id="editdb">
                     <button class="edit" onclick="openForm()">Edit</button>
                 </div>
                 <form action="/showtime/delete/<%= showtimes[i].showtime_id %>" method="post">

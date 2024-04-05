@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Film</title>
     <link rel="stylesheet" href="/css/film.css">
+    <link rel="script" href="src/public/javascript/film.js">
 </head>
 <body>
 </body>
@@ -14,7 +15,7 @@
         <li><a href="/showtime">Showtime</a></li>
     </ul>
     <button class="open-button" onclick="openAddForm()">Add</button>
-    <div class="form-popup" id="addForm">
+    <div class="add-form-popup" id="addForm">
         <form action="/film/post" method="post">
             <label for="title">title:</label>
             <input type="text" name="title" id="title" ><br>
