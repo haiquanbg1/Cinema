@@ -18,17 +18,17 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER
+      type: DataTypes.INTEGER
     },
     title: {
-      type: Sequelize.STRING(20)
+      type: DataTypes.STRING(20)
     },
     money: {
-      type: Sequelize.INTEGER
+      type: DataTypes.INTEGER
     }
   }, {
     sequelize,
-    modelName: 'Rank',
+    modelName: 'ranks',
   });
   return Rank;
 };

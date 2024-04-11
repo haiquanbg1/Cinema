@@ -17,14 +17,14 @@ module.exports = (sequelize, DataTypes) => {
     film_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'Films',
+        model: 'films',
         key: 'film_id'
       }
     },
     category_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'Categories',
+        model: 'categories',
         key: 'category_id'
       }
     }

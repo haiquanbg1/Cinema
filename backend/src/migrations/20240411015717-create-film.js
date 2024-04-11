@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Films', {
+    await queryInterface.createTable('films', {
       film_id: {
         allowNull: false,
         autoIncrement: true,
@@ -21,7 +21,7 @@ module.exports = {
       language_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Languages',
+          model: 'languages',
           key: 'language_id'
         }
       },
@@ -37,17 +37,25 @@ module.exports = {
       classify_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Classifies',
+          model: 'classifies',
           key: 'classify_id'
         }
       },
       deleted: {
         type: Sequelize.BOOLEAN,
         defaultValue: 0
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Films');
+    await queryInterface.dropTable('films');
   }
 };

@@ -26,12 +26,4 @@ const connection = mysql.createPool({
     queueLimit: 0,
 })
 
-connection.query(
-    'select * from user'
-).catch((err) => {
-    console.log(err)
-})
-
-console.log(connection)
-
 module.exports = connection

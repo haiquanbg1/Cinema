@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     city: DataTypes.STRING(50)
   }, {
     sequelize,
-    modelName: 'City',
+    modelName: 'cities',
   });
   return City;
 };

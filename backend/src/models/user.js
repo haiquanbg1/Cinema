@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     city_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'Cities',
+        model: 'cities',
         key: 'city_id'
       }
     },
@@ -59,13 +59,13 @@ module.exports = (sequelize, DataTypes) => {
     rank_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'Ranks',
+        model: 'ranks',
         key: 'rank_id'
       }
     }
   }, {
     sequelize,
-    modelName: 'user',
+    modelName: 'users',
   });
   return user;
 };

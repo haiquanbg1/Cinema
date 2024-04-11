@@ -4,10 +4,10 @@
 const data = require('./data.json')['languages']
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('Languages', data)
+    await queryInterface.bulkInsert('languages', data)
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Languages', null, {})
+    await queryInterface.bulkDelete('languages', null, {})
   }
 };

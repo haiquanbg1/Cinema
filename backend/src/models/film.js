@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     language_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'Languages',
+        model: 'languages',
         key: 'language_id'
       }
     },
@@ -48,25 +48,17 @@ module.exports = (sequelize, DataTypes) => {
     classify_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'Classifies',
+        model: 'classifies',
         key: 'classify_id'
       }
     },
     deleted: {
       type: DataTypes.BOOLEAN,
       defaultValue: 0
-    },
-    createdAt: {
-      allowNull: false,
-      type: Sequelize.DATE
-    },
-    updatedAt: {
-      allowNull: false,
-      type: Sequelize.DATE
     }
   }, {
     sequelize,
-    modelName: 'Film',
+    modelName: 'films',
   });
   return Film;
 };

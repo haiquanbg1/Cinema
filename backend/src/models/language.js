@@ -18,14 +18,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER
+      type: DataTypes.INTEGER
     },
     name: {
-      type: Sequelize.STRING(20)
+      type: DataTypes.STRING(20)
     }
   }, {
     sequelize,
-    modelName: 'Language',
+    modelName: 'Languages',
   });
   return Language;
 };

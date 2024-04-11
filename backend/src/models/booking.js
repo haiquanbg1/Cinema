@@ -23,14 +23,14 @@ module.exports = (sequelize, DataTypes) => {
     showtime_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'Showtimes',
+        model: 'showtimes',
         key: 'showtime_id'
       }
     },
     user_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'Users',
+        model: 'users',
         key: 'user_id'
       }
     },
@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Booking',
+    modelName: 'bookings',
   });
   return booking;
 };
