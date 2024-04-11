@@ -8,6 +8,8 @@ RUN npm ci
 
 COPY . .
 
+ENV NODE_ENV = production
+
 CMD ["npm", "run", "dev"]
 
 EXPOSE 8080

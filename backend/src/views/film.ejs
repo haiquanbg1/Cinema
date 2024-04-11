@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Film</title>
     <link rel="stylesheet" href="/css/film.css">
-    <link rel="script" href="src/public/javascript/film.js">
 </head>
 <body>
 </body>
@@ -14,8 +13,8 @@
         <li><a class="active" href="/film">Film</a></li>
         <li><a href="/showtime">Showtime</a></li>
     </ul>
-    <button class="open-button" onclick="openAddForm()">Add</button>
-    <div class="add-form-popup" id="addForm">
+    <button class="open-button" onclick="openAddForm('<%= films.length %>')">Add</button>
+    <div class="form-popup" id="addForm">
         <form action="/film/post" method="post">
             <label for="title">title:</label>
             <input type="text" name="title" id="title" ><br>
@@ -36,12 +35,6 @@
             <input type="submit" value="add">
         </form>
     </div>
-    <script >
-        function openAddForm() {
-            document.getElementById('myForm').style.display = "none";
-            document.getElementById("addForm").style.display = "block";
-        }
-    </script>
     <h2>List films</h2>
     <table>
         <tr>
@@ -50,7 +43,7 @@
             <th>Action</th>
         </tr>
         <% for (var i=0; i<films.length; i++) { %>
-            <div class="form-popup" id="myForm">
+            <div class="form-popup" id="myForm<%=i%>">
                 <form action="/film/update" method="post" >
                     <input class="hidden" type="text" name="film_id" id="film_id" value="<%= films[i].film_id %>"><br>
                     <label for="title">title:</label>
@@ -77,7 +70,7 @@
             <td><%= films[i].title %></td>
             <td>
                 <div class="edit" id="editdb">
-                    <button class="edit" onclick="openForm()">Edit </button>
+                    <button class="edit" onclick="openForm('<%=i%>', '<%=films.length%>')">Edit </button>
                 </div>
                 <form action="/film/delete/<%= films[i].film_id %>" method="post">
                     <button>Delete</button>
@@ -87,9 +80,27 @@
         <% } %>
     </table>
 <script>
-    function openForm() {
-        document.getElementById("addForm").style.display = "none";
-        document.getElementById('myForm').style.display = "block";
+    function openForm(id, size) {
+        var addForm = document.getElementById("addForm")
+        if (addForm) {
+            addForm.style.display = "none"
+        }
+        for (var i=0; i<size; i++) {
+            var form = document.getElementById('myForm' + i)
+            if (form) {
+                form.style.display = "none"
+            }
+        }
+        document.getElementById('myForm' + id).style.display = "block";
+    }
+    function openAddForm(size) {
+        for (var i=0; i<size; i++) {
+            var form = document.getElementById('myForm' + i)
+            if (form) {
+                form.style.display = "none"
+            }
+        }
+        document.getElementById("addForm").style.display = "block";
     }
 </script>
 </body>

@@ -1,50 +1,57 @@
 const conn = require("../config/database")
+const db = require('../models/index')
+const Showtime = require('../models/showtime')(db.sequelize, db.Sequelize)
+const { Op } = require('sequelize')
+const moment = require('moment')
 
 const insertShowtime = async (showtime) => {
-    await conn.query(
-        'insert into showtimes(film_id, cinema_id, time, price) values(?, ?, ?, ?)',
-        [
-            showtime.film_id,
-            showtime.cinema_id,
-            showtime.time,
-            showtime.price
-        ]
-    )
+    await Showtime.create({
+        film_id: showtime.film_id,
+        cinema_id: showtime.cinema_id,
+        time: showtime.time,
+        price: showtime.price
+    })
 }
 
 const getAllShowtimes = async () => {
-    [result, field] = await conn.query(
-        'select * from showtimes where time >= now()'
-    )
+    result = await Showtime.findAll({
+        where: {
+            time: {
+                [Op.gte]: moment().add(7, 'hours').toDate()
+            }
+        }
+    })
     return result
 }
 
 const getShowtimeById = async (showtime_id) => {
-    [result, field] = await conn.query(
-        'select * from showtimes where showtime_id = ? and time >= now()',
-        [showtime_id]
-    )
-    return result[0]
+    result = await Showtime.findOne({
+        where: {
+            showtime_id: showtime_id
+        }
+    })
+    return result
 }
 
 const deleteShowtimeById = async (showtime_id) => {
-    await conn.query(
-        'delete from showtimes where showtime_id = ?',
-        [showtime_id]
-    )
+    await Showtime.destroy({
+        where: {
+            showtime_id: showtime_id
+        }
+    })
 }
 
 const updateShowTimeById = async (showtime) => {
-    await conn.query(
-        'update showtimes set film_id = ?, cinema_id = ?, time = ?, price = ? where showtime_id = ?',
-        [
-            showtime.film_id,
-            showtime.cinema_id,
-            showtime.time,
-            showtime.price,
-            showtime.showtime_id
-        ]
-    )
+    await Showtime.update({
+        film_id: showtime.film_id,
+        cinema_id: showtime.cinema_id,
+        time: showtime.time,
+        price: showtime.price
+    }, {
+        where: {
+            showtime_id: showtime.showtime_id
+        }
+    })
 }
 
 const getShowtimeByFilmId = async (film_id, city_id) => {

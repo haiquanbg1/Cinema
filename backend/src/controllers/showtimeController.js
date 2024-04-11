@@ -5,7 +5,7 @@ const getShowtime = async (req, res) => {
     for (var i = 0; i < result.length; i++) {
         let date = result[i].time
         date.setHours(date.getHours() + 7)
-        result[i].time = date.toISOString().replace('T', ' ').substr(0, 19)
+        result[i].date = date.toISOString().replace('T', ' ').substr(0, 19)
     }
     return res.render("showtime.ejs", { showtimes: result })
 }
