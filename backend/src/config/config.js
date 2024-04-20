@@ -5,10 +5,8 @@ module.exports = {
     username: 'root',
     password: '123456',
     database: 'web',
-    //host: 'mysql-server',// docker
-    host: 'localhost',
-    //port: 3306, // docker
-    port: 3308,
+    host: 'localhost',// docker
+    port: 3308, // docker
     dialect: 'mysql',
     dialectOptions: {
       bigNumberStrings: true

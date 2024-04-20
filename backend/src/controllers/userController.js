@@ -22,8 +22,6 @@ const postUser = async (req, res) => {
 
     user.email = user.email.toLowerCase()
     user.password = password
-    user['created_at'] = now
-    user['updated_at'] = now
 
     await User.insertUser(user)
 

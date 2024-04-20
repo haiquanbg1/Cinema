@@ -1,0 +1,16 @@
+[
+  "20240408023746-create-category.js",
+  "20240411002758-create-city.js",
+  "20240411003203-create-classify.js",
+  "20240411003425-create-language.js",
+  "20240411003635-create-rank.js",
+  "20240411005416-create-cinema.js",
+  "20240411015717-create-film.js",
+  "20240411020236-create-room.js",
+  "20240411020529-create-seat.js",
+  "20240411020845-create-showtime.js",
+  "20240411021417-create-user.js",
+  "20240411022001-create-booking.js",
+  "20240411022226-create-film-category.js",
+  "20240411022504-create-booking-seat.js"
+]

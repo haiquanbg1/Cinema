@@ -1,44 +1,46 @@
 const conn = require("../config/database")
+const db = require("../models/index")
+const User = require("../models/user")(db.sequelize, db.Sequelize)
 
 const insertUser = async (user) => {
-    await conn.query(
-        "insert into users(firstname, lastname, gender, email, password, phone, birthday, city_id, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-        [
-            user.firstname,
-            user.lastname,
-            user.gender,
-            user.email,
-            password,
-            user.phone,
-            user.birthday,
-            user.city_id,
-            user.created_at,
-            user.updated_at
-        ]
-    )
+    await User.create({
+        firstname: user.firstname,
+        lastname: user.lastname,
+        gender: user.gender,
+        email: user.email,
+        password: user.password,
+        phone: user.phone,
+        birthday: user.birthday,
+        city_id: user.city_id,
+    })
 }
 
 const getUserByEmail = async (email) => {
-    [result, field] = await conn.query(
-        'select * from users where email = ?',
-        [email]
-    )
-    return result[0]
+    result = await User.findOne({
+        where: {
+            email: email
+        }
+    })
+    return result
 }
 
 const getUserById = async (user_id) => {
-    [result, field] = await conn.query(
-        'select * from users where user_id = ?',
-        [user_id]
-    )
-    return result[0]
+    result = await User.findOne({
+        where: {
+            id: user_id
+        }
+    })
+    return result
 }
 
 const updateRefreshToken = async (user_id, refresh_token) => {
-    await conn.query(
-        'update users set refresh_token = ? where user_id = ?',
-        [refresh_token, user_id]
-    )
+    await User.update({
+        refresh_token: refresh_token
+    }, {
+        where: {
+            id: user_id
+        }
+    })
 }
 
 module.exports = {

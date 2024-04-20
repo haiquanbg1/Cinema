@@ -13,14 +13,14 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'films',
-          key: 'film_id'
+          key: 'id'
         }
       },
       category_id: {
         type: Sequelize.INTEGER,
         references: {
           model: 'categories',
-          key: 'category_id'
+          key: 'id'
         }
       }
     });

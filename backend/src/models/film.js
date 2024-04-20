@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Film.init({
-    film_id: {
+    id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,

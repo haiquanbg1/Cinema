@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Showtime.init({
-    showtime_id: {
+    id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,

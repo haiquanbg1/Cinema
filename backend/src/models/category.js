@@ -14,13 +14,21 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Category.init({
-    category_id: {
+    id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    // don't add the timestamp attributes (updatedAt, createdAt)
+    timestamps: false,
+
+    // If don't want createdAt
+    createdAt: false,
+
+    // If don't want updatedAt
+    updatedAt: false,
   }, {
     sequelize,
     modelName: 'categories',

@@ -30,7 +30,7 @@ services:
     env_file:
       - ./backend/.env
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
     expose:
       - 8080
   client:

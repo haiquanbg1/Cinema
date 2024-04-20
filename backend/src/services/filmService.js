@@ -13,7 +13,7 @@ const getAllFilms = async () => {
 const getFilmById = async (film_id) => {
     result = await Film.findAll({
         where: {
-            film_id: film_id
+            id: film_id
         }
     })
     return result
@@ -44,7 +44,7 @@ const updateFilmById = async (film) => {
         classify_id: film.classify_id
     }, {
         where: {
-            film_id: film.film_id
+            id: film.film_id
         }
     }
     )
@@ -55,7 +55,7 @@ const deleteFilmById = async (film_id) => {
         deleted: 1
     }, {
         where: {
-            film_id: film_id
+            id: film_id
         }
     })
 }

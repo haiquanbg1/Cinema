@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Room.init({
-    room_id: {
+    id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
@@ -29,7 +29,15 @@ module.exports = (sequelize, DataTypes) => {
         model: 'cinemas',
         key: 'cinema_id'
       }
-    }
+    },
+    // don't add the timestamp attributes (updatedAt, createdAt)
+    timestamps: false,
+
+    // If don't want createdAt
+    createdAt: false,
+
+    // If don't want updatedAt
+    updatedAt: false,
   }, {
     sequelize,
     modelName: 'rooms',

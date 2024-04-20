@@ -14,13 +14,21 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   City.init({
-    city_id: {
+    id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    city: DataTypes.STRING(50)
+    city: DataTypes.STRING(50),
+    // don't add the timestamp attributes (updatedAt, createdAt)
+    timestamps: false,
+
+    // If don't want createdAt
+    createdAt: false,
+
+    // If don't want updatedAt
+    updatedAt: false,
   }, {
     sequelize,
     modelName: 'cities',

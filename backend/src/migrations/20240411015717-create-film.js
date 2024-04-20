@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('films', {
-      film_id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'languages',
-          key: 'language_id'
+          key: 'id'
         }
       },
       director: {
@@ -38,7 +38,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'classifies',
-          key: 'classify_id'
+          key: 'id'
         }
       },
       deleted: {
