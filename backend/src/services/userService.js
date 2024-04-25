@@ -1,5 +1,3 @@
-const conn = require("../config/database")
-const db = require("../models/index")
 const { User } = require("../models/index")
 
 const insertUser = async (user) => {

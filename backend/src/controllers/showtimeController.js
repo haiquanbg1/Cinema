@@ -34,6 +34,10 @@ const getShowtimeByFilmId = async (req, res) => {
 }
 
 const getShowtimeById = async (req, res) => {
+    result = await Showtime.getShowtimeById(req.params.showtime_id)
+    return res.status(200).json({
+        data: result
+    })
 
 }
 
@@ -42,5 +46,6 @@ module.exports = {
     postShowtime,
     updateShowtime,
     deleteShowtime,
-    getShowtimeByFilmId
+    getShowtimeByFilmId,
+    getShowtimeById
 }

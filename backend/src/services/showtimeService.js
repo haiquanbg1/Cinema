@@ -1,5 +1,3 @@
-const conn = require("../config/database")
-const db = require('../models/index')
 const { Showtime, Cinema } = require('../models/index')
 const { Op } = require('sequelize')
 const moment = require('moment')
@@ -55,10 +53,6 @@ const updateShowTimeById = async (showtime) => {
 }
 
 const getShowtimeByFilmId = async (film_id, city_id) => {
-    // [result, field] = await conn.query(
-    //     'select st.*, c.name from showtimes st inner join cinemas c on c.cinema_id = st.cinema_id where st.film_id = ? and st.time >= now() and c.city_id = ?',
-    //     [film_id, city_id]
-    // )
     // let showtime = await Showtime.findAll({
     //     where: {
     //         time: {

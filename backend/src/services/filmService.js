@@ -1,4 +1,3 @@
-const db = require('../models/index')
 const { Film } = require('../models/index')
 
 const getAllFilms = async () => {
