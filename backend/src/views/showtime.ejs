@@ -38,7 +38,7 @@
         <% for (var i=0; i<showtimes.length; i++) { %>
             <div class="form-popup" id="myForm<%=i%>">
                 <form action="/showtime/update" method="post">
-                    <input class="hidden" type="text" name="showtime_id" id="showtime_id" value="<%= showtimes[i].showtime_id %>"><br>
+                    <input class="hidden" type="text" name="showtime_id" id="showtime_id" value="<%= showtimes[i].id %>"><br>
                     <label for="film_id">film:</label>
                     <input type="number" name="film_id" id="film_id" value="<%= showtimes[i].film_id %>"><br>
                     <label for="cinema_id">cinema:</label>
@@ -51,7 +51,7 @@
                 </form>
             </div>
         <tr>
-            <td><%= showtimes[i].showtime_id %></td>
+            <td><%= showtimes[i].id %></td>
             <td><%= showtimes[i].film_id %></td>
             <td><%= showtimes[i].cinema_id %></td>
             <td><%= showtimes[i].time %></td>

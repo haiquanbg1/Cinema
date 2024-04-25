@@ -10,22 +10,29 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      film_category.belongsTo(models.Film, {
+        foreignKey: 'id',
+
+      });
+      film_category.belongsTo(models.Category, {
+        foreignKey: 'id',
+
+      });
     }
   }
   film_category.init({
     film_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'films',
-        key: 'film_id'
+        model: 'Film',
+        key: 'id'
       }
     },
     category_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'categories',
-        key: 'category_id'
+        model: 'Category',
+        key: 'id'
       }
     },
     // don't add the timestamp attributes (updatedAt, createdAt)
@@ -39,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'film_category',
+    tableName: 'film-category'
   });
   return film_category;
 };

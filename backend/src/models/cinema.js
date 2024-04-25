@@ -9,24 +9,30 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate() {
+    static associate(models) {
+      Cinema.belongsTo(models.City, {
+        foreignKey: 'city_id',
+
+      });
+      Cinema.hasMany(models.Room, {
+        foreignKey: 'cinema_id',
+      });
+      Cinema.hasMany(models.Showtime, {
+        foreignKey: "cinema_id"
+      });
     }
   }
   Cinema.init({
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER
-    },
     address: {
       type: DataTypes.STRING(100)
     },
     city_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'cities',
-        key: 'city_id'
+        model: {
+          tableName: "cities",
+          key: "id"
+        }
       }
     },
     phone: {
@@ -41,17 +47,10 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING(100)
     },
-    // don't add the timestamp attributes (updatedAt, createdAt)
-    timestamps: false,
-
-    // If don't want createdAt
-    createdAt: false,
-
-    // If don't want updatedAt
-    updatedAt: false,
   }, {
     sequelize,
-    modelName: 'cinemas',
+    modelName: "Cinema",
+    tableName: "cinemas"
   });
   return Cinema;
 };

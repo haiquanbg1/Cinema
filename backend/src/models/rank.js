@@ -10,7 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Rank.hasMany(models.User, {
+        foreignKey: 'rank_id',
+
+      });
     }
   }
   Rank.init({
@@ -26,17 +29,10 @@ module.exports = (sequelize, DataTypes) => {
     money: {
       type: DataTypes.INTEGER
     },
-    // don't add the timestamp attributes (updatedAt, createdAt)
-    timestamps: false,
-
-    // If don't want createdAt
-    createdAt: false,
-
-    // If don't want updatedAt
-    updatedAt: false,
   }, {
     sequelize,
-    modelName: 'ranks',
+    modelName: 'Rank',
+    tableName: 'ranks'
   });
   return Rank;
 };

@@ -10,7 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Language.hasMany(models.Film, {
+        foreignKey: 'language_id',
+
+      });
     }
   }
   Language.init({
@@ -23,17 +26,10 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING(20)
     },
-    // don't add the timestamp attributes (updatedAt, createdAt)
-    timestamps: false,
-
-    // If don't want createdAt
-    createdAt: false,
-
-    // If don't want updatedAt
-    updatedAt: false,
   }, {
     sequelize,
-    modelName: 'Languages',
+    modelName: 'Language',
+    tableName: 'languages'
   });
   return Language;
 };

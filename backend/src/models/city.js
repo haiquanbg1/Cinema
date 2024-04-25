@@ -9,8 +9,15 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate() {
+    static associate(models) {
+      City.hasMany(models.Cinema, {
+        foreignKey: 'city_id',
 
+      });
+      City.hasMany(models.User, {
+        foreignKey: 'city_id',
+
+      });
     }
   }
   City.init({
@@ -21,17 +28,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     city: DataTypes.STRING(50),
-    // don't add the timestamp attributes (updatedAt, createdAt)
-    timestamps: false,
-
-    // If don't want createdAt
-    createdAt: false,
-
-    // If don't want updatedAt
-    updatedAt: false,
   }, {
     sequelize,
-    modelName: 'cities',
+    modelName: 'City',
+    tableName: 'cities'
   });
   return City;
 };

@@ -10,28 +10,33 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Showtime.belongsTo(models.Cinema, {
+        foreignKey: 'cinema_id',
+      });
+      Showtime.belongsTo(models.Film, {
+        foreignKey: 'film_id',
+
+      });
+      Showtime.hasMany(models.Booking, {
+        foreignKey: 'showtime_id',
+      })
     }
   }
   Showtime.init({
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER
-    },
     film_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'films',
-        key: 'film_id'
+        model: 'Film',
+        key: 'id'
       }
     },
     cinema_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'cinemas',
-        key: 'cinema_id'
+        model: {
+          tableName: 'cinemas',
+          key: 'id'
+        }
       }
     },
     time: {
@@ -42,7 +47,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'showtimes',
+    modelName: 'Showtime',
+    tableName: 'showtimes',
   });
   return Showtime;
 };

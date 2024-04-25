@@ -1,5 +1,5 @@
 const db = require('../models/index')
-const Film = require('../models/film')(db.sequelize, db.Sequelize)
+const { Film } = require('../models/index')
 
 const getAllFilms = async () => {
     result = await Film.findAll({

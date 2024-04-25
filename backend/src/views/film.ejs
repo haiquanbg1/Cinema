@@ -45,7 +45,7 @@
         <% for (var i=0; i<films.length; i++) { %>
             <div class="form-popup" id="myForm<%=i%>">
                 <form action="/film/update" method="post" >
-                    <input class="hidden" type="text" name="film_id" id="film_id" value="<%= films[i].film_id %>"><br>
+                    <input class="hidden" type="text" name="film_id" id="film_id" value="<%= films[i].id %>"><br>
                     <label for="title">title:</label>
                     <input type="text" name="title" id="title" value="<%= films[i].title %>"><br>
                     <label for="description">description:</label>
@@ -66,7 +66,7 @@
                 </form>
             </div>
         <tr>
-            <td><%= films[i].film_id %></td>
+            <td><%= films[i].id %></td>
             <td><%= films[i].title %></td>
             <td>
                 <div class="edit" id="editdb">

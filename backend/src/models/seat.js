@@ -10,7 +10,14 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Seat.hasMany(models.booking_seat, {
+        foreignKey: 'seat_id',
+
+      });
+      Seat.belongsTo(models.Room, {
+        foreignKey: 'room_id',
+
+      });
     }
   }
   Seat.init({
@@ -29,21 +36,14 @@ module.exports = (sequelize, DataTypes) => {
     room_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'rooms',
-        key: 'room_id'
+        model: 'Room',
+        key: 'id'
       }
     },
-    // don't add the timestamp attributes (updatedAt, createdAt)
-    timestamps: false,
-
-    // If don't want createdAt
-    createdAt: false,
-
-    // If don't want updatedAt
-    updatedAt: false,
   }, {
     sequelize,
-    modelName: 'seats',
+    modelName: 'Seat',
+    tableName: 'seats'
   });
   return Seat;
 };

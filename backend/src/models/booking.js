@@ -3,17 +3,28 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class booking extends Model {
+  class Booking extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Booking.belongsTo(models.Showtime, {
+        foreignKey: 'showtime_id',
+
+      });
+      Booking.hasMany(models.booking_seat, {
+        foreignKey: 'booking_id',
+
+      });
+      Booking.belongsTo(models.User, {
+        foreignKey: 'user_id',
+
+      });
     }
   }
-  booking.init({
+  Booking.init({
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -23,14 +34,14 @@ module.exports = (sequelize, DataTypes) => {
     showtime_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'showtimes',
+        model: 'Showtime',
         key: 'showtime_id'
       }
     },
     user_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'users',
+        model: 'User',
         key: 'user_id'
       }
     },
@@ -39,7 +50,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'bookings',
+    modelName: 'Booking',
+    tableName: 'bookings'
   });
-  return booking;
+  return Booking;
 };

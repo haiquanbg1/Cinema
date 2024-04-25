@@ -1,17 +1,19 @@
 const conn = require("../config/database")
 const db = require("../models/index")
-const User = require("../models/user")(db.sequelize, db.Sequelize)
+const { User } = require("../models/index")
 
 const insertUser = async (user) => {
+    console.log(user)
     await User.create({
-        firstname: user.firstname,
-        lastname: user.lastname,
         gender: user.gender,
         email: user.email,
         password: user.password,
         phone: user.phone,
         birthday: user.birthday,
         city_id: user.city_id,
+        rank_id: 1,
+        firstName: user.firstName,
+        lastName: user.lastName,
     })
 }
 

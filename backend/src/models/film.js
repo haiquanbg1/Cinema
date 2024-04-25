@@ -10,7 +10,22 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Film.belongsTo(models.Classify, {
+        foreignKey: 'classify_id',
+
+      });
+      Film.belongsTo(models.Language, {
+        foreignKey: 'language_id',
+
+      });
+      Film.hasMany(models.Showtime, {
+        foreignKey: 'film_id',
+
+      });
+      Film.hasMany(models.film_category, {
+        foreignKey: 'film_id',
+
+      });
     }
   }
   Film.init({
@@ -32,8 +47,8 @@ module.exports = (sequelize, DataTypes) => {
     language_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'languages',
-        key: 'language_id'
+        model: 'Language',
+        key: 'id'
       }
     },
     director: {
@@ -48,8 +63,8 @@ module.exports = (sequelize, DataTypes) => {
     classify_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'classifies',
-        key: 'classify_id'
+        model: 'Classify',
+        key: 'id'
       }
     },
     deleted: {
@@ -58,7 +73,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'films',
+    modelName: 'Film',
+    tableName: 'films'
   });
   return Film;
 };

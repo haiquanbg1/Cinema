@@ -10,7 +10,14 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Room.hasMany(models.Seat, {
+        foreignKey: 'room_id',
+
+      });
+      Room.belongsTo(models.Cinema, {
+        foreignKey: 'cinema_id',
+
+      });
     }
   }
   Room.init({
@@ -26,8 +33,8 @@ module.exports = (sequelize, DataTypes) => {
     cinema_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'cinemas',
-        key: 'cinema_id'
+        model: 'Cinema',
+        key: 'id'
       }
     },
     // don't add the timestamp attributes (updatedAt, createdAt)
@@ -40,7 +47,8 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: false,
   }, {
     sequelize,
-    modelName: 'rooms',
+    modelName: 'Room',
+    tableName: 'rooms'
   });
   return Room;
 };

@@ -17,8 +17,6 @@ const postUser = async (req, res) => {
 
     // hash password
     password = await bcrypt.hash(user.password, 10)
-    // get time now
-    let now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }))
 
     user.email = user.email.toLowerCase()
     user.password = password
@@ -58,7 +56,7 @@ const getUser = async (req, res) => {
     const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET
 
     const dataForAccessToken = {
-        user_id: user.user_id
+        user_id: user.id
     }
     const accessToken = await methods.generateToken(
         dataForAccessToken,
@@ -78,7 +76,7 @@ const getUser = async (req, res) => {
     ) // tạo 1 refresh token
     if (!user.refresh_token) {
         // Nếu user này chưa có refresh token thì lưu refresh token đó vào database
-        await User.updateRefreshToken(user.user_id, refresh_token)
+        await User.updateRefreshToken(user.id, refresh_token)
         user.refresh_token = refresh_token
     } else {
         // Nếu user này đã có refresh token thì lấy refresh token đó từ database

@@ -1,7 +1,6 @@
 const conn = require("../config/database")
 const db = require('../models/index')
-const Showtime = require('../models/showtime')(db.sequelize, db.Sequelize)
-const Cinema = require("../models/cinema")(db.sequelize, db.Sequelize)
+const { Showtime, Cinema } = require('../models/index')
 const { Op } = require('sequelize')
 const moment = require('moment')
 
@@ -60,47 +59,43 @@ const getShowtimeByFilmId = async (film_id, city_id) => {
     //     'select st.*, c.name from showtimes st inner join cinemas c on c.cinema_id = st.cinema_id where st.film_id = ? and st.time >= now() and c.city_id = ?',
     //     [film_id, city_id]
     // )
-    let showtime = await Showtime.findAll({
-        where: {
-            time: {
-                [Op.gte]: moment().add(7, 'hours').toDate()
-            },
-            film_id: film_id
-        },
-        include: [{
-            model: Cinema,
-            required: false,
-            on: {
-                cinema_id: db.Sequelize.col('showtimes.cinema_id')
-            },
-            where: {
-                city_id: city_id
-            }
-        }]
-    })
+    // let showtime = await Showtime.findAll({
+    //     where: {
+    //         time: {
+    //             [Op.gte]: moment().add(7, 'hours').toDate()
+    //         },
+    //         film_id: film_id
+    //     },
+    //     include: [{
+    //         model: Cinema,
+    //         attributes: [
+    //             'name'
+    //         ],
+    //         where: {
+    //             city_id: city_id
+    //         }
+    //     }]
+    // })
+    console.log(Showtime.associations)
     let cinema = await Cinema.findAll({
-        attributes: {
-            exclude: [
-                'timestamps',
-                'createdAt',
-                'updatedAt'
-            ]
-        },
+        attributes: [
+            'name'
+        ],
         where: {
             city_id: city_id
-        }
+        },
+        include: [{
+            model: Showtime,
+            where: {
+                time: {
+                    [Op.gte]: moment().add(7, 'hours').toDate()
+                },
+                film_id: film_id
+            },
+            require: true
+        }]
     })
-    let result = []
-    for (let i = 0; i < showtime.length; i++) {
-        for (let j = 0; j < cinema.length; j++) {
-            if (showtime[i].cinema_id == cinema[j].cinema_id) {
-                showtime[i].dataValues.cinema = cinema[j].name
-                result.push(showtime[i])
-                break
-            }
-        }
-    }
-    return showtime
+    return cinema
 }
 
 module.exports = {
