@@ -1,0 +1,103 @@
+.cinema-map-container {
+    .map-body {
+        table {
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .map-header {
+            width: 100%;
+            padding-top: 6.741%;
+            background-image: url(https://www.bhdstar.vn/wp-content/assets/loodo/seatMapHeader.png);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    }
+}
+
+.map-body table tr>td:first-child {
+    padding-left: 0;
+}
+
+.map-body table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.map-body table td {
+    color: white;
+    border-width: 0;
+    text-align: center;
+    padding: 5px;
+}
+
+.seat-types {
+    justify-content: center !important;
+}
+
+.seat-container {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+
+
+    .icon {
+        flex: 0 0 auto;
+        margin-bottom: 0;
+        max-width: 200px;
+        position: relative;
+    }
+}
+
+.seat-icon {
+    width: 36px;
+    height: 25px;
+    padding: 0 !important;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    max-width: 36px;
+    margin: auto;
+    position: relative;
+}
+
+.seat-icon.standard {
+    background-image: url(https://www.bhdstar.vn/wp-content/assets/loodo/ghe-thuong.png);
+
+}
+
+.seat-icon.vip {
+    background-image: url(https://www.bhdstar.vn/wp-content/assets/loodo/ghe-vip.png);
+}
+
+.seat-icon.couple {
+    background-image: url(https://www.bhdstar.vn/wp-content/assets/loodo/ghe-doi.png);
+}
+
+.seat-icon.selected {
+    background-image: url(https://www.bhdstar.vn/wp-content/assets/loodo/ghe-da-chon.png);
+}
+
+.seat-icon.disable {
+    background-image: url(https://www.bhdstar.vn/wp-content/assets/loodo/ghe-da-ban.png);
+}
+
+.icon-text {
+    color: white;
+    flex: 1 1 0px;
+    padding-left: 10px;
+}
+
+.seat {
+    --stack-gap: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#app {
+    display: flex;
+}

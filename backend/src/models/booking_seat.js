@@ -35,6 +35,14 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
+    // don't add the timestamp attributes (updatedAt, createdAt)
+    timestamps: false,
+
+    // If don't want createdAt
+    createdAt: false,
+
+    // If don't want updatedAt
+    updatedAt: false,
   }, {
     sequelize,
     modelName: 'booking_seat',

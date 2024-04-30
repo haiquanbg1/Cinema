@@ -28,6 +28,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     city: DataTypes.STRING(50),
+    // don't add the timestamp attributes (updatedAt, createdAt)
+    timestamps: false,
+
+    // If don't want createdAt
+    createdAt: false,
+
+    // If don't want updatedAt
+    updatedAt: false,
   }, {
     sequelize,
     modelName: 'City',

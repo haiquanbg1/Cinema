@@ -35,12 +35,10 @@ const getFilmAPI = async (req, res) => {
 
     for (let data in films) {
         let date = films[data]['release_date']
-        date.setHours(date.getHours() - 17)
-        films[data]['release_date'] = date
-        if (date > now) {
-            films[data]['showing'] = 0
+        if (Date.parse(date) > Date.parse(now)) {
+            films[data]['dataValues']['showing'] = 0
         } else {
-            films[data]['showing'] = 1
+            films[data]['dataValues']['showing'] = 1
         }
     }
     return res.status(200).json({

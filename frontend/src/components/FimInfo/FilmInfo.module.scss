@@ -1,0 +1,66 @@
+.film-info.show {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    z-index: 1002;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+
+    .close-Btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 40px;
+        height: 40px;
+
+    }
+
+    .film-detail {
+        width: 70%;
+        height: 85%;
+        background-color: #1a1a1a;
+        border-radius: 5px;
+        display: flex;
+
+        .film-detail-control {
+            margin: 60px;
+            width: 320px;
+            height: 460px;
+
+            .image {
+                display: block;
+                margin-bottom: 30px;
+            }
+
+            .trailer-btn {
+                height: 40px;
+                min-width: 120px;
+                border-radius: 5px;
+                background-color: transparent;
+                color: white;
+                border: 1px solid white;
+                margin-left: 20px;
+                cursor: pointer;
+            }
+        }
+
+        .film-detail-content {
+            margin: 50px;
+
+            .name {
+                font-size: 30px;
+                font-weight: 700;
+                color: var(--primary-color);
+            }
+        }
+    }
+}
+
+.film-info {
+    display: none;
+}

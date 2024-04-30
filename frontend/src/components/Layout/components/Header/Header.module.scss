@@ -270,3 +270,60 @@
 .big {
     font-size: 20px;
 }
+
+.info-container {
+    display: flex;
+    margin: 0 10px;
+    font-size: 18px;
+
+    .account-link {
+        display: flex;
+        align-items: center;
+
+    }
+}
+
+.info-header--link {
+    margin-bottom: 10px;
+    font-size: 18px;
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-weight: 700;
+
+    &:first-child {
+        margin-top: 10px;
+    }
+
+    &:hover {
+        color: var(--primary-color);
+    }
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.info-header--container {
+    margin-left: 20px;
+
+    a {
+        display: block;
+    }
+}
+
+.info-header--btn {
+    margin-bottom: 10px;
+    font-size: 16px;
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-weight: 600;
+
+    &:hover {
+        color: var(--primary-color);
+    }
+}

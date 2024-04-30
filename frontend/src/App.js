@@ -1,15 +1,21 @@
 import { Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { publicRoutes } from "./routes";
+
+
 import DefaultLayout from "~/components/Layout/DefaultLayout";
 import RegisterLayout from '~/components/Layout/RegisterLayout';
+import TicketLayout from "./components/Layout/TicketLayout";
+
+
+
 function App() {
   return (
     <Router>
       <div className="App">
         <Routes>
           {publicRoutes.map((route, index) => {
-            const Layout = route.layout === null ? RegisterLayout : DefaultLayout
+            const Layout = route.layout === 'registerLayout' ? RegisterLayout : route.layout === 'getTicketLayout' ? TicketLayout : DefaultLayout
             const Page = route.component;
             return (
               <Route

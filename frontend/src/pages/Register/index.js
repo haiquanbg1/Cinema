@@ -1,30 +1,34 @@
 import styles from './Register.module.scss';
 import classNames from "classnames/bind";
+import './index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { faAngleDown, faCheck, faTimes, faInfoCircle, faDisplay } from '@fortawesome/free-solid-svg-icons';
+import { useState, useRef, useEffect } from 'react';
 import Tippy from '@tippyjs/react/headless';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
-import fetchAPI from '../../fetchAPI';
 
 import Button from '~/components/Button';
 import requestApi from '~/fetch';
 
 const cx = classNames.bind(styles)
-
+const USER_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 function Register() {
     // const days = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"]
     // const [day, setDay] = useState('')
+    const userRef = useRef();
+    const errRef = useRef();
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [gender, setGender] = useState("0");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [password2, setPassword2] = useState("");
     const [phone, setPhone] = useState("");
     const [day, setDay] = useState("");
     const [month, setMonth] = useState("");
@@ -36,43 +40,70 @@ function Register() {
     // const [birth, setBirth] = useState("");
     // const [address, addresschange] = useState("");
 
+    const [errMsg, setErrMsg] = useState('');
+    const [success, setSuccess] = useState(false);
+    const [validName, setValidName] = useState(false);
+    const [validPwd, setValidPwd] = useState(false);
+    const [validMatch, setValidMatch] = useState(true);
+    const [validFirstName, setValidFirstName] = useState(false);
+    const [validLastName, setValidLastName] = useState(false);
+    const [validPhone, setValidPhone] = useState(false);
 
+    useEffect(() => {
+        setValidName(USER_REGEX.test(email));
+    }, [email])
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    useEffect(() => {
+        setValidPwd(PWD_REGEX.test(password));
+        setValidMatch(password === password2);
+    }, [password, password2])
+
+    useEffect(() => {
+        setErrMsg('');
+    }, [email, password, password2])
+
+    useEffect(() => {
+        setValidFirstName(firstName !== '')
+    }, [firstName])
+
+    useEffect(() => {
+        setValidLastName(lastName !== '')
+    }, [lastName])
+
+    useEffect(() => {
+        setValidPhone(phone !== '')
+    }, [phone])
+
     const usenavigate = useNavigate();
 
     //Register
-    const onSubmit = (e) => {
-        let birthday = `${year}/${month}/${day}`;
+    const onSubmit = async (e) => {
         e.preventDefault();
-        let regobj = { firstname: firstName, lastname: lastName, gender, email, password, phone, birthday: '2004-02-11', city_id: 1, };
+        // if button enabled with JS hack
+        const v1 = USER_REGEX.test(email);
+        const v2 = PWD_REGEX.test(password);
+        console.log(validFirstName)
+        if (!validFirstName || !validLastName) {
+            setErrMsg('TÊN là bắt buộc');
+            return;
+        }
+        if (!validPhone) {
+            setErrMsg('Số điện thoại là bắt buộc');
+            return;
+        }
+        if (!v1 || !v2 || !validMatch) {
+            setErrMsg("Invalid Entry");
+            return;
+        }
+
+        let birthday = `${year}/${month}/${day}`;
+        let regobj = { firstname: firstName, lastname: lastName, gender, email, password, phone, birthday, city_id: 1, };
 
         requestApi('user/register', 'post', regobj)
             .then((res) => {
                 console.log(res)
             })
             .catch(err => console.log(err))
-        // axios
-        //     .post("http://localhost:8080/api/ver1/user/register", regobj)
-        //     .then((res) => {
-        //         console.log(res)
-        //     })
-        //     .catch(err => console.log(err))
-        // try {
-        //     const data = await fetch("http://localhost:8080/api/ver1/user/register", {
-        //         method: "POST",
-        //         // headers: { 'Content-Type': 'application/json' },
-        //         body: JSON.stringify(regobj)
-        //     }).then((res) => {
-        //         console.log('Registered successfully.')
-        //     }).catch((err) => {
-        //         console.log('Failed :' + err.message);
-        //     });
-        // }
-        // catch (e) {
-        //     console.log(e)
-        // }
-
     }
 
 
@@ -87,17 +118,16 @@ function Register() {
 
         requestApi('user/login', 'post', inputobj)
             .then((res) => {
+                console.log(res)
+                localStorage.setItem('isAdmin', res.data.user.is_admin)
+                localStorage.setItem('lastName', res.data.user.lastname)
+                localStorage.setItem('firstName', res.data.user.firstname)
                 localStorage.setItem('accessToken', res.data.accessToken)
                 localStorage.setItem('refreshToken', res.data.refresh_token)
                 usenavigate('/')
             })
             .catch(err => console.log(err))
-        // axios
-        //     .post("http://localhost:8080/api/ver1/user/login", inputobj)
-        //     .then((res) => {
-        //         console.log(res);
-        //     })
-        //     .catch(err => console.log(err))
+
     }
 
 
@@ -163,19 +193,19 @@ function Register() {
                                 <div className={cx('radio-list')}>
                                     <label className={cx('radio-item')}>
                                         <span>Nam</span>
-                                        <input checked={gender === '1'} onChange={e => setGender(e.target.value)} type="radio" name='title' value='1' />
+                                        <input checked={gender === '1'} onChange={e => setGender(0)} type="radio" name='title' value='male' />
                                         <span className={cx('checkmark')}></span>
                                     </label>
 
                                     <label className={cx('radio-item')}>
                                         <span>Nữ</span>
-                                        <input checked={gender === '0'} onChange={e => setGender(e.target.value)} type="radio" name='title' value='0' />
+                                        <input checked={gender === '0'} onChange={e => setGender(1)} type="radio" name='title' value='female' />
                                         <span className={cx('checkmark')}></span>
                                     </label>
 
                                     <label className={cx('radio-item')}>
                                         <span>Khác</span>
-                                        <input type="radio" name='title' value='2' />
+                                        <input type="radio" name='title' value='other' />
                                         <span className={cx('checkmark')}></span>
                                     </label>
                                 </div>
@@ -187,7 +217,11 @@ function Register() {
                                     Địa chỉ email
                                     <span> *</span>
                                 </label>
-                                <input value={email} onChange={e => setEmail(e.target.value)} type='email' name='email' id='email'></input>
+                                <input value={email} onChange={e => setEmail(e.target.value)} name='email' id='email'></input>
+                                <p className={!validName ? cx('notify') : cx('hide')} >
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Địa chỉ mail không hợp lệ
+                                </p>
                             </div>
                         </div>
 
@@ -199,6 +233,12 @@ function Register() {
                                     <span> *</span>
                                 </label>
                                 <input value={password} onChange={e => setPassword(e.target.value)} type='password' name='password' id='password'></input>
+                                <p className={!validPwd ? cx('notify') : cx('hide')} >
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    8 to 24 characters.<br />
+                                    Must include uppercase and lowercase letters, a number and a special character.<br />
+                                    Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
+                                </p>
                             </div>
 
                             {/*check password */}
@@ -207,7 +247,11 @@ function Register() {
                                     Nhập lại mật khẩu
                                     <span> *</span>
                                 </label>
-                                <input type='password' name='password2' id='password2'></input>
+                                <input value={password2} onChange={e => setPassword2(e.target.value)} type='password' name='password2' id='password2'></input>
+                                <p className={!validMatch ? cx('notify') : cx('hide')} >
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Must match the first password input field.
+                                </p>
                             </div>
                         </div>
 
@@ -413,7 +457,7 @@ function Register() {
                                 <span> *</span>
                             </label>
                         </div>
-
+                        <p className={cx('notify')} style={{ marginBottom: '0' }}>{errMsg}</p>
                         <div type="submit   "><Button type='submit' primary stretch className={'login-btn'}>ĐĂNG KÝ</Button></div>
                     </form>
                 </div >

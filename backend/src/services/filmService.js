@@ -1,10 +1,32 @@
-const { Film } = require('../models/index')
+const { Film, film_category, Category, Language, Classify } = require('../models/index')
 
 const getAllFilms = async () => {
     result = await Film.findAll({
         where: {
             deleted: 0
-        }
+        },
+        include: [{
+            model: film_category,
+            attributes: [
+                'film_id', 'category_id'
+            ],
+            include: [{
+                model: Category,
+                attributes: [
+                    'name'
+                ]
+            }]
+        }, {
+            model: Language,
+            attributes: [
+                'name'
+            ]
+        }, {
+            model: Classify,
+            attributes: [
+                'title', 'description'
+            ]
+        }]
     });
     return result
 }

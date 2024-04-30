@@ -1,23 +1,32 @@
 import styles from './Header.module.scss';
 import classNames from 'classnames/bind';
+import './index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faTicketSimple } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react/headless';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import Image from '~/components/Image';
 import Button from '~/components/Button';
+
 const cx = classNames.bind(styles)
 
 function Header() {
     const cities = ['TP.Hồ Chí Minh', 'Hà Nội', 'Nha Trang', 'Đà Nẵng']
     const [city, setCity] = useState('Chọn thành phố')
+    let name = localStorage.getItem('firstName') ? localStorage.getItem('firstName').concat(localStorage.getItem('lastName')) : '';
+    const usenavigate = useNavigate();
+
+    const logOut = () => {
+        localStorage.clear()
+    }
     if (!localStorage.accessToken) {
         return (
             <header id='header' className={cx('header')}>
-                <div className={cx('header-wrapper')}>
+                <div className={cx('header-wrapper', 'stuck')}>
                     <div className={cx('header-inner', 'flex-row')}>
                         <div id='header-logo' className={cx('logo', 'flex-col')}>
                             <Link to={'/'}>
@@ -44,7 +53,6 @@ function Header() {
                                 </li>
                             </ul>
                         </div>
-
                         <div className={cx('flex-right', 'flex-grow', 'flex-col')}>
                             <ul className={cx('header-nav', 'nav-right')}>
                                 <span>
@@ -95,8 +103,11 @@ function Header() {
                                         )}
                                     >
                                         <li className={cx('nav-item', 'nav-right--item')}>
-                                            Đăng nhập/Đăng ký
+                                            <Link to={'/register'} >
+                                                Đăng nhập/Đăng ký
+                                            </Link>
                                         </li>
+
                                     </Tippy>
                                 </span>
                                 <li className={cx('nav-right--item', 'big')}>
@@ -106,6 +117,7 @@ function Header() {
                             </ul>
                         </div>
                     </div>
+
                 </div>
             </header >
         );
@@ -163,24 +175,48 @@ function Header() {
                                     </Tippy>
                                 </span>
 
+                                <span>
+                                    <Tippy
+                                        trigger='click'
+                                        interactive
+                                        render={(attrs) => (
+                                            <div className={cx("city-select", 'info')} tabIndex="-1" {...attrs}>
+                                                <PopperWrapper className='info-header'>
+                                                    <div className={cx('info-header--container')}>
 
-                                <li className={cx('nav-item', 'nav-right--item')}>
-                                    <div>
-                                        <Image></Image>
-                                        <span></span>
-                                    </div>
-                                    /
-                                    <span>Thoát</span>
+                                                        <div className={cx('info-header-content')}>
+                                                            <Image src={'https://static2-images.vnncdn.net/files/publish/2022/11/22/ronaldo-mang-xa-hoi-219.jpg'} className={cx('avatar')}></Image>
+                                                            <span>{name}</span>
+                                                        </div>
 
-                                </li>
+                                                        <Link className={cx('info-header--link')}> Xem tất cả thông tin</Link>
+
+                                                        {localStorage.getItem('isAdmin') === '0' ?
+                                                            (<Link className={cx('info-header--link')} >Go to admin page</Link>)
+                                                            : (<span></span>)}
+
+                                                        <Link to={'/register'} onClick={logOut} className={cx('info-header--link')} >Đăng xuất</Link>
+                                                    </div>
+                                                </PopperWrapper>
+                                            </div>
+                                        )}
+                                    >
+                                        <li className={cx('info-container')}>
+                                            <Link className={cx('account-link')}>
+                                                <Image src={'https://static2-images.vnncdn.net/files/publish/2022/11/22/ronaldo-mang-xa-hoi-219.jpg'} className={cx('avatar')}></Image>
+                                                <span>{localStorage.getItem('firstName')}</span>
+                                            </Link>
+                                        </li>
+                                    </Tippy>
+                                </span>
 
                                 <li className={cx('nav-right--item', 'big')}>
                                     <FontAwesomeIcon className={cx('f-icon3')} icon={faTicketSimple} />
                                     <Link to={'/get-ticket'}>Mua vé</Link>
                                 </li>
                             </ul>
-                        </div>
-                    </div>
+                        </div >
+                    </div >
                 </div >
             </header >
         );
