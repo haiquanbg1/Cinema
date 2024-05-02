@@ -6,49 +6,59 @@ import { faAngleDown, faCheck, faTimes, faInfoCircle, faDisplay } from '@fortawe
 import './index.css'
 
 import Showtime from "../ShowTime";
+import { useParams } from "react-router-dom";
 const cx = classNames.bind(styles)
 
 const showTimes = [
     {
+        film: 'boat',
         date: '2024-04-28',
         time: '8:00',
         address: 'Vincom Pham Ngoc Thach'
     },
     {
+        film: 'boat',
         date: '2024-04-28',
         time: '8:00',
         address: 'Vincom Tran Duy Hung'
     },
     {
+        film: 'boat',
         date: '2024-04-28',
         time: '10:00',
         address: 'Vincom Pham Ngoc Thach'
     },
     {
+        film: 'boat',
         date: '2024-04-28',
         time: '11:00',
         address: 'Vincom Tran Duy Hung'
     },
     {
+        film: 'boat',
         date: '2024-04-28',
         time: '16:00',
         address: 'Vincom Pham Ngoc Thach'
     },
     {
+        film: 'boat',
         date: '2024-04-29',
         time: '10:00',
         address: 'Vincom Pham Ngoc Thach'
     },
     {
+        film: 'boat',
         date: '2024-04-29',
         time: '16:00',
         address: 'Vincom Tran Duy Hung'
     },
     {
+        film: 'boat',
         date: '2024-04-29',
         time: '16:00',
         address: 'Vincom Tran Duy Hung'
     }, {
+        film: 'boat',
         date: '2024-04-29',
         time: '16:00',
         address: 'Vincom Tran Duy Hung'
@@ -67,10 +77,12 @@ function GetTicket1() {
 
     const [showTime, setShowTime] = useState([]);
 
+    const params = useParams();
+
     const getTime = () => {
         let tmp = []
         for (let x in showTimes) {
-            if (showTimes[x].date == date) {
+            if (showTimes[x].date == date && showTimes[x].film == params.id) {
                 tmp.push(showTimes[x])
             }
 

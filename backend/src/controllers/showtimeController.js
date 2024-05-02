@@ -12,6 +12,9 @@ const getShowtime = async (req, res) => {
 
 const postShowtime = async (req, res) => {
     await Showtime.insertShowtime(req.body)
+        .catch((err) => {
+            console.log(err)
+        })
     return res.redirect('/showtime')
 }
 

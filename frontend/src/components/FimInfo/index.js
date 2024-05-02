@@ -8,7 +8,8 @@ import Image from "../Image";
 import styles from './FilmInfo.module.scss';
 import Button from "../Button";
 import { targerFilmSlice } from "~/redux/reducers/targetFilmSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const cx = classNames.bind(styles)
 
@@ -16,13 +17,23 @@ const cx = classNames.bind(styles)
 function FilmInfo() {
     const dispatch = useDispatch();
     const listInfo = useSelector(state => state.getInfo);
-
+    const navigate = useNavigate();
+    // const [info, setInfo] = useState('')
+    let info
     const closeHandle = () => {
         dispatch(targerFilmSlice.actions.deleteInfo(''));
-        console.log('test');
     }
     if (listInfo != null) {
-        var info = listInfo[0];
+        // setInfo(listInfo[0]);
+        info = listInfo[0]
+    }
+    // useEffect(
+    //     setInfo(listInfo[0])
+    //     , [listInfo])
+
+    const handleClick = (id) => {
+        navigate(`/get-ticket/${id}`)
+        closeHandle();
     }
     return (
         <div className={listInfo.length != 0 ? cx('film-info', 'show') : cx('film-info')}>
@@ -33,7 +44,7 @@ function FilmInfo() {
                 <div className={cx('film-detail-control')}>
                     <Image className={cx('image')} src={info != null ? info.src : ''}></Image>
                     <Button primary leftIcon={<FontAwesomeIcon icon={faTicketSimple} />}>
-                        <Link to={'/get-ticket'}>MUA VÉ NGAY</Link>
+                        <div onClick={() => handleClick(info.title)}>MUA VÉ NGAY</div>
                     </Button>
                     <button onClick={closeHandle} className={cx('trailer-btn')}>XEM TRAILER</button>
                 </div>

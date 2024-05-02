@@ -97,7 +97,7 @@ function Register() {
         }
 
         let birthday = `${year}/${month}/${day}`;
-        let regobj = { firstname: firstName, lastname: lastName, gender, email, password, phone, birthday, city_id: 1, };
+        let regobj = { firstName, lastName, gender, email, password, phone, birthday, city_id: 1, };
 
         requestApi('user/register', 'post', regobj)
             .then((res) => {
@@ -120,8 +120,8 @@ function Register() {
             .then((res) => {
                 console.log(res)
                 localStorage.setItem('isAdmin', res.data.user.is_admin)
-                localStorage.setItem('lastName', res.data.user.lastname)
-                localStorage.setItem('firstName', res.data.user.firstname)
+                localStorage.setItem('lastName', res.data.user.lastName)
+                localStorage.setItem('firstName', res.data.user.firstName)
                 localStorage.setItem('accessToken', res.data.accessToken)
                 localStorage.setItem('refreshToken', res.data.refresh_token)
                 usenavigate('/')

@@ -1,7 +1,7 @@
 const routes = {
     home: '/',
-    getTicket: '/get-ticket',
-    getTicket2: '/get-ticket2',
+    getTicket: `/get-ticket/:id`,
+    getTicket2: '/get-ticket/:id/:id',
     getTicket3: '/get-ticket3',
     getTicket4: '/get-ticket4',
     register: '/register',

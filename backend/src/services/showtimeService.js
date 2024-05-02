@@ -53,24 +53,6 @@ const updateShowTimeById = async (showtime) => {
 }
 
 const getShowtimeByFilmId = async (film_id, city_id) => {
-    // let showtime = await Showtime.findAll({
-    //     where: {
-    //         time: {
-    //             [Op.gte]: moment().add(7, 'hours').toDate()
-    //         },
-    //         film_id: film_id
-    //     },
-    //     include: [{
-    //         model: Cinema,
-    //         attributes: [
-    //             'name'
-    //         ],
-    //         where: {
-    //             city_id: city_id
-    //         }
-    //     }]
-    // })
-    console.log(Showtime.associations)
     let cinema = await Cinema.findAll({
         attributes: [
             'name'
