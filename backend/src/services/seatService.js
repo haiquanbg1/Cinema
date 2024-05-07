@@ -1,22 +1,131 @@
-const { Seat, booking_seat, Booking } = require('../models/index')
+const { Seat, booking_seat, Booking, Showtime } = require('../models/index')
+const { remember, rememberForever } = require("../core/cache")
+const redis = require("../methods/redis")
 
 const getSeatBookedByShowtimeId = async (showtime_id) => {
-    result = await Booking.findAll({
-        where: {
-            showtime_id: showtime_id
-        },
-        include: [{
-            model: booking_seat,
+    const seatBooked = `booked-showtime:${showtime_id}`
+    const existsBooked = await redis.exists(seatBooked)
+    if (existsBooked) {
+        const seats = await redis.SMEMBERS(seatBooked)
+        return seats
+    } else {
+        result = await Booking.findAll({
+            where: {
+                showtime_id: showtime_id
+            },
             include: [{
-                model: Seat,
+                model: booking_seat,
                 attributes: [
-                    'name'
-                ]
-            }]
-        }],
-    })
+                    'seat_id',
+                    'booking_id'
+                ],
+                include: [{
+                    model: Seat,
+                    attributes: [
+                        'name'
+                    ]
+                }]
+            }],
+        })
+        // lấy tên ghế
+        var seats = []
+        result.forEach((dataBooking) => {
+            dataBooking.booking_seats.forEach((dataSeat) => {
+                seats.push(dataSeat.Seat.name)
+            })
+        })
+        // đẩy vào redis
+        seats.forEach(async (e) => {
+            await redis.sAdd(seatBooked, e)
+        })
+        return seats
+    }
 }
 
+const getSeatBookingByUser = async (showtime_id, user_id) => {
+    const seatBookingByUser = `showtime:${showtime_id}-user:${user_id}`
+    result = await redis.sMembers(seatBookingByUser)
+    return result
+}
+
+const getSeatBooking = async (showtime_id) => {
+    const seatBooking = `booking-showtime:${showtime_id}`
+    const seatsBooking = await redis.sMembers(seatBooking)
+    return seatsBooking
+}
+
+const getSeatBooked = async (showtime_id) => {
+    const seatBooked = `booked-showtime:${showtime_id}`
+    const seatsBooked = await redis.sMembers(seatBooked)
+    return seatsBooked
+}
+
+const checkSeatBooked = async (showtime_id, seat) => {
+    const seatBooked = `booked-showtime:${showtime_id}`
+    const seatsBooked = await redis.sMembers(seatBooked)
+    var ok = true
+    seatsBooked.forEach(element => {
+        if (seat === element) {
+            ok = false
+        }
+    })
+    return ok
+}
+
+const checkSeatBooking = async (showtime_id, seat) => {
+    const seatBooking = `booking-showtime:${showtime_id}`
+    const seatsBooking = await redis.sMembers(seatBooking)
+    var ok = true
+    seatsBooking.forEach(element => {
+        if (seat === element) {
+            ok = false
+        }
+    })
+    return ok
+}
+
+const postSeatBooked = async (showtime_id, booking_id, seat_name, room_id) => {
+    const seatBooked = `booked-showtime:${showtime_id}`
+    const seat = await Seat.findOne({
+        where: {
+            name: seat_name,
+            room_id: room_id
+        }
+    })
+    console.log(seat)
+    await booking_seat.create({
+        booking_id: booking_id,
+        seat_id: seat.id
+    })
+    await redis.sAdd(seatBooked, seat_name)
+}
+
+const postSeatBooking = async (showtime_id, user_id, seat) => {
+    const seatBookingByUser = `showtime:${showtime_id}-user:${user_id}`
+    const seatBooking = `booking-showtime:${showtime_id}`
+    await redis.sAdd(seatBookingByUser, seat)
+    await redis.sAdd(seatBooking, seat)
+}
+
+const deleteSeatBookingCache = async (showtime_id, user_id) => {
+    const seatBooking = `booking-showtime:${showtime_id}`
+    const seatBookingByUser = `showtime:${showtime_id}-user:${user_id}`
+    const seats = await redis.sMembers(seatBookingByUser)
+    seats.forEach(async element => {
+        await redis.sRem(seatBooking, element)
+    })
+    redis.del(seatBookingByUser)
+}
+
+
 module.exports = {
-    getSeatBookedByShowtimeId
+    getSeatBookedByShowtimeId,
+    checkSeatBooked,
+    checkSeatBooking,
+    postSeatBooked,
+    postSeatBooking,
+    deleteSeatBookingCache,
+    getSeatBookingByUser,
+    getSeatBooked,
+    getSeatBooking
 }

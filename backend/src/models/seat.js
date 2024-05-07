@@ -40,18 +40,13 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    // don't add the timestamp attributes (updatedAt, createdAt)
-    timestamps: false,
-
-    // If don't want createdAt
-    createdAt: false,
-
-    // If don't want updatedAt
-    updatedAt: false,
   }, {
     sequelize,
     modelName: 'Seat',
-    tableName: 'seats'
+    tableName: 'seats',
+    timestamps: false,
+    createdAt: false,
+    updatedAt: false,
   });
   return Seat;
 };

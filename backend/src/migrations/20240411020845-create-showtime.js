@@ -16,10 +16,10 @@ module.exports = {
           key: 'id'
         }
       },
-      cinema_id: {
+      room_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'cinemas',
+          model: 'rooms',
           key: 'id'
         }
       },

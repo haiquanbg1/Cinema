@@ -50,6 +50,19 @@ const insertFilm = async (film) => {
         actor: film.actor,
         length: film.length,
         classify_id: film.classify_id,
+        image: film.image,
+        video: film.video
+    }).then(async (data) => {
+        for (var i = 0; i < film.category.length; i++) {
+            await film_category.create({
+                film_id: data.dataValues.id,
+                category_id: film['category'][i]
+            }).catch((err) => {
+                console.log("error film_category")
+            })
+        }
+    }).catch((err) => {
+        console.log(err)
     })
 }
 

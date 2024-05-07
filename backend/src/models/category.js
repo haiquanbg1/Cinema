@@ -24,18 +24,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     name: DataTypes.STRING,
-    // don't add the timestamp attributes (updatedAt, createdAt)
-    timestamps: false,
-
-    // If don't want createdAt
-    createdAt: false,
-
-    // If don't want updatedAt
-    updatedAt: false,
   }, {
     sequelize,
     modelName: 'Category',
-    tableName: 'categories'
+    tableName: 'categories',
+    timestamps: false,
+    createdAt: false,
+    updatedAt: false,
   });
   return Category;
 };

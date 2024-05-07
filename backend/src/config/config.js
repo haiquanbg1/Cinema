@@ -17,15 +17,19 @@ module.exports = {
     seederStoragePath: './sequelizeData.json',
   },
   test: {
-    username: process.env.CI_DB_USERNAME,
-    password: process.env.CI_DB_PASSWORD,
-    database: process.env.CI_DB_NAME,
-    host: '127.0.0.1',
+    username: 'root',
+    password: 'Phamquan2004@',
+    database: 'web',
+    host: 'localhost',
     port: 3306,
     dialect: 'mysql',
     dialectOptions: {
       bigNumberStrings: true
-    }
+    },
+    migrationStorage: 'json',
+    seederStorage: 'json',
+    migrationStoragePath: './sequelizeMeta.json',
+    seederStoragePath: './sequelizeData.json',
   },
   production: {
     username: process.env.PROD_DB_USERNAME,

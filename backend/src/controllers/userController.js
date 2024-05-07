@@ -1,94 +1,94 @@
 const User = require("../services/userService")
 const bcrypt = require("bcryptjs")
 const methods = require('../methods/authMethod')
+const { successResponse, errorResponse } = require("../methods/response")
 
 //
-const postUser = async (req, res) => {
-    let user = req.body
+const register = async (req, res) => {
+    try {
+        let user = req.body
 
-    // check email exist
-    auth = await User.getUserByEmail(user.email)
-    if (auth) {
-        return res.status(409).json({
-            errCode: 1,
-            message: "email exist"
-        })
+        // check email exist
+        auth = await User.getUserByEmail(user.email)
+        if (auth) {
+            return errorResponse(res, 400, "Email đã tồn tại")
+        }
+
+        // hash password
+        password = await bcrypt.hash(user.password, 10)
+
+        user.email = user.email.toLowerCase()
+        user.password = password
+
+        await User.insertUser(user)
+
+        return successResponse(res, 200, "Thành công")
+    } catch (error) {
+        console.log(error)
+        return errorResponse(res, 500, "Đã có lỗi xảy ra")
     }
-
-    // hash password
-    password = await bcrypt.hash(user.password, 10)
-
-    user.email = user.email.toLowerCase()
-    user.password = password
-
-    await User.insertUser(user)
-
-    return res.status(200).json({
-        message: "success"
-    })
 }
 
 //
-const getUser = async (req, res) => {
-    let { email, password } = req.body
-    email = email.toLowerCase()
+const login = async (req, res) => {
+    try {
+        let { email, password } = req.body
+        email = email.toLowerCase()
 
-    // check email exist
-    let user = await User.getUserByEmail(email)
-    if (!user) {
-        return res.status(401).json({
-            errCode: 1,
-            message: "email not exist"
+        // check email exist
+        let user = await User.getUserByEmail(email)
+        if (!user) {
+            return errorResponse(res, 400, "Tài khoản không tồn tại")
+        }
+
+        // check password
+        if (!bcrypt.compareSync(password, user.password)) {
+            return errorResponse(res, 400, "Tài khoản hoặc mật khẩu sai")
+        }
+
+        const accessTokenLife = process.env.ACCESS_TOKEN_LIFE
+        const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
+        const refreshTokenLife = process.env.REFRESH_TOKEN_LIFE
+        const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET
+
+        const dataForAccessToken = {
+            user_id: user.id
+        }
+        const accessToken = await methods.generateToken(
+            dataForAccessToken,
+            accessTokenSecret,
+            accessTokenLife,
+        )
+
+        let refresh_token = await methods.generateToken(
+            dataForAccessToken,
+            refreshTokenSecret,
+            refreshTokenLife,
+        ) // tạo 1 refresh token
+        if (!user.refresh_token) {
+            // Nếu user này chưa có refresh token thì lưu refresh token đó vào database
+            await User.updateRefreshToken(user.id, refresh_token)
+            user.refresh_token = refresh_token
+        } else {
+            // Nếu user này đã có refresh token thì lấy refresh token đó từ database
+            refresh_token = user.refresh_token
+        }
+        dataUser = {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            city_id: user.city_id,
+            admin: user.is_admin
+        }
+
+        return successResponse(res, 200, "Thành công", {
+            accessToken,
+            refresh_token,
+            dataUser
         })
+    } catch (error) {
+        console.log(error)
+        return errorResponse(res, 500, "Đã có lỗi xảy ra")
     }
-
-    // check password
-    if (!bcrypt.compareSync(password, user.password)) {
-        return res.status(401).json({
-            errCode: 1,
-            message: "password not correct"
-        })
-    }
-
-    const accessTokenLife = process.env.ACCESS_TOKEN_LIFE
-    const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
-    const refreshTokenLife = process.env.REFRESH_TOKEN_LIFE
-    const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET
-
-    const dataForAccessToken = {
-        user_id: user.id
-    }
-    const accessToken = await methods.generateToken(
-        dataForAccessToken,
-        accessTokenSecret,
-        accessTokenLife,
-    )
-    if (!accessToken) {
-        return res.status(401).json({
-            message: "login not success"
-        })
-    }
-
-    let refresh_token = await methods.generateToken(
-        dataForAccessToken,
-        refreshTokenSecret,
-        refreshTokenLife,
-    ) // tạo 1 refresh token
-    if (!user.refresh_token) {
-        // Nếu user này chưa có refresh token thì lưu refresh token đó vào database
-        await User.updateRefreshToken(user.id, refresh_token)
-        user.refresh_token = refresh_token
-    } else {
-        // Nếu user này đã có refresh token thì lấy refresh token đó từ database
-        refresh_token = user.refresh_token
-    }
-
-    return res.json({
-        msg: 'login success',
-        accessToken,
-        refresh_token,
-        user,
-    })
 }
 
 //
@@ -96,19 +96,21 @@ const refreshToken = async (req, res) => {
     // Lấy access token từ header
     const accessTokenFromHeader = req.headers.x_authorization
     if (!accessTokenFromHeader) {
-        return res.status(400).send('access token not exist')
+        return errorResponse(res, 400, "Access Token không tồn tại")
     }
 
     // Lấy refresh token từ body
     const refreshTokenFromBody = req.body.refresh_token
     if (!refreshTokenFromBody) {
-        return res.status(400).send('refresh token not exist')
+        return errorResponse(res, 400, "Refresh Token không tồn tại")
     }
 
     const accessTokenSecret =
         process.env.ACCESS_TOKEN_SECRET || jwtVariable.accessTokenSecret
     const accessTokenLife =
         process.env.ACCESS_TOKEN_LIFE || jwtVariable.accessTokenLife
+    const refreshTokenLife = process.env.REFRESH_TOKEN_LIFE
+    const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET
 
     // Decode access token đó
     const decoded = await methods.decodeToken(
@@ -116,18 +118,18 @@ const refreshToken = async (req, res) => {
         accessTokenSecret,
     )
     if (!decoded) {
-        return res.status(400).send('Invalid access token')
+        return errorResponse(res, 400, "Access Token không hợp lệ")
     }
 
     const user_id = decoded.payload.user_id // Lấy username từ payload
 
     const user = await User.getUserById(user_id)
     if (!user) {
-        return res.status(401).send('User not exist')
+        return errorResponse(res, 400, "Người dùng không tồn tại")
     }
 
     if (refreshTokenFromBody !== user.refresh_token) {
-        return res.status(400).send(' Invalid refresh token')
+        return errorResponse(res, 400, "Refresh Token không hợp lệ")
     }
 
     // Tạo access token mới
@@ -140,25 +142,33 @@ const refreshToken = async (req, res) => {
         accessTokenSecret,
         accessTokenLife,
     )
-    if (!accessToken) {
-        return res
-            .status(400)
-            .send('create access token not success')
-    }
-    return res.json({
+
+    const refreshToken = await methods.generateToken(
+        dataForAccessToken,
+        accessTokenSecret,
+        accessTokenLife,
+    )
+
+    User.update({
+        refresh_token: refreshToken,
+        where: {
+            refresh_token: refreshTokenFromBody
+        }
+    })
+
+    return successResponse(res, 200, "Thành công", {
         accessToken,
+        refreshToken
     })
 }
 
 const getUserByAccessToken = async (req, res) => {
-    return res.json({
-        user: req.user,
-    })
+    return successResponse(res, 200, "Thành công", req.user)
 }
 
 module.exports = {
-    postUser,
-    getUser,
+    register,
+    login,
     refreshToken,
     getUserByAccessToken
 }

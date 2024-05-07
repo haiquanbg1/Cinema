@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'room_id',
 
       });
+      Room.hasMany(models.Showtime, {
+        foreignKey: 'room_id'
+      })
       Room.belongsTo(models.Cinema, {
         foreignKey: 'cinema_id',
 
@@ -36,19 +39,14 @@ module.exports = (sequelize, DataTypes) => {
         model: 'Cinema',
         key: 'id'
       }
-    },
-    // don't add the timestamp attributes (updatedAt, createdAt)
-    timestamps: false,
-
-    // If don't want createdAt
-    createdAt: false,
-
-    // If don't want updatedAt
-    updatedAt: false,
+    }
   }, {
     sequelize,
     modelName: 'Room',
-    tableName: 'rooms'
+    tableName: 'rooms',
+    timestamps: false,
+    createdAt: false,
+    updatedAt: false,
   });
   return Room;
 };

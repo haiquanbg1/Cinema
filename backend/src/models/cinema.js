@@ -17,9 +17,6 @@ module.exports = (sequelize, DataTypes) => {
       Cinema.hasMany(models.Room, {
         foreignKey: 'cinema_id',
       });
-      Cinema.hasMany(models.Showtime, {
-        foreignKey: "cinema_id"
-      });
     }
   }
   Cinema.init({
@@ -47,18 +44,13 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING(100)
     },
-    // don't add the timestamp attributes (updatedAt, createdAt)
-    timestamps: false,
-
-    // If don't want createdAt
-    createdAt: false,
-
-    // If don't want updatedAt
-    updatedAt: false,
   }, {
     sequelize,
     modelName: "Cinema",
-    tableName: "cinemas"
+    tableName: "cinemas",
+    timestamps: false,
+    createdAt: false,
+    updatedAt: false,
   });
   return Cinema;
 };

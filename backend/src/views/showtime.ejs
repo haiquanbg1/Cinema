@@ -20,18 +20,11 @@
             <option value="<%=films[j].dataValues.id%>"><%=films[j].dataValues.title%></option>
             <%}%>
         </select><br>
-        <label for="cinema_id">cinema:</label>
-        <select type="number" name="cinema_id" id="cinema_id">
-            <option value="1">BHD STAR THE GARDEN</option>
-            <option value="2">BHD STAR LÊ VĂN VIỆT</option>
-            <option value="3">BHD STAR PHẠM NGỌC THẠCH</option>
-            <option value="4">BHD STAR LONG KHÁNH</option>
-            <option value="5">BHD STAR PHẠM HÙNG</option>
-            <option value="6">BHD STAR QUANG TRUNG</option>
-            <option value="7">BHD STAR THẢO ĐIỀN</option>
-            <option value="8">BHD STAR HUẾ</option>
-            <option value="9">BHD STAR DISCOVERY</option>
-            <option value="10">BHD STAR 3/2</option>
+        <label for="room_id">room:</label>
+        <select type="number" name="room_id" id="room_id" >
+            <%for(var j=0; j < rooms.length; j++) {%>
+            <option value="<%=rooms[j].dataValues.id%>"><%=rooms[j].dataValues.name%></option>
+            <%}%>
         </select><br>
         <label for="time">time:</label>
         <input type="datetime-local" name="time" id="time"><br>
@@ -45,7 +38,7 @@
         <tr>
             <th>Id</th>
             <th>Film</th>
-            <th>Cinema</th>
+            <th>Room</th>
             <th>Time</th>
             <th>Price</th>
             <th>Action</th>
@@ -56,8 +49,8 @@
                     <input class="hidden" type="text" name="showtime_id" id="showtime_id" value="<%= showtimes[i].id %>"><br>
                     <label for="film_id">film:</label>
                     <input type="number" name="film_id" id="film_id" value="<%= showtimes[i].film_id %>"><br>
-                    <label for="cinema_id">cinema:</label>
-                    <input type="number" name="cinema_id" id="cinema_id" value="<%= showtimes[i].cinema_id %>"><br>
+                    <label for="room_id">cinema:</label>
+                    <input type="number" name="room_id" id="room_id" value="<%= showtimes[i].room_id %>"><br>
                     <label for="time">time:</label>
                     <input type="datetime-local" name="time" id="time" value="<%= showtimes[i].date %>"><br>
                     <label for="price">price:</label>
@@ -68,7 +61,7 @@
         <tr>
             <td><%= showtimes[i].id %></td>
             <td><%= showtimes[i].film_id %></td>
-            <td><%= showtimes[i].cinema_id %></td>
+            <td><%= showtimes[i].room_id %></td>
             <td><%= showtimes[i].time %></td>
             <td><%= showtimes[i].price %></td>
             <td>

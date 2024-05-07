@@ -29,18 +29,13 @@ module.exports = (sequelize, DataTypes) => {
     description: {
       type: DataTypes.TEXT
     },
-    // don't add the timestamp attributes (updatedAt, createdAt)
-    timestamps: false,
-
-    // If don't want createdAt
-    createdAt: false,
-
-    // If don't want updatedAt
-    updatedAt: false,
   }, {
     sequelize,
     modelName: 'Classify',
-    tableName: 'classifies'
+    tableName: 'classifies',
+    timestamps: false,
+    createdAt: false,
+    updatedAt: false,
   });
   return Classify;
 };

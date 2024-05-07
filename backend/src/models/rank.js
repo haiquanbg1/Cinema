@@ -29,18 +29,13 @@ module.exports = (sequelize, DataTypes) => {
     money: {
       type: DataTypes.INTEGER
     },
-    // don't add the timestamp attributes (updatedAt, createdAt)
-    timestamps: false,
-
-    // If don't want createdAt
-    createdAt: false,
-
-    // If don't want updatedAt
-    updatedAt: false,
   }, {
     sequelize,
     modelName: 'Rank',
-    tableName: 'ranks'
+    tableName: 'ranks',
+    timestamps: false,
+    createdAt: false,
+    updatedAt: false,
   });
   return Rank;
 };

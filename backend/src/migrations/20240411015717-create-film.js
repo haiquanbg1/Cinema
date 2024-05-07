@@ -41,6 +41,12 @@ module.exports = {
           key: 'id'
         }
       },
+      image: {
+        type: Sequelize.STRING
+      },
+      video: {
+        type: Sequelize.STRING
+      },
       deleted: {
         type: Sequelize.BOOLEAN,
         defaultValue: 0

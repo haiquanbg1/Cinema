@@ -5,7 +5,7 @@ const moment = require('moment')
 const insertShowtime = async (showtime) => {
     await Showtime.create({
         film_id: showtime.film_id,
-        cinema_id: showtime.cinema_id,
+        room_id: showtime.room_id,
         time: showtime.time,
         price: showtime.price
     })
@@ -42,7 +42,7 @@ const deleteShowtimeById = async (showtime_id) => {
 const updateShowTimeById = async (showtime) => {
     await Showtime.update({
         film_id: showtime.film_id,
-        cinema_id: showtime.cinema_id,
+        room_id: showtime.room_id,
         time: showtime.time,
         price: showtime.price
     }, {

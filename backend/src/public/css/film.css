@@ -80,7 +80,11 @@ td form {
 
 .mult-select-tag {
     display: flex;
+<<<<<<< Updated upstream
     width:100%;
+=======
+    width: 100%;
+>>>>>>> Stashed changes
     flex-direction: column;
     align-items: center;
     position: relative;
@@ -99,7 +103,11 @@ td form {
     border: 1px solid var(--border-color);
     background: white;
     min-height: 2.15rem;
+<<<<<<< Updated upstream
     width:100%;
+=======
+    width: 100%;
+>>>>>>> Stashed changes
     min-width: 14rem;
 
 }
@@ -118,7 +126,11 @@ td form {
 }
 
 .mult-select-tag .input {
+<<<<<<< Updated upstream
     flex:1;
+=======
+    flex: 1;
+>>>>>>> Stashed changes
     background: transparent;
     border-radius: 0.25rem;
     padding: 0.45rem;
@@ -222,7 +234,11 @@ td form {
     display: none;
 }
 
+<<<<<<< Updated upstream
 .mult-select-tag .shadow  {
+=======
+.mult-select-tag .shadow {
+>>>>>>> Stashed changes
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 

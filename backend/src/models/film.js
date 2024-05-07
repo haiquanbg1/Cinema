@@ -67,6 +67,12 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
+    image: {
+      type: DataTypes.STRING
+    },
+    video: {
+      type: DataTypes.STRING
+    },
     deleted: {
       type: DataTypes.BOOLEAN,
       defaultValue: 0
