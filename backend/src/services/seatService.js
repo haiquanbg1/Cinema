@@ -92,7 +92,6 @@ const postSeatBooked = async (showtime_id, booking_id, seat_name, room_id) => {
             room_id: room_id
         }
     })
-    console.log(seat)
     await booking_seat.create({
         booking_id: booking_id,
         seat_id: seat.id
