@@ -42,6 +42,12 @@ const getSeatBookedByShowtimeId = async (showtime_id) => {
     }
 }
 
+const getSeatBookingByShowtimeId = async (showtime_id) => {
+    const seatBooking = `booking-showtime:${showtime_id}`
+    result = await redis.sMembers(seatBooking)
+    return result
+}
+
 const getSeatBookingByUser = async (showtime_id, user_id) => {
     const seatBookingByUser = `showtime:${showtime_id}-user:${user_id}`
     result = await redis.sMembers(seatBookingByUser)
@@ -126,5 +132,6 @@ module.exports = {
     deleteSeatBookingCache,
     getSeatBookingByUser,
     getSeatBooked,
-    getSeatBooking
+    getSeatBooking,
+    getSeatBookingByShowtimeId
 }

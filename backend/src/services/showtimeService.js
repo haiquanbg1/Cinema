@@ -1,4 +1,4 @@
-const { Showtime, Cinema } = require('../models/index')
+const { Showtime, Cinema, Room, Film } = require('../models/index')
 const { Op } = require('sequelize')
 const moment = require('moment')
 
@@ -53,25 +53,39 @@ const updateShowTimeById = async (showtime) => {
 }
 
 const getShowtimeByFilmId = async (film_id, city_id) => {
-    let cinema = await Cinema.findAll({
-        attributes: [
-            'name'
-        ],
+    const cinema = await Cinema.findAll({
         where: {
             city_id: city_id
         },
         include: [{
-            model: Showtime,
-            where: {
-                time: {
-                    [Op.gte]: moment().add(7, 'hours').toDate()
-                },
-                film_id: film_id
-            },
-            require: true
+            model: Room
         }]
     })
-    return cinema
+    var rooms = []
+    cinema.forEach(element => {
+        element.Rooms.forEach(room => {
+            rooms.push(room.id)
+        })
+    });
+    const showtimes = await Showtime.findAll({
+        where: {
+            film_id: film_id,
+            time: {
+                [Op.gte]: moment().add(7, 'hours').toDate()
+            },
+        },
+        include: [{
+            model: Room,
+            where: {
+                id: {
+                    [Op.in]: rooms
+                }
+            }
+        }, {
+            model: Film
+        }]
+    })
+    return showtimes
 }
 
 module.exports = {

@@ -5,8 +5,9 @@ const { successResponse, errorResponse } = require("../methods/response")
 
 const getAllSeatBooked = async (req, res) => {
     try {
-        result = await Seat.getSeatBookedByShowtimeId(req.query.showtime_id)
-        return successResponse(res, 200, "Thành công", result)
+        const booked = await Seat.getSeatBookedByShowtimeId(req.query.showtime_id)
+        const booking = await Seat.getSeatBookingByShowtimeId(req.query.showtime_id)
+        return successResponse(res, 200, "Thành công", {booked, booking})
     } catch (error) {
         console.log(error)
         return errorResponse(res, 500, "Đã có lỗi xảy ra")

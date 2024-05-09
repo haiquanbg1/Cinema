@@ -18,7 +18,7 @@ router.post('/user/login', user.login)
 router.get('/user', isAuth, user.getUserByAccessToken)
 
 // showtime
-router.get('/showtime', isAuth, showtime.getShowtimeByFilmId)
+router.get('/showtime', showtime.getShowtimeByFilmId)
 // router.get('/showtime/showtimeId:showtimeId', showtime.getSho)
 
 // seat
