@@ -72,7 +72,7 @@ const getShowtimeByFilmId = async (film_id, city_id) => {
             film_id: film_id,
             time: {
                 [Op.gte]: moment().add(7, 'hours').toDate()
-            },
+            }
         },
         include: [{
             model: Room,
