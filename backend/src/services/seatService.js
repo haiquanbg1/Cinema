@@ -116,10 +116,15 @@ const deleteSeatBookingCache = async (showtime_id, user_id) => {
     const seatBooking = `booking-showtime:${showtime_id}`
     const seatBookingByUser = `showtime:${showtime_id}-user:${user_id}`
     const seats = await redis.sMembers(seatBookingByUser)
-    seats.forEach(async element => {
-        await redis.sRem(seatBooking, element)
-    })
-    redis.del(seatBookingByUser)
+    if (seats[0]) {
+        seats.forEach(async element => {
+            await redis.sRem(seatBooking, element)
+        })
+        redis.del(seatBookingByUser)
+        return 1
+    } else {
+        return 0
+    }
 }
 
 
