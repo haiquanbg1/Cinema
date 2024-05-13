@@ -93,12 +93,6 @@ const login = async (req, res) => {
 
 //
 const refreshToken = async (req, res) => {
-    // Lấy access token từ header
-    const accessTokenFromHeader = req.headers.x_authorization
-    if (!accessTokenFromHeader) {
-        return errorResponse(res, 400, "Access Token không tồn tại")
-    }
-
     // Lấy refresh token từ body
     const refreshTokenFromBody = req.body.refresh_token
     if (!refreshTokenFromBody) {
@@ -112,29 +106,23 @@ const refreshToken = async (req, res) => {
     const refreshTokenLife = process.env.REFRESH_TOKEN_LIFE
     const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET
 
-    // Decode access token đó
+    // Decode token đó
     const decoded = await methods.decodeToken(
-        accessTokenFromHeader,
-        accessTokenSecret,
+        refreshTokenFromBody,
+        refreshTokenSecret,
     )
     if (!decoded) {
-        return errorResponse(res, 400, "Access Token không hợp lệ")
+        return errorResponse(res, 400, "Token không hợp lệ")
     }
 
-    const user_id = decoded.payload.user_id // Lấy username từ payload
-
-    const user = await User.getUserById(user_id)
+    const user = await User.getUserByToken(refreshTokenFromBody)
     if (!user) {
         return errorResponse(res, 400, "Người dùng không tồn tại")
     }
 
-    if (refreshTokenFromBody !== user.refresh_token) {
-        return errorResponse(res, 400, "Refresh Token không hợp lệ")
-    }
-
     // Tạo access token mới
     const dataForAccessToken = {
-        user_id,
+        user_id: user.id,
     }
 
     const accessToken = await methods.generateToken(
@@ -145,16 +133,11 @@ const refreshToken = async (req, res) => {
 
     const refreshToken = await methods.generateToken(
         dataForAccessToken,
-        accessTokenSecret,
-        accessTokenLife,
+        refreshTokenSecret,
+        refreshTokenLife,
     )
 
-    User.update({
-        refresh_token: refreshToken,
-        where: {
-            refresh_token: refreshTokenFromBody
-        }
-    })
+    await User.updateRefreshToken(user.id, refreshToken)
 
     return successResponse(res, 200, "Thành công", {
         accessToken,

@@ -1,81 +1,24 @@
 import styles from './Showtime.module.scss';
 import classNames from "classnames/bind";
 
+import Showtimeitem from '../ShowTimeItem';
 const cx = classNames.bind(styles);
 
-function Showtime({ address, times }) {
+function Showtime({ address, times, film }) {
 
     return (
-        <div className="c-box" style={{ marginBottom: '20px' }}>
+        <div className="c-box" >
             <div className={cx('container')}>
                 <div className={cx('info')}>
                     <h4>{address}</h4>
                     <p></p>
                 </div>
 
-                <div className='row row-small'>
-                    <div className='col large-3'>
-                        <div className={cx('show-time-container', 'col-inner')}>
-                            <div className={cx('showTimes')}>{times}</div>
-                            <div className={cx('meta')}>
-                                <span class={cx("type")}>Phụ đề</span>
-                                <span class={cx("format")}>2D</span>
-                            </div>
-                        </div>
-
+                {times.map((time, index) => (
+                    <div style={{ marginBottom: '20px' }}>
+                        <Showtimeitem key={index} time={time.time} id={time.showtime_id} film={film} ></Showtimeitem>
                     </div>
-                    <div className='col large-3'>
-                        <div className={cx('show-time-container', 'col-inner')}>
-                            <div className={cx('showTimes')}>{times}</div>
-                            <div className={cx('meta')}>
-                                <span class={cx("type")}>Phụ đề</span>
-                                <span class={cx("format")}>2D</span>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div className='col large-3'>
-                        <div className={cx('show-time-container', 'col-inner')}>
-                            <div className={cx('showTimes')}>{times}</div>
-                            <div className={cx('meta')}>
-                                <span class={cx("type")}>Phụ đề</span>
-                                <span class={cx("format")}>2D</span>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div className='col large-3'>
-                        <div className={cx('show-time-container', 'col-inner')}>
-                            <div className={cx('showTimes')}>{times}</div>
-                            <div className={cx('meta')}>
-                                <span class={cx("type")}>Phụ đề</span>
-                                <span class={cx("format")}>2D</span>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div className='col large-3'>
-                        <div className={cx('show-time-container', 'col-inner')}>
-                            <div className={cx('showTimes')}>{times}</div>
-                            <div className={cx('meta')}>
-                                <span class={cx("type")}>Phụ đề</span>
-                                <span class={cx("format")}>2D</span>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div className='col large-3'>
-                        <div className={cx('show-time-container', 'col-inner')}>
-                            <div className={cx('showTimes')}>{times}</div>
-                            <div className={cx('meta')}>
-                                <span class={cx("type")}>Phụ đề</span>
-                                <span class={cx("format")}>2D</span>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
+                ))}
 
             </div>
         </div>

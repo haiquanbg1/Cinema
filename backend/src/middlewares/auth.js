@@ -3,7 +3,7 @@ const User = require('../services/userService')
 
 exports.isAuth = async (req, res, next) => {
     // Lấy access token từ header
-    const accessTokenFromHeader = req.headers.x_authorization
+    const accessTokenFromHeader = req.headers.authorization.split(' ')[1];
     if (!accessTokenFromHeader) {
         return res.status(401).send('Không tìm thấy access token!')
     }

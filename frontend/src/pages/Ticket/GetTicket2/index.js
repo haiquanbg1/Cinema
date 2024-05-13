@@ -1,15 +1,245 @@
 import classNames from "classnames/bind";
 import styles from "./GetTicket2.module.scss";
-const cx = classNames.bind(styles)
+import { useEffect, useState } from "react";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+
+
+import { getSeatBooked, deleteSeatBooking } from "./seat";
+import requestApi from "~/fetchAPI";
+import Seat from "~/components/Seat";
+
+
+
+
+const cx = classNames.bind(styles);
+const list = [[{ id: 'A1', type: 'standard' }
+    , { id: 'A2', type: 'standard' }
+    , { id: 'A3', type: 'standard' }
+    , { id: 'A4', type: 'standard' }
+    , { id: 'A5', type: 'standard' }
+    , { id: 'A6', type: 'standard' }
+    , { id: 'A7', type: 'standard' }
+    , { id: 'A8', type: 'standard' }
+    , { id: 'A9', type: 'standard' }
+    , { id: 'A10', type: 'standard' }
+    , { id: 'A11', type: 'standard' }
+    , { id: 'A12', type: 'standard' }
+    , { id: 'A13', type: 'standard' }
+    , { id: 'A14', type: 'standard' }
+    , { id: 'A15', type: 'standard' }
+    , { id: 'A16', type: 'standard' }]
+    , [{ id: 'B1', type: 'standard' }
+    , { id: 'B2', type: 'standard' }
+    , { id: 'B3', type: 'standard' }
+    , { id: 'B4', type: 'standard' }
+    , { id: 'B5', type: 'standard' }
+    , { id: 'B6', type: 'standard' }
+    , { id: 'B7', type: 'standard' }
+    , { id: 'B8', type: 'standard' }
+    , { id: 'B9', type: 'standard' }
+    , { id: 'B10', type: 'standard' }
+    , { id: 'B11', type: 'standard' }
+    , { id: 'B12', type: 'standard' }
+    , { id: 'B13', type: 'standard' }
+    , { id: 'B14', type: 'standard' }
+    , { id: 'B15', type: 'standard' }
+    , { id: 'B16', type: 'standard' }]
+    , [{ id: 'C1', type: 'standard' }
+    , { id: 'C2', type: 'standard' }
+    , { id: 'C3', type: 'standard' }
+    , { id: 'C4', type: 'standard' }
+    , { id: 'C5', type: 'standard' }
+    , { id: 'C6', type: 'standard' }
+    , { id: 'C7', type: 'standard' }
+    , { id: 'C8', type: 'standard' }
+    , { id: 'C9', type: 'standard' }
+    , { id: 'C10', type: 'standard' }
+    , { id: 'C11', type: 'standard' }
+    , { id: 'C12', type: 'standard' }
+    , { id: 'C13', type: 'standard' }
+    , { id: 'C14', type: 'standard' }
+    , { id: 'C15', type: 'standard' }
+    , { id: 'C16', type: 'standard' }]
+    , [{ id: 'D1', type: 'standard' }
+    , { id: 'D2', type: 'standard' }
+    , { id: 'D3', type: 'standard' }
+    , { id: 'D4', type: 'standard' }
+    , { id: 'D5', type: 'vip' }
+    , { id: 'D6', type: 'vip' }
+    , { id: 'D7', type: 'vip' }
+    , { id: 'D8', type: 'vip' }
+    , { id: 'D9', type: 'vip' }
+    , { id: 'D10', type: 'vip' }
+    , { id: 'D11', type: 'vip' }
+    , { id: 'D12', type: 'vip' }
+    , { id: 'D13', type: 'standard' }
+    , { id: 'D14', type: 'standard' }
+    , { id: 'D15', type: 'standard' }
+    , { id: 'D16', type: 'standard' }]
+    , [{ id: 'E1', type: 'standard' }
+    , { id: 'E2', type: 'standard' }
+    , { id: 'E3', type: 'standard' }
+    , { id: 'E4', type: 'standard' }
+    , { id: 'E5', type: 'vip' }
+    , { id: 'E6', type: 'vip' }
+    , { id: 'E7', type: 'vip' }
+    , { id: 'E8', type: 'vip' }
+    , { id: 'E9', type: 'vip' }
+    , { id: 'E10', type: 'vip' }
+    , { id: 'E11', type: 'vip' }
+    , { id: 'E12', type: 'vip' }
+    , { id: 'E13', type: 'standard' }
+    , { id: 'E14', type: 'standard' }
+    , { id: 'E15', type: 'standard' }
+    , { id: 'E16', type: 'standard' }]
+    , [{ id: 'F1', type: 'standard' }
+    , { id: 'F2', type: 'standard' }
+    , { id: 'F3', type: 'standard' }
+    , { id: 'F4', type: 'standard' }
+    , { id: 'F5', type: 'vip' }
+    , { id: 'F6', type: 'vip' }
+    , { id: 'F7', type: 'vip' }
+    , { id: 'F8', type: 'vip' }
+    , { id: 'F9', type: 'vip' }
+    , { id: 'F10', type: 'vip' }
+    , { id: 'F11', type: 'vip' }
+    , { id: 'F12', type: 'vip' }
+    , { id: 'F13', type: 'standard' }
+    , { id: 'F14', type: 'standard' }
+    , { id: 'F15', type: 'standard' }
+    , { id: 'F16', type: 'standard' }]
+    , [{ id: 'G1', type: 'standard' }
+    , { id: 'G2', type: 'standard' }
+    , { id: 'G3', type: 'standard' }
+    , { id: 'G4', type: 'standard' }
+    , { id: 'G5', type: 'vip' }
+    , { id: 'G6', type: 'vip' }
+    , { id: 'G7', type: 'vip' }
+    , { id: 'G8', type: 'vip' }
+    , { id: 'G9', type: 'vip' }
+    , { id: 'G10', type: 'vip' }
+    , { id: 'G11', type: 'vip' }
+    , { id: 'G12', type: 'vip' }
+    , { id: 'G13', type: 'standard' }
+    , { id: 'G14', type: 'standard' }
+    , { id: 'G15', type: 'standard' }
+    , { id: 'G16', type: 'standard' }]
+    , [{ id: 'H1', type: 'standard' }
+    , { id: 'H2', type: 'standard' }
+    , { id: 'H3', type: 'standard' }
+    , { id: 'H4', type: 'standard' }
+    , { id: 'H5', type: 'vip' }
+    , { id: 'H6', type: 'vip' }
+    , { id: 'H7', type: 'vip' }
+    , { id: 'H8', type: 'vip' }
+    , { id: 'H9', type: 'vip' }
+    , { id: 'H10', type: 'vip' }
+    , { id: 'H11', type: 'vip' }
+    , { id: 'H12', type: 'vip' }
+    , { id: 'H13', type: 'standard' }
+    , { id: 'H14', type: 'standard' }
+    , { id: 'H15', type: 'standard' }
+    , { id: 'H16', type: 'standard' }]
+    , [{ id: 'I1', type: 'standard' }
+    , { id: 'I2', type: 'standard' }
+    , { id: 'I3', type: 'standard' }
+    , { id: 'I4', type: 'standard' }
+    , { id: 'I5', type: 'vip' }
+    , { id: 'I6', type: 'vip' }
+    , { id: 'I7', type: 'vip' }
+    , { id: 'I8', type: 'vip' }
+    , { id: 'I9', type: 'vip' }
+    , { id: 'I10', type: 'vip' }
+    , { id: 'I11', type: 'vip' }
+    , { id: 'I12', type: 'vip' }
+    , { id: 'I13', type: 'standard' }
+    , { id: 'I14', type: 'standard' }
+    , { id: 'I15', type: 'standard' }
+    , { id: 'I16', type: 'standard' }]
+    , [{ id: 'I1', type: 'couple' }
+    , { id: 'I2', type: 'couple' }
+    , { id: 'I3', type: 'standard' }
+    , { id: 'I4', type: 'couple' }
+    , { id: 'I5', type: 'couple' }
+    , { id: 'I6', type: 'vip' }
+    , { id: 'I7', type: 'couple' }
+    , { id: 'I8', type: 'couple' }
+    , { id: 'I9', type: 'vip' }
+    , { id: 'I10', type: 'couple' }
+    , { id: 'I11', type: 'couple' }
+    , { id: 'I12', type: 'vip' }
+    , { id: 'I13', type: 'couple' }
+    , { id: 'I14', type: 'couple' }
+    , { id: 'I15', type: 'standard' }
+    , { id: 'I16', type: 'standard' }]
+]
 
 
 function GetTicket2() {
+    const [seats, setSeats] = useState([])
+    const [listDisable, setListDisable] = useState([])
+    const params = useParams();
+
+    const location = useLocation()
+    const { film, id } = location.state
+
+    const navigate = useNavigate()
+
+    const addId = (id) => {
+        setSeats([...seats, id])
+    }
+
+    const handleClick = async () => {
+        await requestApi(`seat/delete?showtime_id=${params.id}`, 'delete')
+            .then(res => {
+                console.log(res)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+        await requestApi(`seat/booking?showtime_id=${params.id}`, 'post', seats)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch(err => console.log(err))
+
+        navigate(`/get-ticket/${film}/${id}/thanh-toan`, { state: { film, id } })
+    }
+
+    // useEffect(() => {
+    //     const fetchAPI2 = async () => {
+    //         try {
+    //             await deleteSeatBooking(params.id)
+
+    //         } catch (err) {
+    //             console.log(err);
+    //         }
+    //     }
+    //     fetchAPI2();
+    // }, [])
+
+    useEffect(() => {
+        const fetchAPI = async () => {
+            try {
+                const res = await getSeatBooked(params.id)
+                console.log(res)
+                // setShowTimes(res.data.data)
+                setListDisable(res.data.data.booked)
+
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        fetchAPI();
+    }, [])
+
     return (
         <div>
             <h1 style={{ color: 'white', fontSize: '26px', fontWeight: '800', textAlign: 'center', margin: '30px' }}>Bước 2: Chọn ghế</h1>
             <div className={cx('large-12', 'col')}>
                 <div className={cx('col-inner')}>
-                    <div id="app">
+                    <div id="app" style={{ display: 'flex' }}>
                         <div className={cx('large-8', 'col')}>
                             <div className={cx('col-inner')}>
                                 <div className={cx('cinema-map-container')}>
@@ -70,774 +300,181 @@ function GetTicket2() {
                                             </tr>
                                             <tr>
                                                 <td>A</td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="A1" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="A2" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="A3" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="A4" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="A5" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="A6" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="A7" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="A8" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="A9" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="A10" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="A11" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="A12" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="A13" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="A14" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="A15" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="A16" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
+                                                {list[0].map((seat) => (
+                                                    !listDisable.includes(seat.id) ?
+                                                        <td>
+                                                            <div onClick={() => addId(seat.id)}>
+                                                                <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
+                                                            </div>
+                                                        </td>
+                                                        :
+                                                        <td>
+                                                            <div onClick={() => addId(seat.id)}>
+                                                                <Seat key={seat.id} id={seat.id} type='disable'></Seat>
+                                                            </div>
+                                                        </td>
+                                                ))}
+
                                                 <td>
                                                 </td>
                                                 <td>A</td>
                                             </tr>
                                             <tr>
                                                 <td>B</td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="B1" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="B2" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="B3" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="B4" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="B5" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="B6" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="B7" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="B8" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="B9" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="B10" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="B11" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="B12" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="B13" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="B14" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="B15" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="B16" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
+                                                {list[1].map((seat) => (
+                                                    !listDisable.includes(seat.id) ?
+                                                        <td>
+                                                            <div onClick={() => addId(seat.id)}>
+                                                                <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
+                                                            </div>
+                                                        </td>
+                                                        :
+                                                        <td>
+                                                            <div onClick={() => addId(seat.id)}>
+                                                                <Seat key={seat.id} id={seat.id} type='disable'></Seat>
+                                                            </div>
+                                                        </td>
+                                                ))}
                                                 <td>
                                                 </td>
                                                 <td>B</td>
                                             </tr>
                                             <tr>
                                                 <td>C</td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="C1" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="C2" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="C3" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="C4" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="C5" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="C6" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="C7" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="C8" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="C9" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="C10" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="C11" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="C12" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="C13" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="C14" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="C15" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="C16" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
+                                                {list[2].map((seat) => (
+                                                    !listDisable.includes(seat.id) ?
+                                                        <td>
+                                                            <div onClick={() => addId(seat.id)}>
+                                                                <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
+                                                            </div>
+                                                        </td>
+                                                        :
+                                                        <td>
+                                                            <div onClick={() => addId(seat.id)}>
+                                                                <Seat key={seat.id} id={seat.id} type='disable'></Seat>
+                                                            </div>
+                                                        </td>
+                                                ))}
                                                 <td>
                                                 </td>
                                                 <td>C</td>
                                             </tr>
                                             <tr>
                                                 <td>D</td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="D1" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="D2" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="D3" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="D4" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="D5" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="D6" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="D7" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="D8" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="D9" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="D10" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="D11" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="D12" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="D13" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="D14" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="D15" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="D16" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
+                                                {list[3].map((seat) => (
+                                                    !listDisable.includes(seat.id) ?
+                                                        <td>
+                                                            <div onClick={() => addId(seat.id)}>
+                                                                <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
+                                                            </div>
+                                                        </td>
+                                                        :
+                                                        <td>
+                                                            <div onClick={() => addId(seat.id)}>
+                                                                <Seat key={seat.id} id={seat.id} type='disable'></Seat>
+                                                            </div>
+                                                        </td>
+                                                ))}
                                                 <td>
                                                 </td>
                                                 <td>D</td>
                                             </tr>
                                             <tr>
                                                 <td>E</td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="E1" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="E2" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="E3" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="E4" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="E5" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="E6" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="E7" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="E8" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="E9" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="E10" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="E11" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="E12" className={cx('seat-icon', 'vip')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="E13" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="E14" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="E15" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="E16" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
+                                                {list[4].map((seat) => (
+                                                    !listDisable.includes(seat.id) ?
+                                                        <td>
+                                                            <div onClick={() => addId(seat.id)}>
+                                                                <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
+                                                            </div>
+                                                        </td>
+                                                        :
+                                                        <td>
+                                                            <div onClick={() => addId(seat.id)}>
+                                                                <Seat key={seat.id} id={seat.id} type='disable'></Seat>
+                                                            </div>
+                                                        </td>
+                                                ))}
                                                 <td>
                                                 </td>
                                                 <td>E</td>
                                             </tr>
                                             <tr>
                                                 <td>F</td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="F1" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="F2" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="F3" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="F4" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="F5" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="F6" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="F7" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="F8" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="F9" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="F10" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="F11" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="F12" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="F13" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="F14" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="F15" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="F16" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
+                                                {list[5].map((seat) => (
+                                                    !listDisable.includes(seat.id) ?
+                                                        <td>
+                                                            <div onClick={() => addId(seat.id)}>
+                                                                <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
+                                                            </div>
+                                                        </td>
+                                                        :
+                                                        <td>
+                                                            <div onClick={() => addId(seat.id)}>
+                                                                <Seat key={seat.id} id={seat.id} type='disable'></Seat>
+                                                            </div>
+                                                        </td>
+                                                ))}
                                                 <td>
                                                 </td>
                                                 <td>F</td>
                                             </tr>
                                             <tr>
                                                 <td>G</td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="G1" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="G2" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="G3" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="G4" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="G5" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="G6" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="G7" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="G8" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="G9" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="G10" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="G11" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="G12" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="G13" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="G14" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="G15" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="G16" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
+                                                {list[6].map((seat) => (
+                                                    !listDisable.includes(seat.id) ?
+                                                        <td>
+                                                            <div onClick={() => addId(seat.id)}>
+                                                                <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
+                                                            </div>
+                                                        </td>
+                                                        :
+                                                        <td>
+                                                            <div onClick={() => addId(seat.id)}>
+                                                                <Seat key={seat.id} id={seat.id} type='disable'></Seat>
+                                                            </div>
+                                                        </td>
+                                                ))}
                                                 <td>
                                                 </td>
                                                 <td>G</td>
                                             </tr>
                                             <tr>
                                                 <td>H</td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="H1" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="H2" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="H3" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="H4" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="H5" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="H6" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="H7" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="H8" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="H9" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="H10" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="H11" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="H12" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="H13" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="H14" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="H15" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="H16" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
+                                                {list[7].map((seat) => (
+                                                    !listDisable.includes(seat.id) ?
+                                                        <td>
+                                                            <div onClick={() => addId(seat.id)}>
+                                                                <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
+                                                            </div>
+                                                        </td>
+                                                        :
+                                                        <td>
+                                                            <div onClick={() => addId(seat.id)}>
+                                                                <Seat key={seat.id} id={seat.id} type='disable'></Seat>
+                                                            </div>
+                                                        </td>
+                                                ))}
                                                 <td>
                                                 </td>
                                                 <td>H</td>
                                             </tr>
                                             <tr>
                                                 <td>I</td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="A1" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="A2" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="A3" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="I4" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="I5" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="I6" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="I7" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="I8" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="I9" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="I10" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="I11" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="I12" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="I13" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="I14" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="I15" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="I16" className={cx('seat-icon', 'standard')}></a>
-                                                    </div>
-                                                </td>
+                                                {list[8].map((seat) => (
+                                                    !listDisable.includes(seat.id) ?
+                                                        <td>
+                                                            <div onClick={() => addId(seat.id)}>
+                                                                <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
+                                                            </div>
+                                                        </td>
+                                                        :
+                                                        <td>
+                                                            <div>
+                                                                <Seat key={seat.id} id={seat.id} type='disable'></Seat>
+                                                            </div>
+                                                        </td>
+                                                ))}
                                                 <td>
                                                 </td>
                                                 <td>I</td>
@@ -924,7 +561,9 @@ function GetTicket2() {
                         </div>
                         <div className={cx('large-4', 'col')}>
                             <div className="col-inner">
-                                <div className={cx('c-box', 'film-cart')}></div>
+                                <div className={cx('c-box', 'film-cart')}>
+                                    <button onClick={() => handleClick()}>Tiến hành thanh toán</button>
+                                </div>
                             </div>
                         </div>
 

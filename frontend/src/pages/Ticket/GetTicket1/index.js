@@ -3,98 +3,103 @@ import styles from "./GetTicket1.module.scss";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faCheck, faTimes, faInfoCircle, faDisplay } from '@fortawesome/free-solid-svg-icons';
+import requestApi from "~/fetch";
+import { useLocation } from "react-router-dom";
+
+import { getShowtimes } from "./show";
 import './index.css'
 
 import Showtime from "../ShowTime";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 const cx = classNames.bind(styles)
-
-const showTimes = [
-    {
-        film: 'boat',
-        date: '2024-04-28',
-        time: '8:00',
-        address: 'Vincom Pham Ngoc Thach'
-    },
-    {
-        film: 'boat',
-        date: '2024-04-28',
-        time: '8:00',
-        address: 'Vincom Tran Duy Hung'
-    },
-    {
-        film: 'boat',
-        date: '2024-04-28',
-        time: '10:00',
-        address: 'Vincom Pham Ngoc Thach'
-    },
-    {
-        film: 'boat',
-        date: '2024-04-28',
-        time: '11:00',
-        address: 'Vincom Tran Duy Hung'
-    },
-    {
-        film: 'boat',
-        date: '2024-04-28',
-        time: '16:00',
-        address: 'Vincom Pham Ngoc Thach'
-    },
-    {
-        film: 'boat',
-        date: '2024-04-29',
-        time: '10:00',
-        address: 'Vincom Pham Ngoc Thach'
-    },
-    {
-        film: 'boat',
-        date: '2024-04-29',
-        time: '16:00',
-        address: 'Vincom Tran Duy Hung'
-    },
-    {
-        film: 'boat',
-        date: '2024-04-29',
-        time: '16:00',
-        address: 'Vincom Tran Duy Hung'
-    }, {
-        film: 'boat',
-        date: '2024-04-29',
-        time: '16:00',
-        address: 'Vincom Tran Duy Hung'
-    }
-]
 
 const d = new Date();
 const today = d.getFullYear() + '-' + (d.getMonth() < 10 ? ('0' + (d.getMonth() + 1)) : (d.getMonth() + 1)) + '-' + (d.getDate < 10 ? ('0' + d.getDate) : d.getDate());
 
 
-function GetTicket1() {
+const GetTicket1 = () => {
     const [date, setDate] = useState(today);
     const [day, setDay] = useState(d.getDate());
-    const [month, setMonth] = useState(d.getMonth());
+    const [month, setMonth] = useState(d.getMonth() + 1);
     const [year, setYear] = useState(d.getFullYear());
 
     const [showTime, setShowTime] = useState([]);
 
+    const [showTimes, setShowTimes] = useState([])
     const params = useParams();
 
-    const getTime = () => {
-        let tmp = []
-        for (let x in showTimes) {
-            if (showTimes[x].date == date && showTimes[x].film == params.id) {
-                tmp.push(showTimes[x])
-            }
+    const location = useLocation()
+    const { id } = location.state
 
+    const getTime = () => {
+        console.log(date)
+        let tmp = []
+        // for (let x in showTimes) {
+        //     const Date = showTimes[x].time.slice(0, 10);
+        //     if (Date == date && showTimes[x].Film.title == params.id) {
+        //         tmp.push(showTimes[x])
+        //     }
+        let tmp2 = {}
+        for (let x of showTimes) {
+            const Date = x.time.slice(0, 10);
+            const Time = x.time.slice(11, 16);
+            let cinema_id = x.Room.cinema_id
+            if (x.Film.title == params.id && Date == date) {
+                console.log(1)
+                if (!tmp2.cinema_id) {
+                    tmp2[cinema_id] = []
+                    tmp2[cinema_id].push({
+                        time: Time,
+                        showtime_id: x.id
+                    })
+                } else {
+                    tmp2[cinema_id].push({
+                        time: Time,
+                        showtime_id: x.id
+                    })
+                }
+            }
+        }
+        for (let key in tmp2) {
+            let tmp3 = {}
+            tmp3.id = key
+            tmp3.time = tmp2[key]
+            tmp.push(tmp3)
         }
         setShowTime(tmp)
+
     }
 
+    // useEffect(() => {
+    //     setDate(year + '-' + (month < 10 ? ('0' + (month + 1)) : (month + 1)) + '-' + (day < 10 ? ('0' + day) : day));
+    //     getTime();
+    // }, [])
+
     useEffect(() => {
-        setDate(year + '-' + (month < 10 ? ('0' + (month + 1)) : (month + 1)) + '-' + (day < 10 ? ('0' + day) : day));
-        getTime();
+        setDate(year + '-' + (month < 10 ? ('0' + (month)) : (month)) + '-' + (day < 10 ? ('0' + day) : day));
+
     }, [day, month, year])
 
+    useEffect(() => {
+        getTime();
+    }, [date])
+
+
+    useEffect(() => {
+        //phải lấy được film_id
+        const fetchAPI = async () => {
+            try {
+                const res = await getShowtimes(id)
+                console.log(id)
+                setShowTimes(res.data.data)
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        fetchAPI();
+    }, [])
 
     return (
         <div>
@@ -108,7 +113,7 @@ function GetTicket1() {
                                 <div className={cx('birth-container')}>
                                     <div className={cx('birth-item', 'day')}>
                                         <div className={cx('birth-item-select')}>
-                                            <select onChange={e => { setDay(e.target.value) }} name="birthday_day">
+                                            <select onChange={e => { setDay(e.target.value) }} name="birthday_day" value={day}>
                                                 <option value="">Chọn ngày</option>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
@@ -149,7 +154,7 @@ function GetTicket1() {
 
                                     <div className={cx('birth-item', 'month')}>
                                         <div className={cx('birth-item-select')}>
-                                            <select onChange={e => setMonth(e.target.value)} name="birthday_month">
+                                            <select onChange={e => setMonth(e.target.value)} name="birthday_month" value={month}>
                                                 <option value="">Chọn tháng</option>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
@@ -169,7 +174,7 @@ function GetTicket1() {
 
                                     <div className={cx('birth-item', 'year')}>
                                         <div className={cx('birth-item-select')}>
-                                            <select onChange={e => setYear(e.target.value)} name="birthday_year">
+                                            <select onChange={e => setYear(e.target.value)} name="birthday_year" value={year}>
                                                 <option value="">Chọn năm</option>
                                                 <option value="2024">2024</option>
                                                 <option value="2023">2023</option>
@@ -188,9 +193,18 @@ function GetTicket1() {
                     <div className={cx('col-inner')}>
                         <div className={cx('c-box')}>
                             <div className={cx('showTime-container')}>
-                                {showTime.map((st, index) => (
-                                    <Showtime key={index} address={st.address} times={st.time} />
-                                ))}
+
+                                {
+                                    showTime.map((st, index) => (
+                                        <div style={{ marginBottom: '20px' }}>
+                                            <Showtime key={index} address={st.address} times={st.time} film={params.id} />
+                                        </div>
+                                    ))
+                                }
+
+
+
+
                             </div>
                         </div>
                     </div>

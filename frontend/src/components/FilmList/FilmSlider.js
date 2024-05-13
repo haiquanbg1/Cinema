@@ -15,7 +15,7 @@ const cx = classNames.bind(styles)
 
 function FilmSlider() {
     const filmList = films.map((film, index) => (
-        <FilmItem key={index} title={film.title} src={film.src} type={film.type} />
+        <FilmItem key={index} title={film.title} src={film.src} type={film.type} id={film.id} />
     ))
 
     return (<div className={cx('wrapper')}>

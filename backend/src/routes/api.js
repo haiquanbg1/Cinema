@@ -26,7 +26,7 @@ router.get('/showtime', showtime.getShowtimeByFilmId)
 router.get('/seat', isAuth, seat.getAllSeatBooked)
 router.post('/seat/booked', isAuth, seat.postSeatBooked)
 router.post('/seat/booking', isAuth, seat.postSeatBooking)
-router.post('/seat/delete', isAuth, seat.deleteSeatBookingCache)
+router.delete('/seat/delete', isAuth, seat.deleteSeatBookingCache)
 
 // cinema
 router.get('/cinema', cinema.getAllCinema)

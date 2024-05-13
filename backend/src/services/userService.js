@@ -1,3 +1,4 @@
+const { refreshToken } = require("../controllers/userController")
 const { User } = require("../models/index")
 
 const insertUser = async (user) => {
@@ -33,6 +34,15 @@ const getUserById = async (user_id) => {
     return result
 }
 
+const getUserByToken = async (refreshToken) => {
+    result = await User.findOne({
+        where: {
+            refresh_token: refreshToken
+        }
+    })
+    return result
+}
+
 const updateRefreshToken = async (user_id, refresh_token) => {
     await User.update({
         refresh_token: refresh_token
@@ -47,5 +57,6 @@ module.exports = {
     insertUser,
     getUserByEmail,
     getUserById,
-    updateRefreshToken
+    updateRefreshToken,
+    getUserByToken
 }

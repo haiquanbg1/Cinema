@@ -2,8 +2,8 @@ import { createAction, createSlice, current } from '@reduxjs/toolkit'
 
 let initialState = [];
 
-export const targerFilmSlice = createSlice({
-    name: 'targerFilm',
+export const targetFilmSlice = createSlice({
+    name: 'targetFilm',
     initialState,
     reducers: {
         getInfo: (state, action) => {

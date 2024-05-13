@@ -1,0 +1,35 @@
+.show-time-container {
+
+    .showTimes {
+        background-color: #454d6a;
+        border-radius: 3px;
+        padding: 14px 10px;
+        margin-bottom: 5px;
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .meta {
+        text-align: center;
+
+        span {
+            display: inline-block;
+            height: 20px;
+            line-height: 20px;
+            font-size: 0.7em;
+            border-radius: 4px;
+            text-align: center;
+            padding: 0px 4px;
+            margin: 1px 2px;
+        }
+
+        .type {
+            text-transform: uppercase;
+            border: 1px solid #FFD600;
+        }
+
+        .format {
+            background: linear-gradient(0deg, rgba(0, 185, 18, 1) 0%, rgba(80, 182, 72, 1) 50%);
+        }
+    }
+}
