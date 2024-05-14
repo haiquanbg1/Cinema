@@ -11,6 +11,16 @@ const getAllCinema = async (req, res) => {
     }
 }
 
+const getCinemaById = async (req, res) => {
+    try {
+        const cinema = await Cinema.getCinemaById(req.params.cinema_id)
+        return successResponse(res, 200, "Thành công", cinema)
+    } catch (error) {
+        console.log(error)
+        return errorResponse(res, 500, "Đã có lỗi xảy ra")
+    }
+}
+
 const getNameCinemaByCityId = async (req, res) => {
     try {
         const cinemas = await Cinema.getAllCinemaByCityId(req.body.city_id)
@@ -27,5 +37,6 @@ const getNameCinemaByCityId = async (req, res) => {
 
 module.exports = {
     getAllCinema,
-    getNameCinemaByCityId
+    getNameCinemaByCityId,
+    getCinemaById
 }

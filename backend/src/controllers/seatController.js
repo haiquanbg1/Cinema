@@ -47,9 +47,11 @@ const checkSeatBook = (seats, seatsBook) => {
 }
 
 const postSeatBooking = async (req, res) => {
-    console.log(req.body)
     try {
         const seats = req.body
+        if (!seats || !seats[0]) {
+            return errorResponse(res, 400, "Chưa có ghế được đặt")
+        }
         // Kiểm tra ghế đã book chưa
         seatsBooking = await Seat.getSeatBooking(req.query.showtime_id)
         seatsBooked = await Seat.getSeatBooked(req.query.showtime_id)
@@ -72,9 +74,9 @@ const deleteSeatBookingCache = async (req, res) => {
     try {
         const ok = await Seat.deleteSeatBookingCache(req.query.showtime_id, req.user.id)
         if (ok) {
-            return successResponse(res, 200, "Thành công", {})
+            return successResponse(res, 200, "Thành công")
         } else {
-            return errorResponse(res, 400, "Xoá thất bại, chưa có ghế được đặt")
+            return successResponse(res, 200, "Xoá thất bại, chưa có ghế được đặt")
         }
     } catch (error) {
         return errorResponse(res, 500, "Đã xảy ra lỗi")

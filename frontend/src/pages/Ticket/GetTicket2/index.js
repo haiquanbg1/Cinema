@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 
-import { getSeatBooked, deleteSeatBooking } from "./seat";
+import { getSeatBooked } from "./seat";
 import requestApi from "~/fetchAPI";
 import Seat from "~/components/Seat";
 

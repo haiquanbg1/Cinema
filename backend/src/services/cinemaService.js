@@ -15,7 +15,17 @@ const getAllCinemaByCityId = async (city_id) => {
     return result
 }
 
+const getCinemaById = async (cinema_id) => {
+    const result = await Cinema.findOne({
+        where: {
+            id: cinema_id
+        }
+    })
+    return result
+}
+
 module.exports = {
     getAllCinema,
-    getAllCinemaByCityId
+    getAllCinemaByCityId,
+    getCinemaById
 }

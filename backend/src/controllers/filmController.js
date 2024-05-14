@@ -66,11 +66,21 @@ const getFilmAPI = async (req, res) => {
     }
 }
 
+const getFilmById = async (req, res) => {
+    try {
+        const film = await Film.getFilmById(req.params.film_id)
+        return successResponse(res, 200, "Thành công", film)
+    } catch (error) {
+        console.log(error)
+        return errorResponse(res, 500, "Đã có lỗi xảy ra")
+    }
+}
+
 module.exports = {
     getFilm,
     postFilm,
     updateFilm,
     deleteFilm,
-
+    getFilmById,
     getFilmAPI
 }

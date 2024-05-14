@@ -1,5 +1,4 @@
 const { Seat, booking_seat, Booking, Showtime } = require('../models/index')
-const { remember, rememberForever } = require("../core/cache")
 const redis = require("../methods/redis")
 
 const getSeatBookedByShowtimeId = async (showtime_id) => {
