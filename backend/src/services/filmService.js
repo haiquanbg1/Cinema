@@ -31,7 +31,6 @@ const getAllFilms = async () => {
     return result
 }
 
-
 const getFilmById = async (film_id) => {
     result = await Film.findOne({
         where: {
@@ -40,7 +39,6 @@ const getFilmById = async (film_id) => {
     })
     return result
 }
-
 
 const insertFilm = async (film) => {
     await Film.create({
@@ -98,7 +96,6 @@ const deleteFilmById = async (film_id) => {
 
 module.exports = {
     getAllFilms,
-    // getFilmById,
     insertFilm,
     updateFilmById,
     deleteFilmById,

@@ -101,3 +101,15 @@
 #app {
     display: flex;
 }
+
+.seat-selected {
+    span {
+        font-size: 14px;
+    }
+
+    span+span {
+        &::before {
+            content: ', ';
+        }
+    }
+}

@@ -16,6 +16,10 @@ const cx = classNames.bind(styles)
 function HeaderTicket() {
     const cities = ['TP.Hồ Chí Minh', 'Hà Nội', 'Nha Trang', 'Đà Nẵng']
     const [city, setCity] = useState('Chọn thành phố')
+    const logOut = () => {
+        localStorage.clear()
+    }
+
     if (!localStorage.accessToken) {
         return (
             <header id='header' className={cx('header')}>
@@ -102,8 +106,6 @@ function HeaderTicket() {
                             </ul>
                         </div>
                     </div>
-
-
                 </div>
             </header >
         );
@@ -158,27 +160,26 @@ function HeaderTicket() {
 
                                 <span>
                                     <Tippy
+                                        trigger='click'
                                         interactive
                                         render={(attrs) => (
-                                            <div className={cx('login-div')} tabIndex="-1" {...attrs}>
-                                                <PopperWrapper>
-                                                    <form className={cx('login-form')}>
-                                                        <div className={cx('login-item')} >
-                                                            <label>Email *</label>
-                                                            <input type="text" id="username" placeholder="Tài khoản hoặc địa chỉ Email" />
-                                                            <span></span>
-                                                            <small></small>
-                                                        </div>
-                                                        <div className={cx('login-item')} >
-                                                            <label>Mật khẩu *</label>
-                                                            <input type="password" id="password" placeholder="Mật khẩu" />
-                                                            <span></span>
-                                                            <small></small>
-                                                        </div>
-                                                        <Button className={cx('login-Btn')} primary stretch>Đăng nhập</Button>
-                                                        <br></br>
-                                                        <Button className={cx('login-Btn')} outline stretch to={'/register'}>Đăng ký</Button>
-                                                    </form>
+                                            <div className={cx("city-select", 'info')} tabIndex="-1" {...attrs}>
+                                                <PopperWrapper className='info-header'>
+                                                    <div className={cx('info-header--container')}>
+
+                                                        {/* <div className={cx('info-header-content')}>
+                                                                    <Image src={'https://static2-images.vnncdn.net/files/publish/2022/11/22/ronaldo-mang-xa-hoi-219.jpg'} className={cx('avatar')}></Image>
+                                                                    <span>{name}</span>
+                                                                </div> */}
+
+                                                        <Link className={cx('info-header--link')}> Xem tất cả thông tin</Link>
+
+                                                        {localStorage.getItem('isAdmin') === '0' ?
+                                                            (<Link className={cx('info-header--link')} >Go to admin page</Link>)
+                                                            : (<span></span>)}
+
+                                                        <Link to={'/register'} onClick={logOut} className={cx('info-header--link')} >Đăng xuất</Link>
+                                                    </div>
                                                 </PopperWrapper>
                                             </div>
                                         )}
@@ -189,7 +190,6 @@ function HeaderTicket() {
                                                 <span>{localStorage.getItem('firstName')}</span>
                                             </Link>
                                         </li>
-
                                     </Tippy>
                                 </span>
                             </ul>
@@ -201,8 +201,6 @@ function HeaderTicket() {
             </header >
         );
     }
-
-
 }
 
 

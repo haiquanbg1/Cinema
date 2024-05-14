@@ -12,14 +12,7 @@ router.post('/refresh_token', user.refreshToken)
 
 //film
 router.get('/film', film.getFilmAPI)
-
 router.get('/film/:film_id', film.getFilmById)
-
-// router.get('/filmById', film.getFilmById)
-
-
-router.get('/film/:film_id', film.getFilmById)
-
 
 // user
 router.post('/user/register', user.register)
@@ -28,10 +21,6 @@ router.get('/user', isAuth, user.getUserByAccessToken)
 
 // showtime
 router.get('/showtime', showtime.getShowtimeByFilmId)
-
-
-// router.get('/showtime/showtimeId:showtimeId', showtime.getSho) 
-
 
 // seat
 router.get('/seat', isAuth, seat.getAllSeatBooked)

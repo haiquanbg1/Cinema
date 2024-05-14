@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 
 
 
-function Showtimeitem({ time, id, film, film_id }) {
+function Showtimeitem({ cinema, time, id, film, film_id }) {
     const navigate = useNavigate()
 
     const handleClick = () => {
@@ -14,8 +14,7 @@ function Showtimeitem({ time, id, film, film_id }) {
             navigate('/register')
         }
         else {
-            navigate(`/get-ticket/${film}/${id}`, { state: { film, id, film_id } })
-
+            navigate(`/get-ticket/${film}/${id}`, { state: { film, id, film_id, cinema } })
         }
     }
 

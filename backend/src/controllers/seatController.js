@@ -76,10 +76,7 @@ const deleteSeatBookingCache = async (req, res) => {
         if (ok) {
             return successResponse(res, 200, "Thành công")
         } else {
-
             return successResponse(res, 200, "Xoá thất bại, chưa có ghế được đặt")
-
-
         }
     } catch (error) {
         return errorResponse(res, 500, "Đã xảy ra lỗi")

@@ -6,8 +6,9 @@ import { faAngleDown, faCheck, faTimes, faInfoCircle, faDisplay } from '@fortawe
 import requestApi from "~/fetch";
 import { useLocation } from "react-router-dom";
 
-import { getShowtimes } from "./show";
 import { films } from "~/components/FilmList";
+
+import { getShowtimes } from "./show";
 import './index.css'
 
 import Showtime from "../ShowTime";
@@ -31,10 +32,6 @@ const GetTicket1 = () => {
     const params = useParams();
 
     const location = useLocation()
-
-
-
-
     const getCheck = () => {
         let tmp = 0
         for (let i in films) {
@@ -43,49 +40,33 @@ const GetTicket1 = () => {
                 break
             }
         }
-        console.log(tmp)
+        // console.log(tmp)
         return tmp
     }
 
     const id = getCheck()
 
-    // if (location.state) {
-    //     var { id } = location.state
-    // }
-
-
-
     const getTime = () => {
         console.log(date)
         let tmp = []
-        // for (let x in showTimes) {
-        //     const Date = showTimes[x].time.slice(0, 10);
-        //     if (Date == date && showTimes[x].Film.title == params.id) {
-        //         tmp.push(showTimes[x])
-        //     }
+
         const tmp2 = {}
         for (let x of showTimes) {
             const Date = x.time.slice(0, 10);
             const Time = x.time.slice(11, 16);
             let cinema_id = x.Room.cinema_id
             if (x.Film.title == params.id && Date == date) {
-                console.log(1)
+                // console.log(1)
                 if (!tmp2.cinema_id) {
                     tmp2[cinema_id] = []
                     tmp2[cinema_id].push({
                         time: Time,
-                        showtime_id: x.id,
-                        // cinema_id: x.Room.cinema_id,
-                        // room: x.Room.name
-
+                        showtime_id: x.id
                     })
                 } else {
                     tmp2[cinema_id].push({
                         time: Time,
-                        showtime_id: x.id,
-                        // cinema_id: x.Room.cinema_id,
-                        // room: x.Room.name
-
+                        showtime_id: x.id
                     })
                 }
             }
@@ -96,10 +77,14 @@ const GetTicket1 = () => {
             tmp3.time = tmp2[key]
             tmp.push(tmp3)
         }
-        console.log(tmp)
         setShowTime(tmp)
 
     }
+
+    // useEffect(() => {
+    //     setDate(year + '-' + (month < 10 ? ('0' + (month + 1)) : (month + 1)) + '-' + (day < 10 ? ('0' + day) : day));
+    //     getTime();
+    // }, [])
 
     useEffect(() => {
         setDate(year + '-' + (month < 10 ? ('0' + (month)) : (month)) + '-' + (day < 10 ? ('0' + day) : day));
@@ -108,7 +93,6 @@ const GetTicket1 = () => {
 
     useEffect(() => {
         getTime();
-
     }, [date])
 
 
@@ -117,6 +101,7 @@ const GetTicket1 = () => {
         const fetchAPI = async () => {
             try {
                 const res = await getShowtimes(id)
+                // console.log(id)
                 console.log(res.data.data)
                 setShowTimes(res.data.data)
             } catch (err) {
@@ -140,7 +125,7 @@ const GetTicket1 = () => {
                                     <div className={cx('birth-container')}>
                                         <div className={cx('birth-item', 'day')}>
                                             <div className={cx('birth-item-select')}>
-                                                <select onChange={e => { setDay(e.target.value) }} name="birthday_day" value={day}>
+                                                <select onChange={e => { setDay(e.target.value) }} value={day}>
                                                     <option value="">Chọn ngày</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
@@ -178,10 +163,9 @@ const GetTicket1 = () => {
 
                                             </div>
                                         </div>
-
                                         <div className={cx('birth-item', 'month')}>
                                             <div className={cx('birth-item-select')}>
-                                                <select onChange={e => setMonth(e.target.value)} name="birthday_month" value={month}>
+                                                <select onChange={e => setMonth(e.target.value)} value={month}>
                                                     <option value="">Chọn tháng</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
@@ -198,14 +182,12 @@ const GetTicket1 = () => {
                                                 </select>
                                             </div>
                                         </div>
-
                                         <div className={cx('birth-item', 'year')}>
                                             <div className={cx('birth-item-select')}>
-                                                <select onChange={e => setYear(e.target.value)} name="birthday_year" value={year}>
+                                                <select onChange={e => setYear(e.target.value)} value={year}>
                                                     <option value="">Chọn năm</option>
                                                     <option value="2024">2024</option>
                                                     <option value="2023">2023</option>
-
                                                 </select>
 
                                             </div>
@@ -215,7 +197,6 @@ const GetTicket1 = () => {
                             </div>
                         </div>
                     </div>
-
                     <div className={cx('col', 'large-12')}>
                         <div className={cx('col-inner')}>
                             <div className={cx('c-box')}>
@@ -223,8 +204,8 @@ const GetTicket1 = () => {
 
                                     {
                                         showTime.map((st, index) => (
-                                            <div style={{ marginBottom: '20px' }}>
-                                                <Showtime key={index} cinema_id={st.cinema_id} times={st.time} film={params.id} film_id={id} />
+                                            <div key={index} style={{ marginBottom: '20px' }}>
+                                                <Showtime cinema_id={st.id} times={st.time} film={params.id} film_id={id} />
                                             </div>
                                         ))
                                     }
@@ -240,7 +221,6 @@ const GetTicket1 = () => {
                 </div>
 
             </div>
-
         );
     }
     else {
@@ -264,5 +244,6 @@ const GetTicket1 = () => {
 
     }
 }
+
 
 export default GetTicket1;

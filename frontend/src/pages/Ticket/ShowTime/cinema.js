@@ -1,12 +1,14 @@
-import requestApi from "~/fetch";
+import requestApi from "~/fetchAPI";
 
 export const getCinema = async (cinema_id) => {
-    await requestApi(`showtime?film_id=${film_id}`, 'get')
+    let data
+    await requestApi(`cinema/${cinema_id}`, 'get')
         .then(res => {
-            data = res
+            data = res.data.data
         })
         .catch((error) => {
             console.log(error)
         })
+
     return data
 }

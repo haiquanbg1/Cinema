@@ -179,15 +179,24 @@ const list = [[{ id: 'A1', type: 'standard' }
 function GetTicket2() {
     const [seats, setSeats] = useState([])
     const [listDisable, setListDisable] = useState([])
+    // const [film, setFilm] = useState({})
     const params = useParams();
 
     const location = useLocation()
-    const { film, id, film_id } = location.state
+    const { film, id, film_id, cinema } = location.state
+
 
     const navigate = useNavigate()
 
     const addId = (id) => {
-        setSeats([...seats, id])
+        if (!seats.includes(id)) {
+            setSeats([...seats, id])
+        }
+        else {
+            let tmp = [...seats]
+            tmp.splice(tmp.indexOf(id), 1)
+            setSeats(tmp)
+        }
     }
 
     const handleClick = async () => {
@@ -204,8 +213,6 @@ function GetTicket2() {
                 console.log(res)
             })
             .catch(err => console.log(err))
-
-
 
         navigate(`/get-ticket/${film}/${id}/thanh-toan`, { state: { film, id } })
     }
@@ -226,7 +233,7 @@ function GetTicket2() {
         const fetchAPI = async () => {
             try {
                 const res = await getSeatBooked(params.id)
-                console.log(res)
+                // console.log(res)
                 // setShowTimes(res.data.data)
                 setListDisable(res.data.data.booked)
 
@@ -236,24 +243,6 @@ function GetTicket2() {
         }
         fetchAPI();
     }, [])
-
-    useEffect(() => {
-        console.log(film_id)
-        // const fetchAPI1 = async () => {
-        //     try {
-        //         const res = await getFilmById(film_id)
-        //         console.log(res)
-        //         // setShowTimes(res.data.data)
-
-
-        //     } catch (err) {
-        //         console.log(err);
-        //     }
-        // }
-        // fetchAPI1();
-    }, [])
-
-
 
     return (
         <div>
@@ -330,7 +319,7 @@ function GetTicket2() {
                                                         </td>
                                                         :
                                                         <td>
-                                                            <div onClick={() => addId(seat.id)}>
+                                                            <div >
                                                                 <Seat key={seat.id} id={seat.id} type='disable'></Seat>
                                                             </div>
                                                         </td>
@@ -351,7 +340,7 @@ function GetTicket2() {
                                                         </td>
                                                         :
                                                         <td>
-                                                            <div onClick={() => addId(seat.id)}>
+                                                            <div >
                                                                 <Seat key={seat.id} id={seat.id} type='disable'></Seat>
                                                             </div>
                                                         </td>
@@ -371,7 +360,7 @@ function GetTicket2() {
                                                         </td>
                                                         :
                                                         <td>
-                                                            <div onClick={() => addId(seat.id)}>
+                                                            <div >
                                                                 <Seat key={seat.id} id={seat.id} type='disable'></Seat>
                                                             </div>
                                                         </td>
@@ -391,7 +380,7 @@ function GetTicket2() {
                                                         </td>
                                                         :
                                                         <td>
-                                                            <div onClick={() => addId(seat.id)}>
+                                                            <div >
                                                                 <Seat key={seat.id} id={seat.id} type='disable'></Seat>
                                                             </div>
                                                         </td>
@@ -411,7 +400,7 @@ function GetTicket2() {
                                                         </td>
                                                         :
                                                         <td>
-                                                            <div onClick={() => addId(seat.id)}>
+                                                            <div >
                                                                 <Seat key={seat.id} id={seat.id} type='disable'></Seat>
                                                             </div>
                                                         </td>
@@ -431,7 +420,7 @@ function GetTicket2() {
                                                         </td>
                                                         :
                                                         <td>
-                                                            <div onClick={() => addId(seat.id)}>
+                                                            <div >
                                                                 <Seat key={seat.id} id={seat.id} type='disable'></Seat>
                                                             </div>
                                                         </td>
@@ -451,7 +440,7 @@ function GetTicket2() {
                                                         </td>
                                                         :
                                                         <td>
-                                                            <div onClick={() => addId(seat.id)}>
+                                                            <div >
                                                                 <Seat key={seat.id} id={seat.id} type='disable'></Seat>
                                                             </div>
                                                         </td>
@@ -471,7 +460,7 @@ function GetTicket2() {
                                                         </td>
                                                         :
                                                         <td>
-                                                            <div onClick={() => addId(seat.id)}>
+                                                            <div >
                                                                 <Seat key={seat.id} id={seat.id} type='disable'></Seat>
                                                             </div>
                                                         </td>
@@ -583,13 +572,16 @@ function GetTicket2() {
                         <div className={cx('col', 'large-4')}>
                             <div className={cx('col-inner')}>
                                 <div className={cx('c-box')}>
-                                    <h4 >BHD Star The Garden</h4>
+                                    <h4 >{cinema.name}</h4>
                                     <span ><span >Screen 2</span> - 13/5/2024 - Suất chiếu: 23h40</span>
                                     <hr />
 
                                     <h3 style={{ marginBottom: '10px', color: '#72be43' }} >{film}</h3>
                                     <div className={cx('seat-selected')}>
                                         <h4>Ghế đã chọn</h4>
+                                        {seats.map((seat, index) => (
+                                            <span key={index}>{seat}</span>
+                                        ))}
                                     </div>
                                     <hr />
                                     <div onClick={() => handleClick()}>

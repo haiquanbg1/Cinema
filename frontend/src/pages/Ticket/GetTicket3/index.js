@@ -18,6 +18,7 @@ function GetTicket3() {
 
     const handleClick = async () => {
         await requestApi(`/seat/booked?showtime_id=${id}`, 'post', { pay: 50000 })
+
     }
 
     const handleBack = () => {
@@ -81,7 +82,9 @@ function GetTicket3() {
                     <h3 >{film}</h3>
 
                     <hr />
-                    <Button className={'back'} primary stretch>Xác nhận thanh toán</Button>
+                    <div onClick={() => handleClick()}>
+                        <Button className={'back'} primary stretch>Xác nhận thanh toán</Button>
+                    </div>
                     <div className={cx('back')} onClick={() => handleBack()}>
                         <span>
                             <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
@@ -104,6 +107,7 @@ function GetTicket3() {
 
 
     </div>);
+
 }
 
 export default GetTicket3;
