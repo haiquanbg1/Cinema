@@ -17,16 +17,16 @@ function CountDown({ film, id }) {
     const seconds = Math.floor(timeLeft / 1000) % 60;
 
     const navigate = useNavigate()
-    useEffect(() => {
-        if (minutes == 0 && seconds == 0) {
-            navigate(`/`)
-        }
-    }
-        , [minutes, seconds])
+    // useEffect(() => {
+    //     if (minutes == 0 && seconds == 0) {
+    //         navigate(`/`)
+    //     }
+    // }
+    //     , [minutes, seconds])
 
     return (
         <div className={cx('timer')}>
-            <p>{seconds < 10 ? `0${minutes}:0${seconds}` : `0${minutes}:${seconds}`}</p>
+            <p>{seconds != 0 ? `${minutes} phút ${seconds} giây` : `${minutes} phút`}</p>
         </div>
     );
 }

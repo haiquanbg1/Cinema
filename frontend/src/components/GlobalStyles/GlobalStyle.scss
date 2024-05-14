@@ -132,6 +132,31 @@ a {
     padding: 5px;
 }
 
+.c-box {
+    border: 1px solid #454D6A;
+    border-radius: 15px;
+    padding: 20px;
+
+}
+
+.c-box hr.dashed {
+    border-style: dashed;
+}
+
+.c-box hr {
+    margin-left: -20px;
+    margin-right: -20px;
+}
+
+hr {
+    border-width: 0;
+    border-top: 1.5px solid;
+    margin: 15px 0;
+    border-color: #30333e;
+
+
+}
+
 // .row-small>.col:nth-child(1) {
 //     padding: 0;
 // }

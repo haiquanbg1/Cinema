@@ -1,0 +1,123 @@
+.container {
+    display: flex;
+    margin-top: 30px;
+}
+
+h4 {
+    color: white;
+
+}
+
+.info_seat {
+    display: flex;
+
+    h4 {
+        flex: 0.85;
+    }
+
+    span {
+        color: white;
+        flex: 0.05;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    div {
+        flex: 0.1;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+.info_total {
+    display: flex;
+
+    h4 {
+        flex: 0.85;
+    }
+
+    span {
+        color: white;
+        flex: 0.05;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    div {
+        flex: 0.1;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+.info_discount {
+    display: flex;
+
+    h4 {
+        flex: 0.85;
+    }
+
+    span {
+        color: white;
+        flex: 0.05;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    div {
+        flex: 0.1;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+.info_price {
+    display: flex;
+
+    h4 {
+        flex: 0.75;
+    }
+
+    span {
+        color: white;
+        flex: 0.05;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    div {
+        flex: 0.2;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+.time-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // margin-top: px;
+    font-weight: 500;
+
+    span {
+        margin-right: 5px;
+        font-size: 14px;
+        color: white;
+    }
+}
+
+.back {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 10px 0 0 0;
+    font-weight: 300;
+}
+
+span,
+h3 {
+    color: white;
+}

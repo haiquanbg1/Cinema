@@ -6,11 +6,17 @@ const cx = classNames.bind(styles);
 
 
 
-function Showtimeitem({ time, id, film }) {
+function Showtimeitem({ time, id, film, film_id }) {
     const navigate = useNavigate()
 
     const handleClick = () => {
-        navigate(`/get-ticket/${film}/${id}`, { state: { film, id } })
+        if (!localStorage.getItem('accessToken')) {
+            navigate('/register')
+        }
+        else {
+            navigate(`/get-ticket/${film}/${id}`, { state: { film, id, film_id } })
+
+        }
     }
 
     return (

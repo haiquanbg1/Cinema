@@ -4,7 +4,16 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 
+<<<<<<< Updated upstream
 import { getSeatBooked } from "./seat";
+=======
+<<<<<<< HEAD
+import Button from "~/components/Button";
+import { getSeatBooked, deleteSeatBooking, getFilmById } from "./seat";
+=======
+import { getSeatBooked } from "./seat";
+>>>>>>> b9fbcc7c8a7c0d1058e570a3688991cdad6871c7
+>>>>>>> Stashed changes
 import requestApi from "~/fetchAPI";
 import Seat from "~/components/Seat";
 
@@ -181,7 +190,7 @@ function GetTicket2() {
     const params = useParams();
 
     const location = useLocation()
-    const { film, id } = location.state
+    const { film, id, film_id } = location.state
 
     const navigate = useNavigate()
 
@@ -203,6 +212,8 @@ function GetTicket2() {
                 console.log(res)
             })
             .catch(err => console.log(err))
+
+
 
         navigate(`/get-ticket/${film}/${id}/thanh-toan`, { state: { film, id } })
     }
@@ -233,6 +244,24 @@ function GetTicket2() {
         }
         fetchAPI();
     }, [])
+
+    useEffect(() => {
+        console.log(film_id)
+        // const fetchAPI1 = async () => {
+        //     try {
+        //         const res = await getFilmById(film_id)
+        //         console.log(res)
+        //         // setShowTimes(res.data.data)
+
+
+        //     } catch (err) {
+        //         console.log(err);
+        //     }
+        // }
+        // fetchAPI1();
+    }, [])
+
+
 
     return (
         <div>
@@ -559,12 +588,28 @@ function GetTicket2() {
                                 </div>
                             </div>
                         </div>
-                        <div className={cx('large-4', 'col')}>
-                            <div className="col-inner">
-                                <div className={cx('c-box', 'film-cart')}>
-                                    <button onClick={() => handleClick()}>Tiến hành thanh toán</button>
+                        <div className={cx('col', 'large-4')}>
+                            <div className={cx('col-inner')}>
+                                <div className={cx('c-box')}>
+                                    <h4 >BHD Star The Garden</h4>
+                                    <span ><span >Screen 2</span> - 13/5/2024 - Suất chiếu: 23h40</span>
+                                    <hr />
+
+                                    <h3 style={{ marginBottom: '10px', color: '#72be43' }} >{film}</h3>
+                                    <div className={cx('seat-selected')}>
+                                        <h4>Ghế đã chọn</h4>
+                                    </div>
+                                    <hr />
+                                    <div onClick={() => handleClick()}>
+                                        <Button className={'back'} primary stretch>Tiến hành thanh toán</Button>
+
+                                    </div>
+
+
+
                                 </div>
                             </div>
+
                         </div>
 
                     </div>

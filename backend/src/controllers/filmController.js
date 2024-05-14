@@ -16,6 +16,20 @@ const getFilm = async (req, res) => {
     }
 }
 
+// const getFilmById = async (req, res) => {
+//     try {
+//         result = await Film.getFilmById(req.body.film_id)
+//         // for (var i = 0; i < result.length; i++) {
+//         //     let date = result[i].release_date
+//         //     date.setHours(date.getHours() + 7)
+//         //     result[i].release_date = date.toISOString().replace('T', ' ').substr(0, 10)
+//         // }
+//         return res.render('film.ejs', { films: result })
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+
 const postFilm = async (req, res) => {
     try {
         await Film.insertFilm(req.body)
@@ -81,6 +95,14 @@ module.exports = {
     postFilm,
     updateFilm,
     deleteFilm,
+<<<<<<< Updated upstream
     getFilmById,
+=======
+<<<<<<< HEAD
+    // getFilmById,
+=======
+    getFilmById,
+>>>>>>> b9fbcc7c8a7c0d1058e570a3688991cdad6871c7
+>>>>>>> Stashed changes
     getFilmAPI
 }

@@ -31,6 +31,16 @@ const getAllFilms = async () => {
     return result
 }
 
+<<<<<<< HEAD
+// const getFilmById = async (film_id) => {
+//     result = await Film.findOne({
+//         where: {
+//             id: film_id
+//         }
+//     })
+//     return result
+// }
+=======
 const getFilmById = async (film_id) => {
     result = await Film.findOne({
         where: {
@@ -39,6 +49,7 @@ const getFilmById = async (film_id) => {
     })
     return result
 }
+>>>>>>> b9fbcc7c8a7c0d1058e570a3688991cdad6871c7
 
 const insertFilm = async (film) => {
     await Film.create({
@@ -96,6 +107,7 @@ const deleteFilmById = async (film_id) => {
 
 module.exports = {
     getAllFilms,
+    // getFilmById,
     insertFilm,
     updateFilmById,
     deleteFilmById,
