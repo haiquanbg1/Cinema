@@ -95,14 +95,6 @@ module.exports = {
     postFilm,
     updateFilm,
     deleteFilm,
-<<<<<<< Updated upstream
     getFilmById,
-=======
-<<<<<<< HEAD
-    // getFilmById,
-=======
-    getFilmById,
->>>>>>> b9fbcc7c8a7c0d1058e570a3688991cdad6871c7
->>>>>>> Stashed changes
     getFilmAPI
 }

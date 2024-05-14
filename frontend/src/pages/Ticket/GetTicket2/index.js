@@ -4,16 +4,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 
-<<<<<<< Updated upstream
-import { getSeatBooked } from "./seat";
-=======
-<<<<<<< HEAD
 import Button from "~/components/Button";
 import { getSeatBooked, deleteSeatBooking, getFilmById } from "./seat";
-=======
-import { getSeatBooked } from "./seat";
->>>>>>> b9fbcc7c8a7c0d1058e570a3688991cdad6871c7
->>>>>>> Stashed changes
 import requestApi from "~/fetchAPI";
 import Seat from "~/components/Seat";
 

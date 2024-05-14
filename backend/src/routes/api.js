@@ -12,16 +12,14 @@ router.post('/refresh_token', user.refreshToken)
 
 //film
 router.get('/film', film.getFilmAPI)
-<<<<<<< Updated upstream
+
 router.get('/film/:film_id', film.getFilmById)
-=======
-<<<<<<< HEAD
+
 // router.get('/filmById', film.getFilmById)
 
-=======
+
 router.get('/film/:film_id', film.getFilmById)
->>>>>>> b9fbcc7c8a7c0d1058e570a3688991cdad6871c7
->>>>>>> Stashed changes
+
 
 // user
 router.post('/user/register', user.register)
@@ -30,13 +28,10 @@ router.get('/user', isAuth, user.getUserByAccessToken)
 
 // showtime
 router.get('/showtime', showtime.getShowtimeByFilmId)
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
+
+
 // router.get('/showtime/showtimeId:showtimeId', showtime.getSho) 
-=======
->>>>>>> b9fbcc7c8a7c0d1058e570a3688991cdad6871c7
->>>>>>> Stashed changes
+
 
 // seat
 router.get('/seat', isAuth, seat.getAllSeatBooked)
