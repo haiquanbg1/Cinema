@@ -5,7 +5,8 @@ const routes = {
     getTicket3: '/get-ticket/:id/:id/:id',
     getTicket4: '/get-ticket4',
     register: '/register',
-    cinema: '/cinema'
+    cinema: '/cinema',
+    cinemaDetails: '/cinema/:id'
 };
 
 export default routes;

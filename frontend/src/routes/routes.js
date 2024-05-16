@@ -7,6 +7,7 @@ import GetTicket2 from "~/pages/Ticket/GetTicket2";
 import GetTicket3 from "~/pages/Ticket/GetTicket3";
 import GetTicket4 from "~/pages/Ticket/GetTicket4";
 import Cinema from '~/pages/Cinema';
+import CinemaDetails from '~/pages/CinemaDetails';
 
 import Register from "~/pages/Register";
 
@@ -20,6 +21,8 @@ const publicRoutes = [
     { path: config.routes.getTicket4, component: GetTicket4, layout: 'getTicketLayout' },
     { path: config.routes.register, component: Register, layout: 'registerLayout' },
     { path: config.routes.cinema, component: Cinema, layout: 'cinemaLayout' },
+    { path: config.routes.cinemaDetails, component: CinemaDetails, layout: 'cinemaLayout' },
+
 
 ];
 

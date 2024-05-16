@@ -116,6 +116,11 @@ a {
     max-width: 100%;
 }
 
+.large-3 {
+    flex-basis: 25%;
+    max-width: 25%;
+}
+
 .map-body table tr>td:first-child {
     padding-left: 0;
 }

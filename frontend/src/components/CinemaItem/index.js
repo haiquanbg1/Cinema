@@ -14,10 +14,10 @@ const cx = classNames.bind(styles)
 function CinemaItem({ src, name, id }) {
 
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx('wrapper', 'col-inner')}>
             <div className={cx('inner')}>
                 <div className={cx('thumb')}>
-                    <Image src={src} ></Image>
+                    <Image className={cx('img')} src={src} ></Image>
                 </div>
 
                 <h4 className={cx('title')}>{name}</h4>
