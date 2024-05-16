@@ -42,35 +42,13 @@ export const responsive = {
 //     '/'
 // )
 
-const getFilmList = async () => {
-    let data = []
-    await requestApi('film', 'get')
-        .then((res) => {
-            console.log(res.data.data)
-            for (let i = 0; i < res.data.data.length; i++) {
-                let categories = ""
-                res['data']['data'][i]['film_categories'].forEach(element => {
-                    categories = categories + element.Category.name + ', '
-                })
-                data.push({
-                    src: res['data']['data'][i].image,
-                    title: res['data']['data'][i].title,
-                    id: res['data']['data'][i].id,
-                    type: categories.substring(0, categories.length - 2)
-                })
-            }
-        })
-        .catch(err => console.log(err))
-    return data
-}
-
-export const films = await getFilmList()
 
 
-function FilmList() {
+
+function FilmList({ films }) {
 
     return (
-        <FilmSlider />
+        <FilmSlider films={films} />
 
     );
 }

@@ -4,25 +4,47 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Button from "~/components/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import toast from "react-hot-toast";
 
+import { getUserId } from "./user";
 import requestApi from "~/fetch";
 import CountDown from "../CountDown";
+import { useEffect, useState } from "react";
 const cx = classNames.bind(styles)
 
 
 function GetTicket3() {
     const location = useLocation()
-    const { film, id } = location.state
+    const { film, id, cinema, showTime, seats, price } = location.state
+    const [userRank, setUserRank] = useState(0)
 
     const navigate = useNavigate()
 
-    const handleClick = async () => {
-        await requestApi(`/seat/booked?showtime_id=${id}`, 'post', { pay: 50000 })
+    useEffect(() => {
+        const fetchAPI = async () => {
+            try {
+                const res = await getUserId()
+                setUserRank(res)
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        fetchAPI();
+    }
+        , [])
 
+    function formatNumber(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    const handleClick = async () => {
+        await requestApi(`/seat/booked?showtime_id=${id}`, 'post', { pay: price * (1 - (userRank - 1) * 0.05) })
+        navigate('/')
+        toast.success('Đặt vé thành công')
     }
 
     const handleBack = () => {
-        navigate(`/get-ticket/${film}/${id}`, { state: { film, id } })
+        navigate(`/get-ticket/${film}/${id}`, { state: { film, id, cinema } })
     }
 
     return (<div className={cx('container', 'row')}>
@@ -37,7 +59,12 @@ function GetTicket3() {
                         <div className={cx('info_seat')}>
                             <h4>Ghế đã đặt</h4>
                             <span>:</span>
-                            <div style={{ color: 'white' }}>B5 B6</div>
+                            <div>
+                                {seats.map((seat, index) => (
+                                    <span className={cx('seat')} key={index}>{seat.name}</span>
+                                ))}
+                            </div>
+
                         </div>
                         <hr className={cx('dashed')}></hr>
 
@@ -45,7 +72,7 @@ function GetTicket3() {
                             <h4>Tổng tiền</h4>
                             <span>:</span>
 
-                            <div style={{ color: 'white' }}>160000</div>
+                            <div style={{ color: 'white' }}>{formatNumber(price)} VNĐ</div>
                         </div>
                         <hr className={cx('dashed')}></hr>
 
@@ -53,7 +80,7 @@ function GetTicket3() {
                             <h4>Giảm giá</h4>
                             <span>:</span>
 
-                            <div style={{ color: 'white' }}>40000</div>
+                            <div style={{ color: 'white' }}>{formatNumber(price * (userRank - 1) * 0.05)}</div>
                         </div>
                         <hr className={cx('dashed')}></hr>
 
@@ -61,7 +88,7 @@ function GetTicket3() {
                             <h4>Số tiền phải thanh toán</h4>
                             <span>:</span>
 
-                            <div style={{ color: 'white' }}>120000</div>
+                            <div style={{ color: 'white' }}>{formatNumber(price * (1 - (userRank - 1) * 0.05))} VNĐ</div>
                         </div>
 
 
@@ -75,11 +102,11 @@ function GetTicket3() {
         <div className={cx('col', 'large-4')}>
             <div className={cx('col-inner')}>
                 <div className={cx('c-box')}>
-                    <h4 >BHD Star The Garden</h4>
-                    <span ><span >Screen 2</span> - 13/5/2024 - Suất chiếu: 23h40</span>
+                    <h4 >{cinema.name}</h4>
+                    <span ><span >Screen {showTime.room_id}</span> - {(showTime.time.slice(8, 10))} / {(showTime.time.slice(5, 7))} / {(showTime.time.slice(0, 4))} - Suất chiếu: {(showTime.time.slice(11, 13))}h{(showTime.time.slice(14, 16))}</span>
                     <hr />
 
-                    <h3 >{film}</h3>
+                    <h3 style={{ marginBottom: '10px', color: '#72be43' }}>{film}</h3>
 
                     <hr />
                     <div onClick={() => handleClick()}>

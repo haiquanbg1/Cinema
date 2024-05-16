@@ -7,9 +7,42 @@ import Image from "~/components/Image";
 import Button from "~/components/Button";
 import { useSelector } from 'react-redux';
 import FilmInfo from "~/components/FimInfo";
+import requestApi from "~/fetch";
 
 const cx = classNames.bind(styles)
 
+const getFilmList = async () => {
+    let data = []
+    await requestApi('film', 'get')
+        .then((res) => {
+            console.log(res)
+            for (let i = 0; i < res.data.data.length; i++) {
+                let categories = ""
+                res['data']['data'][i]['film_categories'].forEach(element => {
+                    categories = categories + element.Category.name + ', '
+                })
+                data.push({
+                    src: res['data']['data'][i].image,
+                    title: res['data']['data'][i].title,
+                    id: res['data']['data'][i].id,
+                    type: categories.substring(0, categories.length - 2),
+                    showing: res['data']['data'][i].showing,
+                })
+            }
+        })
+        .catch(err => console.log(err))
+    return data
+}
+
+export const films = await getFilmList()
+
+const filmsNow = films.filter((film, index) => {
+    return film.showing == 1
+})
+
+const filmsAfter = films.filter((film, index) => {
+    return film.showing == 0
+})
 
 function Home() {
 
@@ -17,15 +50,15 @@ function Home() {
         <FilmInfo></FilmInfo>
         <div className={cx('showing')}>
             <h2>Phim đang chiếu</h2>
-            <FilmList />
+            <FilmList films={filmsNow} />
         </div>
         <div className={cx('pre-sale')}>
             <h2>Vé bán trước</h2>
-            <FilmList />
+            <FilmList films={films} />
         </div>
         <div className={cx('coming')}>
             <h2>Phim sắp chiếu</h2>
-            <FilmList />
+            <FilmList films={filmsAfter} />
         </div>
     </div >);
 }

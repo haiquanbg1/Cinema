@@ -5,7 +5,7 @@ import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 // import "./index.css";
-import { responsive, films } from './index';
+import { responsive } from './index';
 import { CustomLeft, CustomRight, CustomDot } from "./custom";
 
 import styles from './FilmList.module.scss';
@@ -13,7 +13,8 @@ import classNames from "classnames/bind";
 
 const cx = classNames.bind(styles)
 
-function FilmSlider() {
+function FilmSlider({ films }) {
+    console.log(films)
     const filmList = films.map((film, index) => (
         <FilmItem key={index} title={film.title} src={film.src} type={film.type} id={film.id} />
     ))

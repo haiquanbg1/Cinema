@@ -5,6 +5,7 @@ import store from './redux/store';
 import App from '~/App';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyles from '~/components/GlobalStyles';
+import { Toaster } from 'react-hot-toast';
 
 
 
@@ -13,8 +14,9 @@ root.render(
   <React.StrictMode>
     <GlobalStyles>
       <Provider store={store}>
-
         <App />
+
+        <Toaster position='top-right' />
       </Provider>
     </GlobalStyles>
   </React.StrictMode>

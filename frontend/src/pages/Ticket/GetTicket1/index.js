@@ -6,7 +6,7 @@ import { faAngleDown, faCheck, faTimes, faInfoCircle, faDisplay } from '@fortawe
 import requestApi from "~/fetch";
 import { useLocation } from "react-router-dom";
 
-import { films } from "~/components/FilmList";
+import { films } from "~/pages/Home";
 
 import { getShowtimes } from "./show";
 import './index.css'

@@ -17,10 +17,11 @@ router.get('/film/:film_id', film.getFilmById)
 // user
 router.post('/user/register', user.register)
 router.post('/user/login', user.login)
-router.get('/user', isAuth, user.getUserByAccessToken)
+router.get('/user', isAuth, user.getRankUserByAccessToken)
 
 // showtime
 router.get('/showtime', showtime.getShowtimeByFilmId)
+router.get('/showtime/:showtime_id', showtime.getShowtimeById)
 
 // seat
 router.get('/seat', isAuth, seat.getAllSeatBooked)

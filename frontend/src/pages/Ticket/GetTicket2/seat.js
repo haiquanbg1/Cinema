@@ -13,3 +13,16 @@ export const getSeatBooked = async (time_id) => {
 
     return data
 }
+
+export const getShowTime = async (showtime_id) => {
+    let data
+    await requestApi(`showtime/${showtime_id}`, 'get')
+        .then(res => {
+            data = res
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+
+    return data
+}

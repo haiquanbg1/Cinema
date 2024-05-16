@@ -15,8 +15,9 @@ function Showtime({ cinema_id, times, film, film_id }) {
             try {
                 const res = await getCinema(cinema_id)
                 setCinema(res)
-                // setShowTimes(res.data.data)
-                setCinema(res.data.data.booked)
+                // console.log(res)
+                // // setShowTimes(res.data.data)
+                // // setCinema(res.data.booked)
 
             } catch (err) {
                 console.log(err);

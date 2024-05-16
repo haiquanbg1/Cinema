@@ -22,4 +22,4 @@ const getAllRooms = async () => {
 module.exports = {
     getAllRooms,
     getRoomByShowtimeId
-}
+}  

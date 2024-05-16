@@ -138,7 +138,7 @@ function Header() {
                                     <Link >Lịch chiếu</Link>
                                 </li>
                                 <li className={cx('nav-item')}>
-                                    <Link>Hệ thống rạp</Link>
+                                    <Link to={'/cinema'}>Hệ thống rạp</Link>
                                 </li>
                                 <li className={cx('nav-item')}>
                                     <Link>Khuyến mãi/Sự kiện</Link>

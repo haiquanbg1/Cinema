@@ -145,13 +145,13 @@ const refreshToken = async (req, res) => {
     })
 }
 
-const getUserByAccessToken = async (req, res) => {
-    return successResponse(res, 200, "Thành công", req.user)
+const getRankUserByAccessToken = async (req, res) => {
+    return successResponse(res, 200, "Thành công", req.user.rank_id)
 }
 
 module.exports = {
     register,
     login,
     refreshToken,
-    getUserByAccessToken
+    getRankUserByAccessToken
 }
