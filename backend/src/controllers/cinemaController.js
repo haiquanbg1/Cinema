@@ -1,5 +1,7 @@
 const Cinema = require("../services/cinemaService")
 const { successResponse, errorResponse } = require("../methods/response")
+const comment = require("../services/commentService")
+const Comment = require("../methods/mongoose");
 
 const getAllCinema = async (req, res) => {
     try {
@@ -35,8 +37,75 @@ const getNameCinemaByCityId = async (req, res) => {
     }
 }
 
+const getAllComment = async (req, res) => {
+    try {
+        const comments = await comment.getAllComment();
+        return successResponse(res, 200, "Success", comments);
+    } catch (error) {
+        console.log(error);
+        return errorResponse(res, 500, "Fail");
+    }
+}
+
+const getCommentByCinemaId = async (req, res) => {
+    try {
+        const comments = await comment.getCommentByCinemaId(req.params.cinema_id);
+        return successResponse(res, 200, "Success", comments);
+    } catch (error) {
+        console.log(error);
+        return errorResponse(res, 500, "Fail");
+    }
+}
+
+const pushComment = async (req, res) => {
+    const {content, rating, cinema} = req.body;
+    const comment = new Comment({
+        user: req.user.id,
+        cinema: cinema,
+        content: content,
+        rating: rating,
+        time: Date()
+    });
+    comment.save().then(() => {
+        return successResponse(res, 200, "Comment success");
+    }).catch(error => {
+        return errorResponse(res, 404, "Fail");
+    })
+}
+
+const updateComment = async (req, res) => {
+    const {content, rating} = req.body;
+    const update = { content: content, rating: rating };
+    const doc = await Comment.findOneAndUpdate({cinema:req.params.cinema_id, user:req.user.id}, update, {
+        new: true
+    });
+    if (!doc) {
+        return errorResponse(res, 404, "Đã xảy ra lỗi");
+    }
+    else {
+        return successResponse(res, 200, "Cập nhật thành công", doc);
+    }
+}
+
+const deleteComment = async (req, res) => {
+    const del = await Comment.deleteOne({
+        user: req.user.id,
+        cinema: req.params.cinema_id
+    })
+    if (del.deletedCount !== 0) {
+        return successResponse(res, 200, "Delete success");
+    } else {
+        return errorResponse(res, 404, "Delete fail");
+    }
+}
+
 module.exports = {
     getAllCinema,
+    getCinemaById,
     getNameCinemaByCityId,
-    getCinemaById
+    getAllComment,
+    getCommentByCinemaId,
+    pushComment,
+    updateComment,
+    deleteComment
 }

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9af716ba-5745-4197-b326-47b443c26e56" name="Changes" comment="update ejs">
+      <change afterPath="$PROJECT_DIR$/backend/src/methods/mongoose.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.env.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/sequelizeData.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/sequelizeData.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/sequelizeMeta.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/sequelizeMeta.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/config/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/config/config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/controllers/cinemaController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controllers/cinemaController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/routes/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/routes/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/services/cinemaService.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/services/cinemaService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/services/filmService.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/services/filmService.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;doanhnguyen28&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/haiquanbg1/Cinema.git&quot;,
+    &quot;accountId&quot;: &quot;5b2ca901-f843-44cf-9569-f03492899a25&quot;
+  }
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/frontend/package.json" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2dkj14BVfjphbdY1hr94UD5yVQS" />
+  <component name="ProjectLevelVcsManager">
+    <OptionsSetting value="false" id="Update" />
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/doanh/redis-cache&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2024.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\doanh\OneDrive\Desktop\OOP\Cinema\backend\src\public\javascript" />
+      <recent name="C:\Users\doanh\OneDrive\Desktop\OOP\Cinema\backend" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/backend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-WS-241.14494.235" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9af716ba-5745-4197-b326-47b443c26e56" name="Changes" comment="" />
+      <created>1710558752011</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1710558752011</updated>
+      <workItem from="1710558753114" duration="100000" />
+      <workItem from="1710558965833" duration="20000" />
+      <workItem from="1710558996191" duration="2142000" />
+      <workItem from="1710681141919" duration="759000" />
+      <workItem from="1710867272572" duration="325000" />
+      <workItem from="1711191969278" duration="517000" />
+      <workItem from="1711192502952" duration="1179000" />
+      <workItem from="1711199318687" duration="5297000" />
+      <workItem from="1711205819220" duration="1123000" />
+      <workItem from="1711285357141" duration="4603000" />
+      <workItem from="1711418987003" duration="4906000" />
+      <workItem from="1711441444874" duration="2167000" />
+      <workItem from="1711552441910" duration="797000" />
+      <workItem from="1711594308935" duration="398000" />
+      <workItem from="1711597596908" duration="720000" />
+      <workItem from="1711631450645" duration="6000" />
+      <workItem from="1711768803869" duration="172000" />
+      <workItem from="1711769147116" duration="638000" />
+      <workItem from="1711814199626" duration="17000" />
+      <workItem from="1712163243837" duration="1061000" />
+      <workItem from="1712290627766" duration="3269000" />
+      <workItem from="1712338682785" duration="524000" />
+      <workItem from="1712339260893" duration="1660000" />
+      <workItem from="1712341852679" duration="41000" />
+      <workItem from="1712342299157" duration="115000" />
+      <workItem from="1712342458148" duration="13000" />
+      <workItem from="1712342479481" duration="135000" />
+      <workItem from="1712414481025" duration="3092000" />
+      <workItem from="1712835682780" duration="222000" />
+      <workItem from="1712837071406" duration="2050000" />
+      <workItem from="1712863919396" duration="301000" />
+      <workItem from="1712892015381" duration="88000" />
+      <workItem from="1712892139875" duration="1268000" />
+      <workItem from="1714706257227" duration="295000" />
+      <workItem from="1714706565088" duration="5047000" />
+      <workItem from="1714711858180" duration="1306000" />
+      <workItem from="1714713237682" duration="2822000" />
+      <workItem from="1714750535837" duration="2973000" />
+      <workItem from="1714835190742" duration="8989000" />
+      <workItem from="1714875240249" duration="3124000" />
+      <workItem from="1714901641365" duration="2945000" />
+      <workItem from="1714986716335" duration="3580000" />
+      <workItem from="1715052764224" duration="364000" />
+      <workItem from="1715328884084" duration="1377000" />
+      <workItem from="1715513569580" duration="1541000" />
+      <workItem from="1715515373445" duration="1617000" />
+      <workItem from="1715523744135" duration="4615000" />
+      <workItem from="1715544346310" duration="3951000" />
+      <workItem from="1715595508751" duration="2988000" />
+      <workItem from="1715613697427" duration="8837000" />
+      <workItem from="1715653183372" duration="3861000" />
+      <workItem from="1715710129459" duration="3275000" />
+      <workItem from="1715716764914" duration="380000" />
+      <workItem from="1715753561478" duration="5870000" />
+      <workItem from="1715826317223" duration="2663000" />
+    </task>
+    <task id="LOCAL-00001" summary="update views">
+      <created>1711204612131</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1711204612131</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fix views">
+      <created>1711443463842</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1711443463842</updated>
+    </task>
+    <task id="LOCAL-00003" summary="update ejs">
+      <option name="closed" value="true" />
+      <created>1714990152197</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1714990152197</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update views" />
+    <MESSAGE value="fix views" />
+    <MESSAGE value="update ejs" />
+    <option name="LAST_COMMIT_MESSAGE" value="update ejs" />
+  </component>
+</project>

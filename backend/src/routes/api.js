@@ -32,6 +32,12 @@ router.delete('/seat/delete', isAuth, seat.deleteSeatBookingCache)
 // cinema
 router.get('/cinema', cinema.getAllCinema)
 router.get('/cinemaByCityId', cinema.getNameCinemaByCityId)
+router.get('/comment', cinema.getAllComment);
+router.get('/comment/:cinema_id', cinema.getCommentByCinemaId)
+router.delete('/deleteComment/:cinema_id', isAuth, cinema.deleteComment)
+router.put('/updateComment/:cinema_id', isAuth, cinema.updateComment)
+router.post('/createComment', isAuth, cinema.pushComment)
+
 router.get('/cinema/:cinema_id', cinema.getCinemaById)
 
 module.exports = router

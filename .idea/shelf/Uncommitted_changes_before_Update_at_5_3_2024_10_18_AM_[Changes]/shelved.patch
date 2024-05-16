@@ -1,0 +1,17 @@
+Index: backend/src/config/config.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n  \"development\": {\r\n    \"username\": \"root\",\r\n    \"password\": \"123456\",\r\n    \"database\": \"web\",\r\n    \"host\": \"mysql-server\",\r\n    \"dialect\": \"mysql\",\r\n    \"port\": \"3306\"\r\n  },\r\n  \"test\": {\r\n    \"username\": \"root\",\r\n    \"password\": null,\r\n    \"database\": \"database_test\",\r\n    \"host\": \"127.0.0.1\",\r\n    \"dialect\": \"mysql\",\r\n    \"port\": \"3306\"\r\n  },\r\n  \"production\": {\r\n    \"username\": \"root\",\r\n    \"password\": null,\r\n    \"database\": \"database_production\",\r\n    \"host\": \"127.0.0.1\",\r\n    \"dialect\": \"mysql\",\r\n    \"port\": \"3306\"\r\n  }\r\n}
+===================================================================
+diff --git a/backend/src/config/config.json b/backend/src/config/config.json
+--- a/backend/src/config/config.json	
++++ b/backend/src/config/config.json	
+@@ -1,7 +1,7 @@
+ {
+   "development": {
+     "username": "root",
+-    "password": "123456",
++    "password": "",
+     "database": "web",
+     "host": "mysql-server",
+     "dialect": "mysql",
