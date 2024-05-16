@@ -11,7 +11,7 @@ mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
 
 const Schema = mongoose.Schema;
 
-const comment  = new Schema({
+const Comment  = new Schema({
     user: {type: Number},
     cinema: {type: Number},
     content: {type: String},
@@ -19,5 +19,5 @@ const comment  = new Schema({
     time: {type: Date, default: new Date},
 });
 
-module.exports = mongoose.model('Comment',comment);
+module.exports = mongoose.model('Comment',Comment);
 

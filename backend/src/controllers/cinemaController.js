@@ -1,6 +1,7 @@
 const Cinema = require("../services/cinemaService")
 const { successResponse, errorResponse } = require("../methods/response")
-const comment = require("../methods/mongoose")
+const comment = require("../services/commentService")
+const Comment = require("../methods/mongoose");
 
 const getAllCinema = async (req, res) => {
     try {
@@ -38,7 +39,7 @@ const getNameCinemaByCityId = async (req, res) => {
 
 const getAllComment = async (req, res) => {
     try {
-        const comments = await Comment.getAllComment();
+        const comments = await comment.getAllComment();
         return successResponse(res, 200, "Success", comments);
     } catch (error) {
         console.log(error);
@@ -48,7 +49,7 @@ const getAllComment = async (req, res) => {
 
 const getCommentByCinemaId = async (req, res) => {
     try {
-        const comments = await Comment.getCommentByCinemaId(req.params.cinema_id);
+        const comments = await comment.getCommentByCinemaId(req.params.cinema_id);
         return successResponse(res, 200, "Success", comments);
     } catch (error) {
         console.log(error);
@@ -75,7 +76,7 @@ const pushComment = async (req, res) => {
 const updateComment = async (req, res) => {
     const {content, rating} = req.body;
     const update = { content: content, rating: rating };
-    const doc = await comment.findOneAndUpdate({cinema:req.params.cinema_id, user:req.user.id}, update, {
+    const doc = await Comment.findOneAndUpdate({cinema:req.params.cinema_id, user:req.user.id}, update, {
         new: true
     });
     if (!doc) {
@@ -87,7 +88,7 @@ const updateComment = async (req, res) => {
 }
 
 const deleteComment = async (req, res) => {
-    const del = await comment.deleteOne({
+    const del = await Comment.deleteOne({
         user: req.user.id,
         cinema: req.params.cinema_id
     })
@@ -100,7 +101,6 @@ const deleteComment = async (req, res) => {
 
 module.exports = {
     getAllCinema,
-    getNameCinemaByCityId,
     getCinemaById,
     getNameCinemaByCityId,
     getAllComment,
