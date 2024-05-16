@@ -5,9 +5,9 @@ const getAllComment = async () => {
     return result;
 }
 
-const getCommentByCinemaId = async (req, res) => {
+const getCommentByCinemaId = async (cinema_id) => {
     const result = await Comment.findOne({
-        cinema_id: req.params.cinema_id
+        cinema: cinema_id
     })
     return result;
 }

@@ -6,7 +6,6 @@ const seat = require('../controllers/seatController')
 const cinema = require('../controllers/cinemaController')
 const router = express.Router()
 const middleware = require('../middlewares/auth')
-const {pushComment} = require("../controllers/cinemaController");
 
 const isAuth = middleware.isAuth
 router.post('/refresh_token', user.refreshToken)
