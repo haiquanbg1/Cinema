@@ -7,20 +7,21 @@ import Button from "../Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTicketSimple, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { targerFilmSlice } from "~/redux/reducers/targetFilmSlice";
+import { targetFilmSlice } from "~/redux/reducers/targetFilmSlice";
 
 const cx = classNames.bind(styles)
 
-function FilmItem({ src, limitAge = 'T16', title, type, slider = false }) {
+function FilmItem({ src, limitAge = 'T16', title, type, id, slider = false }) {
     const dispatch = useDispatch();
 
     const showInfo = () => {
         const info = {
             src,
+            id,
             title,
             type
         }
-        dispatch(targerFilmSlice.actions.getInfo(info))
+        dispatch(targetFilmSlice.actions.getInfo(info))
     }
 
     return (

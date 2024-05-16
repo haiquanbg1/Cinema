@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { targerFilmSlice } from './reducers/targetFilmSlice';
+import { targetFilmSlice } from './reducers/targetFilmSlice';
 const store = configureStore({
     reducer: {
-        getInfo: targerFilmSlice.reducer
+        getInfo: targetFilmSlice.reducer
     },
 })
 

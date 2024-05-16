@@ -28,9 +28,20 @@ const getCommentByCinemaId = async (req, res) => {
     return result;
 }
 
+const getCinemaById = async (cinema_id) => {
+    const result = await Cinema.findOne({
+        where: {
+            id: cinema_id
+        }
+    })
+    return result
+}
+
 module.exports = {
     getAllCinema,
     getAllCinemaByCityId,
     getAllComment,
-    getCommentByCinemaId
+    getCommentByCinemaId,
+    getAllCinemaByCityId,
+    getCinemaById
 }

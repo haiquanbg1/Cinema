@@ -97,7 +97,7 @@ function Register() {
         }
 
         let birthday = `${year}/${month}/${day}`;
-        let regobj = { firstName, lastName, gender, email, password, phone, birthday, city_id: 1, };
+        let regobj = { firstName, lastName, gender, email, password, phone, birthday, city_id: 2, };
 
         requestApi('user/register', 'post', regobj)
             .then((res) => {
@@ -118,12 +118,12 @@ function Register() {
 
         requestApi('user/login', 'post', inputobj)
             .then((res) => {
-                console.log(res)
-                localStorage.setItem('isAdmin', res.data.user.is_admin)
-                localStorage.setItem('lastName', res.data.user.lastName)
-                localStorage.setItem('firstName', res.data.user.firstName)
-                localStorage.setItem('accessToken', res.data.accessToken)
-                localStorage.setItem('refreshToken', res.data.refresh_token)
+                console.log(res.data.data)
+                // localStorage.setItem('isAdmin', res.data.data.dateUser.admin)
+                localStorage.setItem('lastName', res.data.data.dataUser.lastName)
+                localStorage.setItem('firstName', res.data.data.dataUser.firstName)
+                localStorage.setItem('accessToken', res.data.data.accessToken)
+                localStorage.setItem('refreshToken', res.data.data.refresh_token)
                 usenavigate('/')
             })
             .catch(err => console.log(err))

@@ -7,7 +7,7 @@ const getAllSeatBooked = async (req, res) => {
     try {
         const booked = await Seat.getSeatBookedByShowtimeId(req.query.showtime_id)
         const booking = await Seat.getSeatBookingByShowtimeId(req.query.showtime_id)
-        return successResponse(res, 200, "Thành công", {booked, booking})
+        return successResponse(res, 200, "Thành công", { booked, booking })
     } catch (error) {
         console.log(error)
         return errorResponse(res, 500, "Đã có lỗi xảy ra")
@@ -48,7 +48,10 @@ const checkSeatBook = (seats, seatsBook) => {
 
 const postSeatBooking = async (req, res) => {
     try {
-        const seats = req.body.seats
+        const seats = req.body
+        if (!seats || !seats[0]) {
+            return errorResponse(res, 400, "Chưa có ghế được đặt")
+        }
         // Kiểm tra ghế đã book chưa
         seatsBooking = await Seat.getSeatBooking(req.query.showtime_id)
         seatsBooked = await Seat.getSeatBooked(req.query.showtime_id)
@@ -66,9 +69,15 @@ const postSeatBooking = async (req, res) => {
     }
 }
 
+
 const deleteSeatBookingCache = async (req, res) => {
     try {
-        await Seat.deleteSeatBookingCache(req.query.showtime_id, req.user.id)
+        const ok = await Seat.deleteSeatBookingCache(req.query.showtime_id, req.user.id)
+        if (ok) {
+            return successResponse(res, 200, "Thành công")
+        } else {
+            return successResponse(res, 200, "Xoá thất bại, chưa có ghế được đặt")
+        }
     } catch (error) {
         return errorResponse(res, 500, "Đã xảy ra lỗi")
     }

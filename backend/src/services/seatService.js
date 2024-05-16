@@ -1,5 +1,4 @@
 const { Seat, booking_seat, Booking, Showtime } = require('../models/index')
-const { remember, rememberForever } = require("../core/cache")
 const redis = require("../methods/redis")
 
 const getSeatBookedByShowtimeId = async (showtime_id) => {
@@ -116,10 +115,15 @@ const deleteSeatBookingCache = async (showtime_id, user_id) => {
     const seatBooking = `booking-showtime:${showtime_id}`
     const seatBookingByUser = `showtime:${showtime_id}-user:${user_id}`
     const seats = await redis.sMembers(seatBookingByUser)
-    seats.forEach(async element => {
-        await redis.sRem(seatBooking, element)
-    })
-    redis.del(seatBookingByUser)
+    if (seats[0]) {
+        seats.forEach(async element => {
+            await redis.sRem(seatBooking, element)
+        })
+        redis.del(seatBookingByUser)
+        return 1
+    } else {
+        return 0
+    }
 }
 
 
