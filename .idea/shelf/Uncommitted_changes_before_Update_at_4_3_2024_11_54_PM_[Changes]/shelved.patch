@@ -1,0 +1,22 @@
+Index: backend/src/config/config.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/backend/src/config/config.json b/backend/src/config/config.json
+--- a/backend/src/config/config.json	
++++ b/backend/src/config/config.json	
+@@ -1,11 +1,11 @@
+ {
+   "development": {
+     "username": "root",
+-    "password": "123456",
++    "password": "",
+     "database": "web",
+     "host": "127.0.0.1",
+     "dialect": "mysql",
+-    "port": "3308"
++    "port": "3306"
+   },
+   "test": {
+     "username": "root",

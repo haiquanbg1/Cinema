@@ -1,0 +1,16 @@
+Index: backend/src/config/database.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>const mysql = require('mysql2/promise')\r\nconst process = require('process');\r\nconst env = process.env.NODE_ENV || 'development';\r\nconst config = require('./config.js')[env];\r\nconst fs = require('fs')\r\n\r\n// const connection = mysql.createPool({\r\n//     host: config.host,\r\n//     database: config.database,\r\n//     user: config.username,\r\n//     password: config.password,\r\n//     port: config.port,\r\n//     waitForConnections: true,\r\n//     connectionLimit: 10,\r\n//     queueLimit: 0,\r\n// })\r\n\r\nconst connection = mysql.createPool({\r\n    host: config.host,\r\n    database: config.database,\r\n    user: config.username,\r\n    password: config.password,\r\n    port: config.port,\r\n    waitForConnections: true,\r\n    connectionLimit: 10,\r\n    queueLimit: 0,\r\n})\r\n\r\nmodule.exports = connection
+===================================================================
+diff --git a/backend/src/config/database.js b/backend/src/config/database.js
+--- a/backend/src/config/database.js	
++++ b/backend/src/config/database.js	
+@@ -3,6 +3,7 @@
+ const env = process.env.NODE_ENV || 'development';
+ const config = require('./config.js')[env];
+ const fs = require('fs')
++const mongoose = require('mongoose');
+ 
+ // const connection = mysql.createPool({
+ //     host: config.host,

@@ -6,6 +6,7 @@ const seat = require('../controllers/seatController')
 const cinema = require('../controllers/cinemaController')
 const router = express.Router()
 const middleware = require('../middlewares/auth')
+const {pushComment} = require("../controllers/cinemaController");
 
 const isAuth = middleware.isAuth
 router.post('/refresh_token', user.refreshToken)
@@ -31,5 +32,11 @@ router.post('/seat/delete', isAuth, seat.deleteSeatBookingCache)
 // cinema
 router.get('/cinema', cinema.getAllCinema)
 router.get('/cinemaByCityId', cinema.getNameCinemaByCityId)
+router.get('/comment', cinema.getAllComment);
+router.get('/comment/:cinema_id', cinema.getCommentByCinemaId)
+router.delete('/deleteComment/:cinema_id', isAuth, cinema.deleteComment)
+router.put('/updateComment/:cinema_id', isAuth, cinema.updateComment)
+router.post('/createComment', isAuth, cinema.pushComment)
+
 
 module.exports = router
