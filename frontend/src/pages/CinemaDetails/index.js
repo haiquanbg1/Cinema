@@ -3,7 +3,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import styles from './CinemaDetails.module.scss';
 import { Link } from "react-router-dom";
 
+import { useLocation } from "react-router-dom";
 import requestApi from "~/fetch";
+import { getCommentById } from "../../components/Comments/config";
+import Comment from "~/components/Comments";
 import Image from "~/components/Image";
 import { getAllCinema } from "../Ticket/ShowTime/cinema";
 import { useEffect, useState } from "react";
@@ -11,13 +14,17 @@ const cx = classNames.bind(styles)
 
 function CinemaDetails() {
     const param = useParams()
+    const location = useLocation()
+    const { id } = location.state
     const [cinema, setCinema] = useState({})
     const [cinemaList, setCinemaList] = useState([])
     const navigate = useNavigate()
+
     useEffect(() => {
         const fetchAPI = async () => {
             try {
                 const res = await getAllCinema()
+
                 setCinemaList(res)
                 res.forEach(element => {
                     if (element.name == param.id) {
@@ -34,7 +41,6 @@ function CinemaDetails() {
         }
         fetchAPI();
     }, [])
-
 
 
     return (
@@ -55,9 +61,8 @@ function CinemaDetails() {
                     </div>
                 </div>
 
-                <div style={{ borderColor: '#72be43' }} className={cx('col-inner', 'c-box')}>
+                <Comment cinema_id={id}></Comment>
 
-                </div>
             </div>
 
             <div className={cx('col', 'large-4')}>

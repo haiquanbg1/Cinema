@@ -34,8 +34,8 @@ function Cinema() {
     return (
         <div className={cx('container', 'row')}>
             {cinemaList.map((cinema, index) => (
-                <div className={cx('col', 'large-3')}>
-                    <CinemaItem name={cinema.name} src={`cinema${cinema.id}.jpg`} />
+                <div key={index} className={cx('col', 'large-3')}>
+                    <CinemaItem id={cinema.id} name={cinema.name} src={`cinema${cinema.id}.jpg`} />
                 </div>
             ))}
 
