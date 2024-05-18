@@ -77,7 +77,8 @@ const login = async (req, res) => {
             firstName: user.firstName,
             lastName: user.lastName,
             city_id: user.city_id,
-            admin: user.is_admin
+            admin: user.is_admin,
+            id: user.id
         }
 
         return successResponse(res, 200, "Thành công", {

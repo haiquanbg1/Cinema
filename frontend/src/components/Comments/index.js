@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 import CommentForm from "./CommentForm";
 import Comment from "../Comment";
-
+import requestApi from "~/fetch";
 import { getCommentById } from "./config";
 import styles from './Comments.module.scss'
 
@@ -12,6 +12,7 @@ const cx = classNames.bind(styles)
 function Comments({ cinema_id }) {
     console.log(cinema_id)
     const [listCmt, setListCmt] = useState([]);
+    const [reset, setReset] = useState();
     useEffect(() => {
         const fetchAPI = async () => {
             try {
@@ -27,14 +28,21 @@ function Comments({ cinema_id }) {
         }
         fetchAPI();
     }
-        , [])
+        , [reset])
+
+    const addComment = async (text) => {
+        setReset(false)
+        const resObj = { content: text, rating: '3', cinema: cinema_id }
+        await requestApi('createComment', 'post', resObj)
+        setReset(true)
+    };
 
     return (
         <div style={{ borderColor: '#72be43' }} className={cx('col-inner', 'c-box')}>
-            <CommentForm />
+            <CommentForm handleSubmit={addComment} />
 
             {listCmt.map((comment, index) => (
-                <Comment key={index} comment={comment}></Comment>
+                <Comment currentUserId={localStorage.getItem('userId')} key={index} comment={comment}></Comment>
             ))}
         </div>
     );

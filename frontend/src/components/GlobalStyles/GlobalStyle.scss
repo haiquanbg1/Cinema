@@ -38,6 +38,46 @@ a {
     text-decoration: none;
 }
 
+.custom-scrollbar::-webkit-scrollbar {
+    width: 12px;
+
+}
+
+/* Custom scrollbar track */
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #6d1515;
+}
+
+/* Custom scrollbar handle */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+/* Custom scrollbar handle on hover */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Apply custom scrollbar styles */
+.custom-scrollbar-textarea::-webkit-scrollbar {
+    width: 12px;
+}
+
+.custom-scrollbar-textarea::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.custom-scrollbar-textarea::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.custom-scrollbar-textarea::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 .col {
     margin: 0;
     padding: 0 15px 30px;

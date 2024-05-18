@@ -1,3 +1,50 @@
 .comment-container {
     display: flex;
+    margin: 20px 0;
+    padding-right: 10px;
+}
+
+.image-container {
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.comment-right {
+    color: white;
+    flex: 1;
+    margin-left: 20px;
+    font-size: 20px;
+    background-color: #454d6a;
+    padding: 10px 20px;
+    border-radius: 30px;
+
+    .content-container {
+        .info {
+            display: flex;
+            justify-content: space-between;
+
+            .info--created {
+                font-size: 16px;
+                color: var(--primary-color);
+            }
+        }
+    }
+}
+
+.comment-actions {
+    display: flex;
+    font-size: 18px;
+    opacity: 0.8;
+
+    .comment-action {
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:first-child {
+            margin-right: 10px;
+        }
+    }
 }

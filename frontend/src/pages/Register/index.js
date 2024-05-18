@@ -118,12 +118,13 @@ function Register() {
 
         requestApi('user/login', 'post', inputobj)
             .then((res) => {
-                console.log(res.data.data)
+                console.log(res.data)
                 // localStorage.setItem('isAdmin', res.data.data.dateUser.admin)
                 localStorage.setItem('lastName', res.data.data.dataUser.lastName)
                 localStorage.setItem('firstName', res.data.data.dataUser.firstName)
                 localStorage.setItem('accessToken', res.data.data.accessToken)
                 localStorage.setItem('refreshToken', res.data.data.refresh_token)
+                localStorage.setItem('userId', res.data.data.dataUser.id)
                 usenavigate('/')
             })
             .catch(err => console.log(err))
