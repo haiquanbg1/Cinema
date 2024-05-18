@@ -83,7 +83,10 @@ const getShowtimeByFilmId = async (film_id, city_id) => {
             }
         }, {
             model: Film
-        }]
+        }],
+        order: [
+            ['time']
+        ]
     })
     return showtimes
 }
