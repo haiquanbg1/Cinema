@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import Button from "../Button";
 import styles from './CommentForm.module.scss'
@@ -7,6 +7,7 @@ import styles from './CommentForm.module.scss'
 const cx = classNames.bind(styles)
 
 function CommentForm({
+    handleSubmit,
     hasCancelButton = false,
     initialText = "",
 }) {
@@ -14,15 +15,26 @@ function CommentForm({
     const isTextareaDisabled = text.length === 0;
     const onSubmit = (event) => {
         event.preventDefault();
-        // handleSubmit(text);
+        handleSubmit(text);
         setText("");
     };
+
+    const textareaRef = useRef(null);
+
+    useEffect(() => {
+        const textarea = textareaRef.current;
+        if (textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = `${textarea.scrollHeight}px`;
+        }
+    }, [text]);
 
 
     return (
         <form className={cx('container')} onSubmit={onSubmit}>
             <textarea
-                className={cx('input')}
+                ref={textareaRef}
+                className={cx('custom-scrollbar-textarea', 'input')}
                 value={text}
                 onChange={(e) => setText(e.target.value)}
             />
