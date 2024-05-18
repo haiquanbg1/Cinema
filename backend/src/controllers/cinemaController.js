@@ -89,8 +89,7 @@ const updateComment = async (req, res) => {
 
 const deleteComment = async (req, res) => {
     const del = await Comment.deleteOne({
-        user: req.user.id,
-        cinema: req.params.cinema_id
+        id: req.body.id
     })
     if (del.deletedCount !== 0) {
         return successResponse(res, 200, "Delete success");

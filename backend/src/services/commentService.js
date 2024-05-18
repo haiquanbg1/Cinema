@@ -16,6 +16,7 @@ const getCommentByCinemaId = async (cinema_id) => {
             id: result[i].user
         })
         const comment = {
+            id: result[i].id,
             cinema: result[i].cinema,
             content: result[i].content,
             rating: result[i].rating,
