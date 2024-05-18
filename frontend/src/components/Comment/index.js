@@ -17,8 +17,6 @@ function Comment({
     const canEdit = currentUserId == comment.user
     const time = comment.time.slice(0, 10)
 
-    console.log(`canDel ${canDelete} ${currentUserId} ${comment.user}`)
-
     return (
         <div className={cx('comment-container')}>
             <div className={cx('image-container')}>
@@ -48,7 +46,7 @@ function Comment({
                     {canDelete && (
                         <div
                             className={cx("comment-action")}
-                        // onClick={() => deleteComment(comment.id)}
+                            onClick={() => deleteComment(comment.id)}
                         >
                             Delete
                         </div>
