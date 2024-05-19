@@ -15,19 +15,21 @@ const cx = classNames.bind(styles)
 function CinemaDetails() {
     const param = useParams()
     const location = useLocation()
-    const { id } = location.state
+    // const { id } = location.state
     const [cinema, setCinema] = useState({})
+    const [listCmt, setListCmt] = useState([]);
     const [cinemaList, setCinemaList] = useState([])
     const navigate = useNavigate()
 
     useEffect(() => {
         const fetchAPI = async () => {
+            let tmp
             try {
                 const res = await getAllCinema()
-
                 setCinemaList(res)
                 res.forEach(element => {
                     if (element.name == param.id) {
+                        tmp = element.id
                         setCinema(element)
                         return
                     }
@@ -35,6 +37,14 @@ function CinemaDetails() {
                 // console.log(res)
                 // // setShowTimes(res.data.data)
                 // // setCinema(res.data.booked)
+            } catch (err) {
+                console.log(err);
+            }
+
+            try {
+                const res1 = await getCommentById(tmp)
+                console.log(`res1: ${res1}`)
+                setListCmt(res1)
             } catch (err) {
                 console.log(err);
             }
@@ -61,7 +71,7 @@ function CinemaDetails() {
                     </div>
                 </div>
 
-                <Comment cinema_id={id}></Comment>
+                <Comment list_cmt={listCmt} cinemaId={cinema.id} ></Comment>
 
             </div>
 

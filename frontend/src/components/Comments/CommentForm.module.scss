@@ -21,3 +21,23 @@
         }
     }
 }
+
+.cancel-Btn {
+    align-items: center;
+    justify-content: center;
+    min-width: 132px;
+    padding: 10px 16px;
+    border-radius: 4px;
+    font-size: 1.6rem;
+    font-weight: 500;
+    cursor: pointer;
+    background-color: var(--white);
+    border: 1.5px solid var(--border-color);
+    margin-right: 20px;
+    color: white;
+    background-image: linear-gradient(#51b647, #b0ea12);
+
+    &:hover {
+        background-image: linear-gradient(#51b647, #51b647);
+    }
+}

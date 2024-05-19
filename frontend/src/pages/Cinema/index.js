@@ -27,6 +27,8 @@ function Cinema() {
             } catch (err) {
                 console.log(err);
             }
+
+
         }
         fetchAPI();
     }, [])

@@ -2,7 +2,7 @@ import FilmList from "~/components/FilmList";
 import classNames from "classnames/bind";
 import styles from "./Home.module.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTicketSimple, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { faTicketSimple, faCircleInfo, faLanguage } from '@fortawesome/free-solid-svg-icons';
 import Image from "~/components/Image";
 import Button from "~/components/Button";
 import { useSelector } from 'react-redux';
@@ -27,6 +27,12 @@ const getFilmList = async () => {
                     id: res['data']['data'][i].id,
                     type: categories.substring(0, categories.length - 2),
                     showing: res['data']['data'][i].showing,
+                    description: res['data']['data'][i].description,
+                    classify: res['data']['data'][i].Classify.description,
+                    actor: res['data']['data'][i].actor,
+                    director: res['data']['data'][i].director,
+                    release: res['data']['data'][i].release_date,
+                    language: res['data']['data'][i].Language.name
                 })
             }
         })

@@ -9,17 +9,18 @@ import styles from './Comments.module.scss'
 
 const cx = classNames.bind(styles)
 
-function Comments({ cinema_id }) {
-    console.log(cinema_id)
-    const [listCmt, setListCmt] = useState([]);
+function Comments({ list_cmt, cinemaId }) {
+    const [listCmt, setListCmt] = useState(list_cmt);
     const [reset, setReset] = useState();
+    const [activeComment, setActiveComment] = useState(null);
+
     useEffect(() => {
         const fetchAPI = async () => {
             try {
-                const res = await getCommentById(cinema_id)
-                setListCmt(res)
-                console.log(res)
-
+                if (cinemaId) {
+                    const res = await getCommentById(cinemaId)
+                    setListCmt(res)
+                }
                 // // setShowTimes(res.data.data)
                 // // setCinema(res.data.booked)
             } catch (err) {
@@ -32,31 +33,59 @@ function Comments({ cinema_id }) {
 
     const addComment = async (text) => {
         setReset(false)
-        const resObj = { content: text, rating: '3', cinema: cinema_id }
+        const resObj = {
+            content: text, rating: '3', cinema: cinemaId
+        }
         await requestApi('createComment', 'post', resObj)
         setReset(true)
     };
 
     const deleteComment = async (id) => {
         setReset(false)
-        await requestApi(`deleteComment/${cinema_id}`, 'delete', { id: id })
+        await requestApi(`deleteComment`, 'delete', { id: id })
         setReset(true)
+    }
 
+    const updateComment = async (text, id) => {
+        setReset(false)
+        await requestApi(`updateComment`, 'put', { content: text, rating: '3', id })
+        setActiveComment(null);
+        setReset(true)
     }
 
     return (
         <div style={{ borderColor: '#72be43' }} className={cx('col-inner', 'c-box')}>
             <CommentForm handleSubmit={addComment} />
 
-            {listCmt.map((comment, index) => (
-                <Comment
-                    currentUserId={localStorage.getItem('userId')}
-                    key={index}
-                    comment={comment}
-                    deleteComment={deleteComment}
-                >
-                </Comment>
-            ))}
+            {listCmt.length != 0 ?
+                listCmt.map((comment, index) => (
+                    <Comment
+                        currentUserId={localStorage.getItem('userId')}
+                        key={index}
+                        comment={comment}
+                        deleteComment={deleteComment}
+                        activeComment={activeComment}
+                        setActiveComment={setActiveComment}
+                        updateComment={updateComment}
+                    >
+                    </Comment>
+                ))
+                :
+                list_cmt.map((comment, index) => (
+                    <Comment
+                        currentUserId={localStorage.getItem('userId')}
+                        key={index}
+                        comment={comment}
+                        deleteComment={deleteComment}
+                        activeComment={activeComment}
+                        setActiveComment={setActiveComment}
+                        updateComment={updateComment}
+                    >
+                    </Comment>
+                ))
+            }
+
+
         </div>
     );
 }

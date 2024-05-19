@@ -32,7 +32,6 @@ function FilmInfo() {
     //     , [listInfo])
 
 
-
     const handleClick = (name, id) => {
         navigate(`/get-ticket/${name}`, { state: { id } })
 
@@ -40,6 +39,7 @@ function FilmInfo() {
     }
     return (
         <div className={listInfo.length != 0 ? cx('film-info', 'show') : cx('film-info')}>
+
             <button onClick={() => dispatch(targetFilmSlice.actions.deleteInfo(''))} className={cx('close-Btn')}>
 
             </button>
@@ -52,9 +52,11 @@ function FilmInfo() {
                     <button onClick={closeHandle} className={cx('trailer-btn')}>XEM TRAILER</button>
                 </div>
                 <div className={cx('film-detail-content')}>
-
                     <p className={cx('name')}>{info != null ? info.title : ''}</p>
-                    <p></p>
+                    <div className={cx('excerpt')}>
+
+                        {/* {!info.description && <p>{info.description}</p>} */}
+                    </div>
                 </div>
             </div>
         </div>

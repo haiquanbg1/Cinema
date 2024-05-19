@@ -10,6 +10,7 @@ function CommentForm({
     handleSubmit,
     hasCancelButton = false,
     initialText = "",
+    handleCancel
 }) {
     const [text, setText] = useState(initialText);
     const isTextareaDisabled = text.length === 0;
@@ -44,8 +45,8 @@ function CommentForm({
             {hasCancelButton && (
                 <button
                     type="button"
-                    className="comment-form-button comment-form-cancel-button"
-                // onClick={handleCancel}
+                    className={cx('cancel-Btn')}
+                    onClick={handleCancel}
                 >
                     Cancel
                 </button>
