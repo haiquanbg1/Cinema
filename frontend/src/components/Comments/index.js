@@ -37,12 +37,25 @@ function Comments({ cinema_id }) {
         setReset(true)
     };
 
+    const deleteComment = async (id) => {
+        setReset(false)
+        await requestApi(`deleteComment/${cinema_id}`, 'delete', { id: id })
+        setReset(true)
+
+    }
+
     return (
         <div style={{ borderColor: '#72be43' }} className={cx('col-inner', 'c-box')}>
             <CommentForm handleSubmit={addComment} />
 
             {listCmt.map((comment, index) => (
-                <Comment currentUserId={localStorage.getItem('userId')} key={index} comment={comment}></Comment>
+                <Comment
+                    currentUserId={localStorage.getItem('userId')}
+                    key={index}
+                    comment={comment}
+                    deleteComment={deleteComment}
+                >
+                </Comment>
             ))}
         </div>
     );
