@@ -74,27 +74,24 @@ const pushComment = async (req, res) => {
 }
 
 const updateComment = async (req, res) => {
-    const {content, rating} = req.body;
-    const update = { content: content, rating: rating };
-    const doc = await Comment.findOneAndUpdate({cinema:req.params.cinema_id, user:req.user.id}, update, {
-        new: true
-    });
-    if (!doc) {
-        return errorResponse(res, 404, "Đã xảy ra lỗi");
-    }
-    else {
-        return successResponse(res, 200, "Cập nhật thành công", doc);
+    try {
+        const {content, rating, id} = req.body;
+        const update = { content: content, rating: rating };
+        await Comment.findByIdAndUpdate(id, update)
+        return successResponse(res, 200, "Thành công")
+    } catch (error) {
+        console.log(error)
+        return errorResponse(res, 500, "Đã có lỗi xảy ra")
     }
 }
 
 const deleteComment = async (req, res) => {
-    const del = await Comment.deleteOne({
-        id: req.body.id
-    })
-    if (del.deletedCount !== 0) {
-        return successResponse(res, 200, "Delete success");
-    } else {
-        return errorResponse(res, 404, "Delete fail");
+    try {
+        await Comment.findByIdAndDelete(req.body.id)
+        return successResponse(res, 200, "Thành công")
+    } catch (error) {
+        console.log(error)
+        return errorResponse(res, 500, "Đã có lỗi xảy ra")
     }
 }
 
