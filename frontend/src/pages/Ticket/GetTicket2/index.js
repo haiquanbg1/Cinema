@@ -266,7 +266,7 @@ function GetTicket2() {
         const fetchAPI = async () => {
             try {
                 const res = await getSeatBooked(params.id)
-                // console.log(res)
+                console.log(res)
                 // setShowTimes(res.data.data)
                 setListDisable(res.data.data.booked)
 
