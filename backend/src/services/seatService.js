@@ -41,9 +41,22 @@ const getSeatBookedByShowtimeId = async (showtime_id) => {
     }
 }
 
+const refreshSeatBooking = async (showtime_id) => {
+    const seatBooking = `booking-showtime:${showtime_id}`
+    const seatBookingPrefix = `showtime:${showtime_id}-user:`
+    const keys = await scanKeysStartingWith(seatBookingPrefix)
+    await redis.del(seatBooking)
+    keys.forEach(async element => {
+        if (element.startsWith(seatBookingPrefix)) {
+            const seat = await redis.sMembers(element)
+            await redis.sAdd(seatBooking, seat)
+        }
+    })
+}
+
 const getSeatBookingByShowtimeId = async (showtime_id) => {
     const seatBooking = `booking-showtime:${showtime_id}`
-    result = await redis.sMembers(seatBooking)
+    const result = await redis.sMembers(seatBooking)
     return result
 }
 
@@ -108,6 +121,7 @@ const postSeatBooking = async (showtime_id, user_id, seat) => {
     const seatBookingByUser = `showtime:${showtime_id}-user:${user_id}`
     const seatBooking = `booking-showtime:${showtime_id}`
     await redis.sAdd(seatBookingByUser, seat)
+    await redis.expire(seatBookingByUser, 10 * 60)
     await redis.sAdd(seatBooking, seat)
 }
 
@@ -126,6 +140,24 @@ const deleteSeatBookingCache = async (showtime_id, user_id) => {
     }
 }
 
+const scanKeysStartingWith = async (prefix) => {
+    try {
+        const keys = [];
+        let cursor = '0';
+        const pattern = prefix + "*";
+    
+        do {
+        const reply = await redis.scan(cursor);
+        cursor = reply.cursor;
+        keys.push(...reply.keys);
+        } while (cursor != 0);
+    
+        return keys;
+    } catch (error) {
+        console.log(error)
+    }
+  };
+
 
 module.exports = {
     getSeatBookedByShowtimeId,
@@ -137,5 +169,6 @@ module.exports = {
     getSeatBookingByUser,
     getSeatBooked,
     getSeatBooking,
-    getSeatBookingByShowtimeId
+    getSeatBookingByShowtimeId,
+    refreshSeatBooking
 }

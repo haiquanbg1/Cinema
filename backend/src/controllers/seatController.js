@@ -5,6 +5,8 @@ const { successResponse, errorResponse } = require("../methods/response")
 
 const getAllSeatBooked = async (req, res) => {
     try {
+        
+        await Seat.refreshSeatBooking(req.query.showtime_id, req.user.id)
         const booked = await Seat.getSeatBookedByShowtimeId(req.query.showtime_id)
         const booking = await Seat.getSeatBookingByShowtimeId(req.query.showtime_id)
         return successResponse(res, 200, "Thành công", { booked, booking })
