@@ -253,3 +253,79 @@
 .hide {
     display: none;
 }
+
+.birthday_day,
+.birthday_month,
+.birthday_year {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+
+    option {
+        background-color: #1a1d29;
+    }
+}
+
+.city {
+    width: 100%;
+    padding: 10px 20px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+    border: 1px solid #454D6A;
+    border-radius: 5px;
+    padding-left: 12px;
+    margin-bottom: 20px;
+
+    .city-select {
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        outline: none;
+        border: none;
+        color: white;
+        font-size: 18px;
+
+        option {
+            background-color: #1a1d29;
+        }
+    }
+}
+
+.policy {
+    display: flex;
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 16px;
+
+    input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .checkmark {
+        position: absolute;
+        top: 3px;
+        left: 0;
+        height: 18px;
+        width: 18px;
+        background-color: transparent;
+        border: 1px solid #454D6A;
+        // border-radius: 50%;
+    }
+
+    &:hover input~.checkmark {
+        background-color: #0d0e13;
+    }
+
+    input:checked~.checkmark {
+        background-color: var(--primary-color);
+    }
+}

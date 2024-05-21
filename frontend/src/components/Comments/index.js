@@ -10,9 +10,15 @@ import styles from './Comments.module.scss'
 const cx = classNames.bind(styles)
 
 function Comments({ list_cmt, cinemaId }) {
-    const [listCmt, setListCmt] = useState(list_cmt);
+    console.log(list_cmt)
+    const [listCmt, setListCmt] = useState([]);
+    console.log(listCmt)
     const [reset, setReset] = useState();
     const [activeComment, setActiveComment] = useState(null);
+
+    useEffect(() => {
+        setListCmt(list_cmt)
+    }, [])
 
     useEffect(() => {
         const fetchAPI = async () => {
@@ -28,6 +34,7 @@ function Comments({ list_cmt, cinemaId }) {
             }
         }
         fetchAPI();
+
     }
         , [reset])
 
@@ -84,6 +91,20 @@ function Comments({ list_cmt, cinemaId }) {
                     </Comment>
                 ))
             }
+            {/* {
+                listCmt.map((comment, index) => (
+                    <Comment
+                        currentUserId={localStorage.getItem('userId')}
+                        key={index}
+                        comment={comment}
+                        deleteComment={deleteComment}
+                        activeComment={activeComment}
+                        setActiveComment={setActiveComment}
+                        updateComment={updateComment}
+                    >
+                    </Comment>
+                ))
+            } */}
 
 
         </div>

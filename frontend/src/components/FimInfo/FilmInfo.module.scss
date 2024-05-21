@@ -28,9 +28,11 @@
         display: flex;
 
         .film-detail-control {
-            margin: 60px;
-            width: 320px;
-            height: 460px;
+
+            margin: 40px 30px;
+            margin-right: 10px;
+            // width: 320px;
+            max-height: 520px;
 
             .image {
                 display: block;
@@ -50,7 +52,8 @@
         }
 
         .film-detail-content {
-            margin: 50px;
+            margin: 40px 20px;
+            margin-left: 10px;
 
             .name {
                 font-size: 30px;
@@ -63,4 +66,38 @@
 
 .film-info {
     display: none;
+}
+
+.excerpt {
+    margin: 22px 0;
+    font-size: 16px;
+    color: white;
+    font-weight: 650;
+
+}
+
+.meta {
+    color: white;
+    font-size: 18px;
+    font-weight: 650;
+
+    p {
+        margin-bottom: 20px;
+
+        span {
+            margin-right: 5px;
+        }
+
+        .meta-title {
+            color: #ccc;
+        }
+
+        .format {
+            display: inline-block;
+            background-color: #26b82c;
+            font-size: 14px;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    }
 }

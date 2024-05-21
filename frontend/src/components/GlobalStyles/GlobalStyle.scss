@@ -14,6 +14,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: #A9B7E9 #090b13;
 }
 
 html {
@@ -98,6 +100,11 @@ a {
 .large-3 {
     flex-basis: 25%;
     max-width: 25%;
+}
+
+.large-5 {
+    flex-basis: 41.6666666667%;
+    max-width: 41.6666666667%;
 }
 
 .col:first-child .col-inner {

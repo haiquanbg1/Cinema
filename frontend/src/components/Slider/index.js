@@ -25,28 +25,40 @@ export const responsive = {
     },
 };
 
-const getFilmList = async () => {
-    let data = []
-    await requestApi('film', 'get')
-        .then((res) => {
-            // console.log(res.data.data)
-            for (let i = 0; i < res.data.data.length; i++) {
-                let categories = ""
-                res['data']['data'][i]['film_categories'].forEach(element => {
-                    categories = categories + element.Category.name + ', '
-                })
-                data.push({
-                    src: res['data']['data'][i].image,
-                    title: res['data']['data'][i].title,
-                    type: categories.substring(0, categories.length - 2)
-                })
-            }
-        })
-        .catch(err => console.log(err))
-    return data
-}
+// const getFilmList = async () => {
+//     let data = []
+//     await requestApi('film', 'get')
+//         .then((res) => {
+//             // console.log(res.data.data)
+//             for (let i = 0; i < res.data.data.length; i++) {
+//                 let categories = ""
+//                 res['data']['data'][i]['film_categories'].forEach(element => {
+//                     categories = categories + element.Category.name + ', '
+//                 })
+//                 data.push({
+//                     src: res['data']['data'][i].image,
+//                     title: res['data']['data'][i].title,
+//                     type: categories.substring(0, categories.length - 2)
+//                 })
+//             }
+//         })
+//         .catch(err => console.log(err))
+//     return data
+// }
 
-export const films = await getFilmList()
+export const films =
+    [
+        {
+            src: 'https://www.bhdstar.vn/wp-content/uploads/2024/03/duoi-13-t-va-duoi-16t.jpg',
+            title: 'Khách hàng lưu ý',
+        },
+        {
+            src: 'https://www.bhdstar.vn/wp-content/uploads/2024/04/WEB-LED-COMBO-LY-DOI-MAU-KO-GIA.jpg',
+            title: 'COMBO LY ĐỔI MÀU ĐỘC QUYỀN',
+        }
+    ]
+
+
 
 
 function Slider() {

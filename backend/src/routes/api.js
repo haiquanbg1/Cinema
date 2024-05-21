@@ -14,7 +14,7 @@ router.post('/refresh_token', user.refreshToken)
 router.get('/film', film.getFilmAPI)
 router.get('/film/:film_id', film.getFilmById)
 
-// user
+// user  
 router.post('/user/register', user.register)
 router.post('/user/login', user.login)
 router.get('/user', isAuth, user.getRankUserByAccessToken)
@@ -28,6 +28,7 @@ router.get('/seat', isAuth, seat.getAllSeatBooked)
 router.post('/seat/booked', isAuth, seat.postSeatBooked)
 router.post('/seat/booking', isAuth, seat.postSeatBooking)
 router.delete('/seat/delete', isAuth, seat.deleteSeatBookingCache)
+router.get('/seat/user/booking', isAuth, seat.getSeatUserBooking)
 
 // cinema
 router.get('/cinema', cinema.getAllCinema)

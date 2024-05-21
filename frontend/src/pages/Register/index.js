@@ -1,6 +1,5 @@
 import styles from './Register.module.scss';
 import classNames from "classnames/bind";
-import './index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faCheck, faTimes, faInfoCircle, faDisplay } from '@fortawesome/free-solid-svg-icons';
 import { useState, useRef, useEffect } from 'react';
@@ -9,6 +8,7 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast';
 
 import Button from '~/components/Button';
 import requestApi from '~/fetch';
@@ -20,8 +20,8 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 function Register() {
     // const days = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"]
     // const [day, setDay] = useState('')
-    const userRef = useRef();
-    const errRef = useRef();
+    const dayRef = useRef()
+
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -33,7 +33,8 @@ function Register() {
     const [day, setDay] = useState("");
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
-
+    const [cityId, setCityId] = useState(0)
+    const [accept, setAccept] = useState(-1)
 
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
@@ -95,15 +96,32 @@ function Register() {
             setErrMsg("Invalid Entry");
             return;
         }
+        if (accept != 1) {
+            setErrMsg("Vui lòng đồng ý với điều khoản của chúng tôi");
+            return;
+        }
 
         let birthday = `${year}/${month}/${day}`;
         let regobj = { firstName, lastName, gender, email, password, phone, birthday, city_id: 2, };
 
         requestApi('user/register', 'post', regobj)
             .then((res) => {
-                console.log(res)
+                toast.success('Đăng ký thành công')
+                setFirstName('')
+                setLastName('')
+                setEmail('')
+                setPassword('')
+                setPassword2('')
+                setPhone('')
+                setAccept(-1)
+                setDay('')
+                setMonth('')
+                setYear('')
+                setCityId(0)
             })
-            .catch(err => console.log(err))
+            .catch(err =>
+                console.log(err)
+            )
     }
 
 
@@ -194,13 +212,13 @@ function Register() {
                                 <div className={cx('radio-list')}>
                                     <label className={cx('radio-item')}>
                                         <span>Nam</span>
-                                        <input checked={gender === '1'} onChange={e => setGender(0)} type="radio" name='title' value='male' />
+                                        <input checked={gender === '1'} onClick={e => setGender('1')} type="radio" name='title' value='male' />
                                         <span className={cx('checkmark')}></span>
                                     </label>
 
                                     <label className={cx('radio-item')}>
                                         <span>Nữ</span>
-                                        <input checked={gender === '0'} onChange={e => setGender(1)} type="radio" name='title' value='female' />
+                                        <input checked={gender === '0'} onClick={e => setGender('0')} type="radio" name='title' value='female' />
                                         <span className={cx('checkmark')}></span>
                                     </label>
 
@@ -275,7 +293,7 @@ function Register() {
                             <div className={cx('birth-container')}>
                                 <div className={cx('birth-item', 'day')}>
                                     <div className={cx('birth-item-select')}>
-                                        <select onChange={e => { setDay(e.target.value) }} name="birthday_day">
+                                        <select ref={dayRef} onChange={e => { setDay(e.target.value) }} className={cx("birthday_day")} value={day}>
                                             <option value="">Chọn ngày</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
@@ -310,18 +328,18 @@ function Register() {
                                             <option value="31">31</option>
 
                                         </select>
-                                        <span>
+                                        {/* <span>
                                             <span>Chọn ngày</span>
                                             <span>
                                                 <FontAwesomeIcon icon={faAngleDown}></FontAwesomeIcon>
                                             </span>
-                                        </span>
+                                        </span> */}
                                     </div>
                                 </div>
 
                                 <div className={cx('birth-item', 'month')}>
                                     <div className={cx('birth-item-select')}>
-                                        <select onChange={e => setMonth(e.target.value)} name="birthday_month">
+                                        <select onChange={e => setMonth(e.target.value)} className={cx("birthday_month")} value={month}>
                                             <option value="">Chọn tháng</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
@@ -336,18 +354,13 @@ function Register() {
                                             <option value="11">11</option>
                                             <option value="12">12</option>
                                         </select>
-                                        <span>
-                                            <span>Chọn tháng</span>
-                                            <span>
-                                                <FontAwesomeIcon icon={faAngleDown}></FontAwesomeIcon>
-                                            </span>
-                                        </span>
+
                                     </div>
                                 </div>
 
                                 <div className={cx('birth-item', 'year')}>
                                     <div className={cx('birth-item-select')}>
-                                        <select onChange={e => setYear(e.target.value)} name="birthday_year">
+                                        <select onChange={e => setYear(e.target.value)} className={cx("birthday_year")} value={year}>
                                             <option value="">Chọn năm</option>
                                             <option value="2024">2024</option>
                                             <option value="2023">2023</option>
@@ -441,25 +454,42 @@ function Register() {
                                             <option value="1935">1935</option>
                                             <option value="1934">1934</option>
                                         </select>
-                                        <span>
-                                            <span>Chọn năm</span>
-                                            <span>
-                                                <FontAwesomeIcon icon={faAngleDown}></FontAwesomeIcon>
-                                            </span>
-                                        </span>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className={cx('form-row', 'city')}>
+                        <div className={cx('form-row')}>
                             <label>
                                 Tỉnh/Thành phố
                                 <span> *</span>
                             </label>
+
+
+                            <div className={cx('city')}>
+                                <select onChange={e => setCityId(e.target.value)} className={cx("city-select")} value={cityId}>
+                                    <option value={0}>Chọn thành phố</option>
+                                    <option value={1}>Hà Nội</option>
+                                    <option value={2}>Thành phố Hồ Chí Minh</option>
+                                </select>
+                            </div>
+
+
                         </div>
+
+                        <div className={cx('policy')}>
+                            <label className={cx('check-box')}>
+                                <span>Tôi đã đọc, hiểu và đồng ý với các điều khoản</span>
+                                <input checked={accept == 1} type="checkbox" value='1' onClick={() => setAccept(-accept)} />
+                                <span className={cx('checkmark')}></span>
+                            </label>
+                        </div>
+
                         <p className={cx('notify')} style={{ marginBottom: '0' }}>{errMsg}</p>
-                        <div type="submit   "><Button type='submit' primary stretch className={'login-btn'}>ĐĂNG KÝ</Button></div>
+                        <div type="submit"><Button type='submit' primary stretch className={'login-btn'}>ĐĂNG KÝ</Button></div>
+
+
                     </form>
                 </div >
             </div >

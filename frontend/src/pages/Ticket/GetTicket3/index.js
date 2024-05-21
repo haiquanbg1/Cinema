@@ -14,6 +14,7 @@ const cx = classNames.bind(styles)
 
 
 function GetTicket3() {
+    // const history = useHistory
     const location = useLocation()
     const { film, id, cinema, showTime, seats, price } = location.state
     const [userRank, setUserRank] = useState(0)
@@ -43,7 +44,34 @@ function GetTicket3() {
         toast.success('Đặt vé thành công')
     }
 
-    const handleBack = () => {
+    useEffect(() => {
+        const handlePopState = async () => {
+            await requestApi(`seat/delete?showtime_id=${id}`, 'delete')
+                .then(res => {
+                    console.log(res)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+            // Thực hiện các hành động bạn mong muốn tại đây
+        };
+
+        window.addEventListener('popstate', handlePopState);
+
+        // Cleanup event listener khi component bị unmount
+        return () => {
+            window.removeEventListener('popstate', handlePopState);
+        };
+    }, [location]);
+
+    const handleBack = async () => {
+        await requestApi(`seat/delete?showtime_id=${id}`, 'delete')
+            .then(res => {
+                console.log(res)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
         navigate(`/get-ticket/${film}/${id}`, { state: { film, id, cinema } })
     }
 

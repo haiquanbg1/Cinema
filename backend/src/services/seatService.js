@@ -145,18 +145,36 @@ const scanKeysStartingWith = async (prefix) => {
         const keys = [];
         let cursor = '0';
         const pattern = prefix + "*";
-    
+
         do {
-        const reply = await redis.scan(cursor);
-        cursor = reply.cursor;
-        keys.push(...reply.keys);
+            const reply = await redis.scan(cursor);
+            cursor = reply.cursor;
+            keys.push(...reply.keys);
         } while (cursor != 0);
-    
+
         return keys;
     } catch (error) {
         console.log(error)
     }
-  };
+};
+
+const getSeatUserBooking = async (showtime_id, user_id) => {
+    const seatBookingByUser = `showtime:${showtime_id}-user:${user_id}`
+    const result = await redis.sMembers(seatBookingByUser)
+    return result
+}
+
+const getSeatByName = async (name) => {
+    const seat = await Seat.findOne({
+        where: {
+            name: name
+        }
+    })
+    return {
+        name: name,
+        type: seat.dataValues.type
+    }
+}
 
 
 module.exports = {
@@ -170,5 +188,7 @@ module.exports = {
     getSeatBooked,
     getSeatBooking,
     getSeatBookingByShowtimeId,
-    refreshSeatBooking
+    refreshSeatBooking,
+    getSeatUserBooking,
+    getSeatByName
 }

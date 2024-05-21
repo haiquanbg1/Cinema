@@ -5,7 +5,7 @@ const { successResponse, errorResponse } = require("../methods/response")
 
 const getAllSeatBooked = async (req, res) => {
     try {
-        
+
         await Seat.refreshSeatBooking(req.query.showtime_id, req.user.id)
         const booked = await Seat.getSeatBookedByShowtimeId(req.query.showtime_id)
         const booking = await Seat.getSeatBookingByShowtimeId(req.query.showtime_id)
@@ -85,9 +85,21 @@ const deleteSeatBookingCache = async (req, res) => {
     }
 }
 
+
+const getSeatUserBooking = async (req, res) => {
+    try {
+        const result = await Seat.getSeatUserBooking(req.query.showtime_id, req.user.id)
+        return successResponse(res, 200, "Thành công", result)
+    } catch (error) {
+        console.log(error)
+        return errorResponse(res, 500, "Đã xảy ra lỗi")
+    }
+}
+
 module.exports = {
     getAllSeatBooked,
     postSeatBooked,
     postSeatBooking,
-    deleteSeatBookingCache
+    deleteSeatBookingCache,
+    getSeatUserBooking
 }

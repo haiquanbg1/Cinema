@@ -179,6 +179,7 @@ const list = [[{ id: 'A1', type: 'standard' }
 function GetTicket2() {
     const [seats, setSeats] = useState([])
     const [listDisable, setListDisable] = useState([])
+    const [listBooking, setListBooking] = useState([])
     const [showTime, setShowTime] = useState({})
     const [price, setPrice] = useState(0)
     // const [film, setFilm] = useState({})
@@ -228,6 +229,16 @@ function GetTicket2() {
         toast.error('Ghế đã được đặt')
     }
 
+    // useEffect(() => {
+    //     requestApi(`seat/delete?showtime_id=${params.id}`, 'delete')
+    //         .then(res => {
+    //             console.log(res)
+    //         })
+    //         .catch((error) => {
+    //             console.log(error)
+    //         })
+    // })
+
 
     const handleClick = async () => {
         let tmp = seats.map((element) => {
@@ -247,20 +258,12 @@ function GetTicket2() {
             })
             .catch(err => console.log(err))
 
+
+
         navigate(`/get-ticket/${film}/${id}/thanh-toan`, { state: { film, id, cinema, showTime, seats, price } })
     }
 
-    // useEffect(() => {
-    //     const fetchAPI2 = async () => {
-    //         try {
-    //             await deleteSeatBooking(params.id)
 
-    //         } catch (err) {
-    //             console.log(err);
-    //         }
-    //     }
-    //     fetchAPI2();
-    // }, [])
 
     useEffect(() => {
         const fetchAPI = async () => {
@@ -269,7 +272,7 @@ function GetTicket2() {
                 console.log(res)
                 // setShowTimes(res.data.data)
                 setListDisable(res.data.data.booked)
-
+                setListBooking(res.data.data.booking)
             } catch (err) {
                 console.log(err);
             }
@@ -277,11 +280,33 @@ function GetTicket2() {
         fetchAPI();
     }, [])
 
+    // useEffect(() => {
+    //     requestApi(`seat/user/booking?showtime_id=${params.id}`, 'get')
+    //         .then(res => {
+    //             const my_booking = res.data.data.forEach(element => {
+    //                 addId({ id: element, type: 'standard' })
+    //             })
+    //             console.log(my_booking)
+    //             // setListBooking(prevState => {
+    //             //     prevState.filter(element => {
+    //             //         return !my_booking.includes(element.id)
+    //             //     })
+    //             // })
+    //             // setSeats(my_booking)
+
+    //         })
+    //         .catch((error) => {
+    //             console.log(error)
+    //         })
+    // }, [])
+
     useEffect(() => {
         const fetchAPI = async () => {
             try {
                 const res = await getShowTime(params.id)
                 // setShowTimes(res.data.data)
+
+
                 setShowTime(res.data.data)
 
             } catch (err) {
@@ -346,6 +371,15 @@ function GetTicket2() {
                                                         <div className={cx('col', 'large-4')}>
                                                             <div className={cx("col-inner", 'seat-container')}>
                                                                 <div className={cx('icon')}>
+                                                                    <span className={cx('seat-icon', 'booking')}></span>
+                                                                </div>
+                                                                <div className={cx('icon-text')}>Ghế đang đặt</div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className={cx('col', 'large-4')}>
+                                                            <div className={cx("col-inner", 'seat-container')}>
+                                                                <div className={cx('icon')}>
                                                                     <span className={cx('seat-icon', 'disable')}></span>
                                                                 </div>
                                                                 <div className={cx('icon-text')}>Ghế đã bán</div>
@@ -358,18 +392,25 @@ function GetTicket2() {
                                             <tr>
                                                 <td>A</td>
                                                 {list[0].map((seat) => (
-                                                    !listDisable.includes(seat.id) ?
-                                                        <td>
-                                                            <div onClick={() => addId({ name: seat.id, type: seat.type })}>
-                                                                <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
-                                                            </div>
-                                                        </td>
-                                                        :
+                                                    listDisable.includes(seat.id) ?
                                                         <td>
                                                             <div onClick={() => clickDisable()}>
                                                                 <Seat key={seat.id} id={seat.id} type='disable'></Seat>
                                                             </div>
                                                         </td>
+                                                        :
+                                                        listBooking.includes(seat.id) ?
+                                                            <td>
+                                                                <div onClick={() => clickDisable()}>
+                                                                    <Seat key={seat.id} id={seat.id} type='booking'></Seat>
+                                                                </div>
+                                                            </td>
+                                                            :
+                                                            <td>
+                                                                <div onClick={() => addId({ name: seat.id, type: seat.type })}>
+                                                                    <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
+                                                                </div>
+                                                            </td>
                                                 ))}
 
                                                 <td>
@@ -379,18 +420,25 @@ function GetTicket2() {
                                             <tr>
                                                 <td>B</td>
                                                 {list[1].map((seat) => (
-                                                    !listDisable.includes(seat.id) ?
-                                                        <td>
-                                                            <div onClick={() => addId({ name: seat.id, type: seat.type })}>
-                                                                <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
-                                                            </div>
-                                                        </td>
-                                                        :
+                                                    listDisable.includes(seat.id) ?
                                                         <td>
                                                             <div onClick={() => clickDisable()}>
                                                                 <Seat key={seat.id} id={seat.id} type='disable'></Seat>
                                                             </div>
                                                         </td>
+                                                        :
+                                                        listBooking.includes(seat.id) ?
+                                                            <td>
+                                                                <div onClick={() => clickDisable()}>
+                                                                    <Seat key={seat.id} id={seat.id} type='booking'></Seat>
+                                                                </div>
+                                                            </td>
+                                                            :
+                                                            <td>
+                                                                <div onClick={() => addId({ name: seat.id, type: seat.type })}>
+                                                                    <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
+                                                                </div>
+                                                            </td>
                                                 ))}
                                                 <td>
                                                 </td>
@@ -399,18 +447,25 @@ function GetTicket2() {
                                             <tr>
                                                 <td>C</td>
                                                 {list[2].map((seat) => (
-                                                    !listDisable.includes(seat.id) ?
-                                                        <td>
-                                                            <div onClick={() => addId({ name: seat.id, type: seat.type })}>
-                                                                <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
-                                                            </div>
-                                                        </td>
-                                                        :
+                                                    listDisable.includes(seat.id) ?
                                                         <td>
                                                             <div onClick={() => clickDisable()}>
                                                                 <Seat key={seat.id} id={seat.id} type='disable'></Seat>
                                                             </div>
                                                         </td>
+                                                        :
+                                                        listBooking.includes(seat.id) ?
+                                                            <td>
+                                                                <div onClick={() => clickDisable()}>
+                                                                    <Seat key={seat.id} id={seat.id} type='booking'></Seat>
+                                                                </div>
+                                                            </td>
+                                                            :
+                                                            <td>
+                                                                <div onClick={() => addId({ name: seat.id, type: seat.type })}>
+                                                                    <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
+                                                                </div>
+                                                            </td>
                                                 ))}
                                                 <td>
                                                 </td>
@@ -419,18 +474,25 @@ function GetTicket2() {
                                             <tr>
                                                 <td>D</td>
                                                 {list[3].map((seat) => (
-                                                    !listDisable.includes(seat.id) ?
-                                                        <td>
-                                                            <div onClick={() => addId({ name: seat.id, type: seat.type })}>
-                                                                <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
-                                                            </div>
-                                                        </td>
-                                                        :
+                                                    listDisable.includes(seat.id) ?
                                                         <td>
                                                             <div onClick={() => clickDisable()}>
                                                                 <Seat key={seat.id} id={seat.id} type='disable'></Seat>
                                                             </div>
                                                         </td>
+                                                        :
+                                                        listBooking.includes(seat.id) ?
+                                                            <td>
+                                                                <div onClick={() => clickDisable()}>
+                                                                    <Seat key={seat.id} id={seat.id} type='booking'></Seat>
+                                                                </div>
+                                                            </td>
+                                                            :
+                                                            <td>
+                                                                <div onClick={() => addId({ name: seat.id, type: seat.type })}>
+                                                                    <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
+                                                                </div>
+                                                            </td>
                                                 ))}
                                                 <td>
                                                 </td>
@@ -439,18 +501,25 @@ function GetTicket2() {
                                             <tr>
                                                 <td>E</td>
                                                 {list[4].map((seat) => (
-                                                    !listDisable.includes(seat.id) ?
-                                                        <td>
-                                                            <div onClick={() => addId({ name: seat.id, type: seat.type })}>
-                                                                <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
-                                                            </div>
-                                                        </td>
-                                                        :
+                                                    listDisable.includes(seat.id) ?
                                                         <td>
                                                             <div onClick={() => clickDisable()}>
                                                                 <Seat key={seat.id} id={seat.id} type='disable'></Seat>
                                                             </div>
                                                         </td>
+                                                        :
+                                                        listBooking.includes(seat.id) ?
+                                                            <td>
+                                                                <div onClick={() => clickDisable()}>
+                                                                    <Seat key={seat.id} id={seat.id} type='booking'></Seat>
+                                                                </div>
+                                                            </td>
+                                                            :
+                                                            <td>
+                                                                <div onClick={() => addId({ name: seat.id, type: seat.type })}>
+                                                                    <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
+                                                                </div>
+                                                            </td>
                                                 ))}
                                                 <td>
                                                 </td>
@@ -459,18 +528,25 @@ function GetTicket2() {
                                             <tr>
                                                 <td>F</td>
                                                 {list[5].map((seat) => (
-                                                    !listDisable.includes(seat.id) ?
-                                                        <td>
-                                                            <div onClick={() => addId({ name: seat.id, type: seat.type })}>
-                                                                <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
-                                                            </div>
-                                                        </td>
-                                                        :
+                                                    listDisable.includes(seat.id) ?
                                                         <td>
                                                             <div onClick={() => clickDisable()}>
                                                                 <Seat key={seat.id} id={seat.id} type='disable'></Seat>
                                                             </div>
                                                         </td>
+                                                        :
+                                                        listBooking.includes(seat.id) ?
+                                                            <td>
+                                                                <div onClick={() => clickDisable()}>
+                                                                    <Seat key={seat.id} id={seat.id} type='booking'></Seat>
+                                                                </div>
+                                                            </td>
+                                                            :
+                                                            <td>
+                                                                <div onClick={() => addId({ name: seat.id, type: seat.type })}>
+                                                                    <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
+                                                                </div>
+                                                            </td>
                                                 ))}
                                                 <td>
                                                 </td>
@@ -479,18 +555,25 @@ function GetTicket2() {
                                             <tr>
                                                 <td>G</td>
                                                 {list[6].map((seat) => (
-                                                    !listDisable.includes(seat.id) ?
-                                                        <td>
-                                                            <div onClick={() => addId({ name: seat.id, type: seat.type })}>
-                                                                <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
-                                                            </div>
-                                                        </td>
-                                                        :
+                                                    listDisable.includes(seat.id) ?
                                                         <td>
                                                             <div onClick={() => clickDisable()}>
                                                                 <Seat key={seat.id} id={seat.id} type='disable'></Seat>
                                                             </div>
                                                         </td>
+                                                        :
+                                                        listBooking.includes(seat.id) ?
+                                                            <td>
+                                                                <div onClick={() => clickDisable()}>
+                                                                    <Seat key={seat.id} id={seat.id} type='booking'></Seat>
+                                                                </div>
+                                                            </td>
+                                                            :
+                                                            <td>
+                                                                <div onClick={() => addId({ name: seat.id, type: seat.type })}>
+                                                                    <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
+                                                                </div>
+                                                            </td>
                                                 ))}
                                                 <td>
                                                 </td>
@@ -499,18 +582,25 @@ function GetTicket2() {
                                             <tr>
                                                 <td>H</td>
                                                 {list[7].map((seat) => (
-                                                    !listDisable.includes(seat.id) ?
-                                                        <td>
-                                                            <div onClick={() => addId({ name: seat.id, type: seat.type })}>
-                                                                <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
-                                                            </div>
-                                                        </td>
-                                                        :
+                                                    listDisable.includes(seat.id) ?
                                                         <td>
                                                             <div onClick={() => clickDisable()}>
                                                                 <Seat key={seat.id} id={seat.id} type='disable'></Seat>
                                                             </div>
                                                         </td>
+                                                        :
+                                                        listBooking.includes(seat.id) ?
+                                                            <td>
+                                                                <div onClick={() => clickDisable()}>
+                                                                    <Seat key={seat.id} id={seat.id} type='booking'></Seat>
+                                                                </div>
+                                                            </td>
+                                                            :
+                                                            <td>
+                                                                <div onClick={() => addId({ name: seat.id, type: seat.type })}>
+                                                                    <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
+                                                                </div>
+                                                            </td>
                                                 ))}
                                                 <td>
                                                 </td>
@@ -519,18 +609,25 @@ function GetTicket2() {
                                             <tr>
                                                 <td>I</td>
                                                 {list[8].map((seat) => (
-                                                    !listDisable.includes(seat.id) ?
-                                                        <td>
-                                                            <div onClick={() => addId({ name: seat.id, type: seat.type })}>
-                                                                <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
-                                                            </div>
-                                                        </td>
-                                                        :
+                                                    listDisable.includes(seat.id) ?
                                                         <td>
                                                             <div onClick={() => clickDisable()}>
                                                                 <Seat key={seat.id} id={seat.id} type='disable'></Seat>
                                                             </div>
                                                         </td>
+                                                        :
+                                                        listBooking.includes(seat.id) ?
+                                                            <td>
+                                                                <div onClick={() => clickDisable()}>
+                                                                    <Seat key={seat.id} id={seat.id} type='booking'></Seat>
+                                                                </div>
+                                                            </td>
+                                                            :
+                                                            <td>
+                                                                <div onClick={() => addId({ name: seat.id, type: seat.type })}>
+                                                                    <Seat key={seat.id} id={seat.id} type={seat.type}></Seat>
+                                                                </div>
+                                                            </td>
                                                 ))}
                                                 <td>
                                                 </td>
@@ -629,10 +726,13 @@ function GetTicket2() {
 
                                     <h3 style={{ marginBottom: '10px', color: '#72be43' }} >{film}</h3>
                                     <div className={cx('seat-selected')}>
+                                        {/* 
+                                        <span >Chưa có ghế được chọn vui lòng chọn ghế</span> */}
                                         <h4>Ghế đã chọn</h4>
                                         {seats.map((seat, index) => (
                                             <span key={index}>{seat.name}</span>
                                         ))}
+
                                     </div>
                                     <hr />
                                     {
@@ -645,8 +745,8 @@ function GetTicket2() {
                                             <div></div>
                                     }
 
-                                    <div onClick={() => handleClick()}>
-                                        <Button className={'back'} primary stretch>Tiến hành thanh toán</Button>
+                                    <div >
+                                        <Button disabled={seats.length === 0} onClick={() => handleClick()} className={'back'} primary stretch>Tiến hành thanh toán</Button>
 
                                     </div>
 

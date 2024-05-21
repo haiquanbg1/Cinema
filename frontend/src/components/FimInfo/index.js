@@ -31,6 +31,7 @@ function FilmInfo() {
     //     setInfo(listInfo[0])
     //     , [listInfo])
 
+    console.log(listInfo)
 
     const handleClick = (name, id) => {
         navigate(`/get-ticket/${name}`, { state: { id } })
@@ -44,18 +45,49 @@ function FilmInfo() {
 
             </button>
             <div className={cx('film-detail')}>
-                <div className={cx('film-detail-control')}>
+                <div className={cx('film-detail-control', 'col', 'large-4')}>
                     <Image className={cx('image')} src={info != null ? info.src : ''}></Image>
                     <Button primary leftIcon={<FontAwesomeIcon icon={faTicketSimple} />}>
                         <div onClick={() => handleClick(info.title, info.id)}>MUA VÉ NGAY</div>
                     </Button>
                     <button onClick={closeHandle} className={cx('trailer-btn')}>XEM TRAILER</button>
                 </div>
-                <div className={cx('film-detail-content')}>
+                <div className={cx('film-detail-content', 'col', 'large-8')}>
                     <p className={cx('name')}>{info != null ? info.title : ''}</p>
                     <div className={cx('excerpt')}>
 
-                        {/* {!info.description && <p>{info.description}</p>} */}
+                        {info != null ? <p>{info.description}</p> : <p></p>}
+                    </div>
+
+                    <div className={cx('meta')}>
+                        <p>
+                            <span className={cx('meta-title', 'classify')}>Phân loại:</span>
+                            {info != null ? <span>{info.classify}</span> : <span></span>}
+                        </p>
+                        <p>
+                            <span className={cx('meta-title')}>Định dạng:</span>
+                            {info != null ? <span className={cx('format')}>2D</span> : <span></span>}
+                        </p>
+                        <p>
+                            <span className={cx('meta-title', 'director')}>Đạo diễn:</span>
+                            {info != null ? <span>{info.director}</span> : <span></span>}
+                        </p>
+                        <p>
+                            <span className={cx('meta-title', 'actor')}>Diễn viên:</span>
+                            {info != null ? <span>{info.actor}</span> : <span></span>}
+                        </p>
+                        <p>
+                            <span className={cx('meta-title', 'type')}>Thể loại:</span>
+                            {info != null ? <span>{info.type}</span> : <span></span>}
+                        </p>
+                        <p>
+                            <span className={cx('meta-title', 'release')}>Khởi chiếu:</span>
+                            {info != null ? <span>{info.release}</span> : <span></span>}
+                        </p>
+                        <p>
+                            <span className={cx('meta-title', 'language')}>Ngôn ngữ:</span>
+                            {info != null ? <span>{info.language}</span> : <span></span>}
+                        </p>
                     </div>
                 </div>
             </div>
