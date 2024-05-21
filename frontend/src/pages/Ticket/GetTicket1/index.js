@@ -18,9 +18,10 @@ const cx = classNames.bind(styles)
 
 const d = new Date();
 const today = d.getFullYear() + '-' + (d.getMonth() < 10 ? ('0' + (d.getMonth() + 1)) : (d.getMonth() + 1)) + '-' + (d.getDate < 10 ? ('0' + d.getDate) : d.getDate());
-
+const day_today = d.getDate()
 
 const GetTicket1 = () => {
+
     const [date, setDate] = useState(today);
     const [day, setDay] = useState(d.getDate());
     const [month, setMonth] = useState(d.getMonth() + 1);
@@ -122,72 +123,84 @@ const GetTicket1 = () => {
                         <div className={cx('col-inner')}>
                             <div className={cx('c-box')}>
                                 <div className={cx('calendar')}>
-                                    <div className={cx('birth-container')}>
-                                        <div className={cx('birth-item', 'day')}>
-                                            <div className={cx('birth-item-select')}>
-                                                <select onChange={e => { setDay(e.target.value) }} value={day}>
-                                                    <option value="">Chọn ngày</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="6">6</option>
-                                                    <option value="7">7</option>
-                                                    <option value="8">8</option>
-                                                    <option value="9">9</option>
-                                                    <option value="10">10</option>
-                                                    <option value="11">11</option>
-                                                    <option value="12">12</option>
-                                                    <option value="13">13</option>
-                                                    <option value="14">14</option>
-                                                    <option value="15">15</option>
-                                                    <option value="16">16</option>
-                                                    <option value="17">17</option>
-                                                    <option value="18">18</option>
-                                                    <option value="19">19</option>
-                                                    <option value="20">20</option>
-                                                    <option value="21">21</option>
-                                                    <option value="22">22</option>
-                                                    <option value="23">23</option>
-                                                    <option value="24">24</option>
-                                                    <option value="25">25</option>
-                                                    <option value="26">26</option>
-                                                    <option value="27">27</option>
-                                                    <option value="28">28</option>
-                                                    <option value="29">29</option>
-                                                    <option value="30">30</option>
-                                                    <option value="31">31</option>
+                                    <div className={cx('calendar-container')}>
+                                        <div className={cx('calendar-item', 'day')}>
+                                            <label>
+                                                Chọn ngày
+                                                <span> *</span>
+                                            </label>
+                                            <div className={cx('select')}>
+                                                <select onChange={e => { setDay(e.target.value) }} value={day} className={cx('day-select')}>
 
-                                                </select>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 1} value="1">1</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 2} value="2">2</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 3} value="3">3</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 4} value="4">4</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 5} value="5">5</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 6} value="6">6</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 7} value="7">7</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 8} value="8">8</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 9} value="9">9</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 10} value="10">10</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 11} value="11">11</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 12} value="12">12</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 13} value="13">13</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 14} value="14">14</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 15} value="15">15</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 16} value="16">16</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 17} value="17">17</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 18} value="18">18</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 19} value="19">19</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 20} value="20">20</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 21} value="21">21</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 22} value="22">22</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 23} value="23">23</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 24} value="24">24</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 25} value="25">25</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 26} value="26">26</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 27} value="27">27</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 28} value="28">28</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 29} value="29">29</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 30} value="30">30</option>
+                                                    <option disabled={d.getMonth() == month - 1 && day_today > 31} value="31">31</option>
 
-                                            </div>
-                                        </div>
-                                        <div className={cx('birth-item', 'month')}>
-                                            <div className={cx('birth-item-select')}>
-                                                <select onChange={e => setMonth(e.target.value)} value={month}>
-                                                    <option value="">Chọn tháng</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="6">6</option>
-                                                    <option value="7">7</option>
-                                                    <option value="8">8</option>
-                                                    <option value="9">9</option>
-                                                    <option value="10">10</option>
-                                                    <option value="11">11</option>
-                                                    <option value="12">12</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div className={cx('birth-item', 'year')}>
-                                            <div className={cx('birth-item-select')}>
-                                                <select onChange={e => setYear(e.target.value)} value={year}>
-                                                    <option value="">Chọn năm</option>
+                                        <div className={cx('calendar-item', 'month')}>
+                                            <label>
+                                                Chọn tháng
+                                                <span> *</span>
+                                            </label>
+
+                                            <div className={cx('select')}>
+                                                <select className={cx('month-select')} onChange={e => setMonth(e.target.value)} value={month}>
+
+                                                    <option disabled={d.getMonth() > 0} value="1">1</option>
+                                                    <option disabled={d.getMonth() > 1} value="2">2</option>
+                                                    <option disabled={d.getMonth() > 2} value="3">3</option>
+                                                    <option disabled={d.getMonth() > 3} value="4">4</option>
+                                                    <option disabled={d.getMonth() > 4} value="5">5</option>
+                                                    <option disabled={d.getMonth() > 5} value="6">6</option>
+                                                    <option disabled={d.getMonth() > 6} value="7">7</option>
+                                                    <option disabled={d.getMonth() > 7} value="8">8</option>
+                                                    <option disabled={d.getMonth() > 8} value="9">9</option>
+                                                    <option disabled={d.getMonth() > 9} value="10">10</option>
+                                                    <option disabled={d.getMonth() > 10} value="11">11</option>
+                                                    <option disabled={d.getMonth() > 11} value="12">12</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div className={cx('calendar-item', 'year')}>
+                                            <label>
+                                                Chọn năm
+                                                <span> *</span>
+                                            </label>
+                                            <div className={cx('select')}>
+                                                <select className={cx('year-select')} onChange={e => setYear(e.target.value)} value={year}>
+
                                                     <option value="2024">2024</option>
-                                                    <option value="2023">2023</option>
+
                                                 </select>
 
                                             </div>

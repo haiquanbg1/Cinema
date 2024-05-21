@@ -120,7 +120,7 @@ function Register() {
                 setCityId(0)
             })
             .catch(err =>
-                console.log(err)
+                toast.error(`${err.response.data.message}`)
             )
     }
 
@@ -145,7 +145,9 @@ function Register() {
                 localStorage.setItem('userId', res.data.data.dataUser.id)
                 usenavigate('/')
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                toast.error(`${err.response.data.message}`)
+            })
 
     }
 

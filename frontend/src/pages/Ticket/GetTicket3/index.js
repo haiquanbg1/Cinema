@@ -38,31 +38,24 @@ function GetTicket3() {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
-    const handleClick = async () => {
-        await requestApi(`/seat/booked?showtime_id=${id}`, 'post', { pay: price * (1 - (userRank - 1) * 0.05) })
-        navigate('/')
-        toast.success('Đặt vé thành công')
-    }
-
     useEffect(() => {
-        const handlePopState = async () => {
-            await requestApi(`seat/delete?showtime_id=${id}`, 'delete')
+        return () => {
+            requestApi(`seat/delete?showtime_id=${id}`, 'delete')
                 .then(res => {
                     console.log(res)
                 })
                 .catch((error) => {
                     console.log(error)
                 })
-            // Thực hiện các hành động bạn mong muốn tại đây
-        };
+        }
+    }, [])
 
-        window.addEventListener('popstate', handlePopState);
+    const handleClick = async () => {
+        await requestApi(`/seat/booked?showtime_id=${id}`, 'post', { pay: price * (1 - (userRank - 1) * 0.05) })
+        navigate('/')
+        toast.success('Đặt vé thành công')
+    }
 
-        // Cleanup event listener khi component bị unmount
-        return () => {
-            window.removeEventListener('popstate', handlePopState);
-        };
-    }, [location]);
 
     const handleBack = async () => {
         await requestApi(`seat/delete?showtime_id=${id}`, 'delete')

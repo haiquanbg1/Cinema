@@ -31,12 +31,19 @@ function Header() {
         if (headerRef.current) {
             if (window.scrollY !== 0) {
                 headerRef.current.className = cx('header-wrapper', 'stuck')
-                imageRef.current.className = cx('info-container', 'no-top')
-
+                // imageRef.current.className = cx('info-container', 'no-top')
             } else {
                 headerRef.current.className = cx('header-wrapper')
+                // imageRef.current.className = cx('info-container')
+            }
+        }
+        if (imageRef.current) {
+            if (window.scrollY !== 0) {
+                // headerRef.current.className = cx('header-wrapper', 'stuck')
+                imageRef.current.className = cx('info-container', 'no-top')
+            } else {
+                // headerRef.current.className = cx('header-wrapper')
                 imageRef.current.className = cx('info-container')
-
             }
         }
 

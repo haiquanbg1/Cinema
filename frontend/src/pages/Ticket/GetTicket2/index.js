@@ -157,27 +157,28 @@ const list = [[{ id: 'A1', type: 'standard' }
     , { id: 'I14', type: 'standard' }
     , { id: 'I15', type: 'standard' }
     , { id: 'I16', type: 'standard' }]
-    , [{ id: 'I1', type: 'couple' }
-    , { id: 'I2', type: 'couple' }
-    , { id: 'I3', type: 'standard' }
-    , { id: 'I4', type: 'couple' }
-    , { id: 'I5', type: 'couple' }
-    , { id: 'I6', type: 'vip' }
-    , { id: 'I7', type: 'couple' }
-    , { id: 'I8', type: 'couple' }
-    , { id: 'I9', type: 'vip' }
-    , { id: 'I10', type: 'couple' }
-    , { id: 'I11', type: 'couple' }
-    , { id: 'I12', type: 'vip' }
-    , { id: 'I13', type: 'couple' }
-    , { id: 'I14', type: 'couple' }
-    , { id: 'I15', type: 'standard' }
-    , { id: 'I16', type: 'standard' }]
+    , [{ id: 'J1', type: 'couple' }
+    , { id: 'J2', type: 'couple' }
+    , {}
+    , { id: 'J4', type: 'couple' }
+    , { id: 'J5', type: 'couple' }
+    , {}
+    , { id: 'J7', type: 'couple' }
+    , { id: 'J8', type: 'couple' }
+    , {}
+    , { id: 'J10', type: 'couple' }
+    , { id: 'J11', type: 'couple' }
+    , {}
+    , { id: 'J13', type: 'couple' }
+    , { id: 'J14', type: 'couple' }
+    , {}
+    , {}]
 ]
 
 
 function GetTicket2() {
     const [seats, setSeats] = useState([])
+    const [couple, setCouple] = useState([])
     const [listDisable, setListDisable] = useState([])
     const [listBooking, setListBooking] = useState([])
     const [showTime, setShowTime] = useState({})
@@ -221,8 +222,129 @@ function GetTicket2() {
             tmp.splice(idx, 1)
             setSeats(tmp)
             setPrice(price - tmp1)
-
         }
+    }
+
+    const check = (id) => {
+        let tmp = 0
+        seats.forEach((element, index) => {
+            if (id == element.name) {
+                tmp = 1
+                return
+            }
+        })
+        return tmp
+    }
+
+
+
+    const addIdCouple = (seat) => {
+        console.log(seat.id)
+        console.log(check(seat.id))
+        console.log(seats)
+        let id = seat.id
+        let idx = -1
+        let tmp1 = showTime.price * 1.2
+        if (id == 'J1' || id == 'J2') {
+            seats.forEach((element, index) => {
+                if ('J1' == element.name) {
+                    idx = index
+                    console.log(idx)
+                    return
+                }
+            })
+            if (idx == -1) {
+                setSeats([...seats, { name: 'J1', type: 'couple' }, { name: 'J2', type: 'couple' }])
+                setPrice(price + tmp1 * 2)
+            }
+            else {
+                let tmp = [...seats]
+                tmp.splice(idx, 2)
+                setSeats(tmp)
+                setPrice(price - tmp1 * 2)
+            }
+        }
+
+        if (id == 'J4' || id == 'J5') {
+            seats.forEach((element, index) => {
+                if ('J4' == element.name) {
+                    idx = index
+                    console.log(idx)
+                    return
+                }
+            })
+            if (idx == -1) {
+                setSeats([...seats, { name: 'J4', type: 'couple' }, { name: 'J5', type: 'couple' }])
+                setPrice(price + tmp1 * 2)
+            }
+            else {
+                let tmp = [...seats]
+                tmp.splice(idx, 2)
+                setSeats(tmp)
+                setPrice(price - tmp1 * 2)
+            }
+        }
+
+        if (id == 'J7' || id == 'J8') {
+            seats.forEach((element, index) => {
+                if ('J7' == element.name) {
+                    idx = index
+                    console.log(idx)
+                    return
+                }
+            })
+            if (idx == -1) {
+                setSeats([...seats, { name: 'J7', type: 'couple' }, { name: 'J8', type: 'couple' }])
+                setPrice(price + tmp1 * 2)
+            }
+            else {
+                let tmp = [...seats]
+                tmp.splice(idx, 2)
+                setSeats(tmp)
+                setPrice(price - tmp1 * 2)
+            }
+        }
+
+        if (id == 'J10' || id == 'J11') {
+            seats.forEach((element, index) => {
+                if ('J10' == element.name) {
+                    idx = index
+                    console.log(idx)
+                    return
+                }
+            })
+            if (idx == -1) {
+                setSeats([...seats, { name: 'J10', type: 'couple' }, { name: 'J11', type: 'couple' }])
+                setPrice(price + tmp1 * 2)
+            }
+            else {
+                let tmp = [...seats]
+                tmp.splice(idx, 2)
+                setSeats(tmp)
+                setPrice(price - tmp1 * 2)
+            }
+        }
+
+        if (id == 'J13' || id == 'J14') {
+            seats.forEach((element, index) => {
+                if ('J13' == element.name) {
+                    idx = index
+                    console.log(idx)
+                    return
+                }
+            })
+            if (idx == -1) {
+                setSeats([...seats, { name: 'J13', type: 'couple' }, { name: 'J14', type: 'couple' }])
+                setPrice(price + tmp1 * 2)
+            }
+            else {
+                let tmp = [...seats]
+                tmp.splice(idx, 2)
+                setSeats(tmp)
+                setPrice(price - tmp1 * 2)
+            }
+        }
+
     }
 
     const clickDisable = () => {
@@ -318,6 +440,7 @@ function GetTicket2() {
 
     return (
         <div>
+
             <h1 style={{ color: 'white', fontSize: '26px', fontWeight: '800', textAlign: 'center', margin: '30px' }}>Bước 2: Chọn ghế</h1>
             <div className={cx('large-12', 'col')}>
                 <div className={cx('col-inner')}>
@@ -635,74 +758,27 @@ function GetTicket2() {
                                             </tr>
                                             <tr>
                                                 <td>J</td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="J1" className={cx('seat-icon', 'couple')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="J2" className={cx('seat-icon', 'couple')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="J4" className={cx('seat-icon', 'couple')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="J5" className={cx('seat-icon', 'couple')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="J7" className={cx('seat-icon', 'couple')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="J8" className={cx('seat-icon', 'couple')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="J10" className={cx('seat-icon', 'couple')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="J11" className={cx('seat-icon', 'couple')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="J13" className={cx('seat-icon', 'couple')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className={cx('seat')}>
-                                                        <a href="#" title="J14" className={cx('seat-icon', 'couple')}></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-
-                                                </td>
-                                                <td>
-
-                                                </td>
+                                                {list[9].map((seat) => (
+                                                    listDisable.includes(seat.id) ?
+                                                        <td>
+                                                            <div onClick={() => clickDisable()}>
+                                                                <Seat key={seat.id} id={seat.id} type='disable'></Seat>
+                                                            </div>
+                                                        </td>
+                                                        :
+                                                        listBooking.includes(seat.id) ?
+                                                            <td>
+                                                                <div onClick={() => clickDisable()}>
+                                                                    <Seat key={seat.id} id={seat.id} type='booking'></Seat>
+                                                                </div>
+                                                            </td>
+                                                            :
+                                                            <td>
+                                                                <div className={!seat.id && cx('none')} onClick={() => addIdCouple(seat)}>
+                                                                    <Seat coupleSelect={check(seat.id) != 0} key={seat.id} id={seat.id} type={seat.type}></Seat>
+                                                                </div>
+                                                            </td>
+                                                ))}
                                                 <td>
                                                 </td>
                                                 <td>J</td>

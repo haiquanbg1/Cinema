@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
-function Seat({ type = '', id, onClick }) {
+function Seat({ type = '', id, onClick, coupleSelect = false }) {
 
     // const classes = {
     //     standard,
@@ -19,6 +19,7 @@ function Seat({ type = '', id, onClick }) {
     const [selected, setSelected] = useState(false)
     const handleClick = () => {
         setSelected(!selected)
+
         // let seatobj = { id, disabled, couple, standard, vip, selected: selected ? true : false };
 
         // axios.post('/', seatobj)
@@ -42,8 +43,8 @@ function Seat({ type = '', id, onClick }) {
 
 
     return (
-        <div className={cx('seat')} onClick={() => handleClick()} >
-            <a title={id} className={cx(type, 'seat-icon', selected && 'selected')}></a>
+        <div className={cx('seat')} onClick={type != 'couple' ? () => handleClick() : () => { }} >
+            <a title={id} className={cx(type, 'seat-icon', selected && 'selected', coupleSelect && 'coupleSelect')}></a>
         </div>
     );
 }

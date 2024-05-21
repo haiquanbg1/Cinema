@@ -1,4 +1,43 @@
 .content-container {
     display: flex;
+}
 
+.calendar-item {
+    label {
+        display: block;
+        color: #fff;
+        margin-bottom: 10px;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    div {
+        margin-right: 10px;
+    }
+}
+
+.select {
+    width: 100%;
+    padding: 10px 20px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+    border: 1px solid #454D6A;
+    border-radius: 5px;
+    padding-left: 12px;
+    margin-bottom: 20px;
+
+    select {
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        outline: none;
+        border: none;
+        color: white;
+        font-size: 18px;
+
+        option {
+            background-color: #1a1d29;
+        }
+    }
 }
