@@ -1,11 +1,13 @@
 import styles from './HeaderRegister.module.scss';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
+import { useRef, useEffect } from 'react';
 
 import Image from '~/components/Image';
 const cx = classNames.bind(styles)
 
 function Header() {
+
     return (
         <header id='header' className={cx('header')}>
             <div className={cx('header-wrapper')}>

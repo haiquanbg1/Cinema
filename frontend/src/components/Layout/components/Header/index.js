@@ -1,10 +1,10 @@
 import styles from './Header.module.scss';
 import classNames from 'classnames/bind';
-import './index.css'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faTicketSimple } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react/headless';
-import { useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 
@@ -15,18 +15,50 @@ import Button from '~/components/Button';
 const cx = classNames.bind(styles)
 
 function Header() {
+    console.log(window.scrollY)
     const cities = ['TP.Hồ Chí Minh', 'Hà Nội', 'Nha Trang', 'Đà Nẵng']
     const [city, setCity] = useState('Chọn thành phố')
     let name = localStorage.getItem('firstName') ? localStorage.getItem('firstName').concat(localStorage.getItem('lastName')) : '';
     const usenavigate = useNavigate();
-
+    const headerRef = useRef(null)
+    const imageRef = useRef(null)
     const logOut = () => {
         localStorage.clear()
     }
+
+    const checkScrollPosition = () => {
+        // window.scrollY === 0
+        if (headerRef.current) {
+            if (window.scrollY !== 0) {
+                headerRef.current.className = cx('header-wrapper', 'stuck')
+                imageRef.current.className = cx('info-container', 'no-top')
+
+            } else {
+                headerRef.current.className = cx('header-wrapper')
+                imageRef.current.className = cx('info-container')
+
+            }
+        }
+
+    };
+
+    useEffect(() => {
+        // Kiểm tra vị trí cuộn khi component được mount
+        checkScrollPosition();
+
+        // Lắng nghe sự kiện cuộn
+        window.addEventListener('scroll', checkScrollPosition);
+
+        // Cleanup listener khi component bị unmount
+        return () => {
+            window.removeEventListener('scroll', checkScrollPosition);
+        };
+    }, []);
+
     if (!localStorage.accessToken) {
         return (
             <header id='header' className={cx('header')}>
-                <div className={cx('header-wrapper', 'stuck')}>
+                <div ref={headerRef} className={cx('header-wrapper')}>
                     <div className={cx('header-inner', 'flex-row')}>
                         <div id='header-logo' className={cx('logo', 'flex-col')}>
                             <Link to={'/'}>
@@ -122,10 +154,11 @@ function Header() {
             </header >
         );
     }
+
     else {
         return (
             <header id='header' className={cx('header')}>
-                <div className={cx('header-wrapper')}>
+                <div ref={headerRef} className={cx('header-wrapper')}>
                     <div className={cx('header-inner', 'flex-row')}>
                         <div id='header-logo' className={cx('logo', 'flex-col')}>
                             <Link to={'/'}>
@@ -201,7 +234,7 @@ function Header() {
                                             </div>
                                         )}
                                     >
-                                        <li className={cx('info-container')}>
+                                        <li ref={imageRef} className={cx('info-container')}>
                                             <Link className={cx('account-link')}>
                                                 <Image src={'https://static2-images.vnncdn.net/files/publish/2022/11/22/ronaldo-mang-xa-hoi-219.jpg'} className={cx('avatar')}></Image>
                                                 <span>{localStorage.getItem('firstName')}</span>

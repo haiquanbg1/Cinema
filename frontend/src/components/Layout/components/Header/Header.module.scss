@@ -276,11 +276,17 @@
     margin: 0 10px;
     font-size: 18px;
 
+
     .account-link {
         display: flex;
         align-items: center;
 
     }
+}
+
+.no-top.info-container {
+    position: relative;
+    translate: 0 -8px;
 }
 
 .info-header--link {
