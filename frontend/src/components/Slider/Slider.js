@@ -16,7 +16,7 @@ const cx = classNames.bind(styles)
 
 function Slider_logic() {
     const filmList = films.map((film, index) => (
-        <div className={cx('wrapper', 'row')}>
+        <div key={index} className={cx('wrapper', 'row')}>
             <div className={cx('container', ' large-12')}>
                 <div className={cx('')}>
                     <div className={cx('image')}>

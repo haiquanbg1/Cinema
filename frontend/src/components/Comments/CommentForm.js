@@ -13,10 +13,10 @@ function CommentForm({
     handleCancel
 }) {
     const [text, setText] = useState(initialText);
-    const isTextareaDisabled = text.length === 0;
+    const isTextareaDisabled = text.trim().length === 0;
     const onSubmit = (event) => {
         event.preventDefault();
-        handleSubmit(text);
+        handleSubmit(text.trim());
         setText("");
     };
 
