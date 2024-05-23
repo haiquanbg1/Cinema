@@ -40,7 +40,7 @@ const deleteShowtime = async (req, res) => {
 }
 
 const getShowtimeByFilmId = async (req, res) => {
-    const city_id = 2
+    const city_id = req.body.city_id
     result = await Showtime.getShowtimeByFilmId(req.query.film_id, city_id)
         .catch((err) => {
             console.log(err)
