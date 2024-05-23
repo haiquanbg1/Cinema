@@ -63,33 +63,6 @@ function GetTicket3() {
         navigate(`/get-ticket/${film}/${id}`, { state: { film, id, cinema } })
     }
 
-    // useEffect(() => {
-    //     console.log('chuẩn bị xóa')
-    //     return () => {
-    //         requestApi(`seat/delete?showtime_id=${id}`, 'delete')
-    //             .then(res => {
-    //                 console.log(res)
-    //             })
-    //             .catch((error) => {
-    //                 console.log(error)
-    //             })
-    //         console.log('đã xóa')
-    //     }
-    // }, [])
-
-    // useEffect(() => {
-    //     const handlePopState = () => {
-    //         requestApi(`seat/delete?showtime_id=${id}`, 'delete')
-    //         // Thực hiện các hành động cần thiết khi người dùng quay lại trang
-    //     };
-
-    //     window.addEventListener('popstate', handlePopState);
-
-    //     // Cleanup event listener khi component bị unmount
-    //     return () => {
-    //         window.removeEventListener('popstate', handlePopState);
-    //     };
-    // }, []);
 
     return (<div className={cx('container', 'row')}>
 

@@ -36,7 +36,7 @@ export default function requestApi(endpoint, method, body, responseType = 'json'
         },
         async (error) => {
             const originalConfig = error.config;
-            if (error.response && error.response.status === 401) {
+            if (error.response && error.response.status === 400) {
                 try {
                     const refreshToken = localStorage.getItem('refreshToken');
                     if (!refreshToken) {
