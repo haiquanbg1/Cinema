@@ -392,8 +392,6 @@ function GetTicket2() {
             })
             .catch(err => console.log(err))
 
-
-
         navigate(`/get-ticket/${film}/${id}/thanh-toan`, { state: { film, id, cinema, showTime, seats, price } })
     }
 

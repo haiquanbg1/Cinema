@@ -16,6 +16,8 @@ import requestApi from '~/fetch';
 const cx = classNames.bind(styles)
 const USER_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const d = new Date();
+const today = d.getFullYear() + '-' + (d.getMonth() < 10 ? ('0' + (d.getMonth() + 1)) : (d.getMonth() + 1)) + '-' + (d.getDate < 10 ? ('0' + d.getDate) : d.getDate());
 
 function Register() {
     // const days = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"]
@@ -96,13 +98,25 @@ function Register() {
             setErrMsg("Invalid Entry");
             return;
         }
+
+        if (year == d.getFullYear()) {
+            if (month > d.getMonth() + 1) {
+                setErrMsg("Ngày sinh không hợp lệ");
+                return
+            } else if (month == d.getMonth() + 1) {
+                if (day > d.getDate()) {
+                    setErrMsg("Ngày sinh không hợp lệ")
+                    return
+                }
+            }
+        }
         if (accept != 1) {
             setErrMsg("Vui lòng đồng ý với điều khoản của chúng tôi");
             return;
         }
 
         let birthday = `${year}/${month}/${day}`;
-        let regobj = { firstName, lastName, gender, email, password, phone, birthday, city_id: 2, };
+        let regobj = { firstName, lastName, gender, email, password, phone, birthday, city_id: cityId, };
 
         requestApi('user/register', 'post', regobj)
             .then((res) => {
@@ -136,13 +150,14 @@ function Register() {
 
         requestApi('user/login', 'post', inputobj)
             .then((res) => {
-                console.log(res.data)
+                // console.log(res.data)
                 // localStorage.setItem('isAdmin', res.data.data.dateUser.admin)
                 localStorage.setItem('lastName', res.data.data.dataUser.lastName)
                 localStorage.setItem('firstName', res.data.data.dataUser.firstName)
                 localStorage.setItem('accessToken', res.data.data.accessToken)
                 localStorage.setItem('refreshToken', res.data.data.refresh_token)
                 localStorage.setItem('userId', res.data.data.dataUser.id)
+                localStorage.setItem('cityId', res.data.data.dataUser.city_id)
                 usenavigate('/')
             })
             .catch(err => {
@@ -472,8 +487,10 @@ function Register() {
                             <div className={cx('city')}>
                                 <select onChange={e => setCityId(e.target.value)} className={cx("city-select")} value={cityId}>
                                     <option value={0}>Chọn thành phố</option>
-                                    <option value={1}>Hà Nội</option>
-                                    <option value={2}>Thành phố Hồ Chí Minh</option>
+                                    <option value={1}>Thành phố Hồ Chí Minh</option>
+                                    <option value={2}>Hà Nội</option>
+                                    <option value={3}>Huế</option>
+                                    <option value={4}>Đồng Nai</option>
                                 </select>
                             </div>
 
