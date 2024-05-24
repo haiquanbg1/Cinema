@@ -33,3 +33,9 @@
         }
     }
 }
+
+.st-item {
+    &:hover {
+        cursor: pointer;
+    }
+}

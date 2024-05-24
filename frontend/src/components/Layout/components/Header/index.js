@@ -15,17 +15,37 @@ import Button from '~/components/Button';
 const cx = classNames.bind(styles)
 
 function Header() {
-    console.log(window.scrollY)
-    const cities = ['TP.Hồ Chí Minh', 'Hà Nội', 'Nha Trang', 'Đà Nẵng']
+    // console.log(window.scrollY)
+    const cities = ['TP.Hồ Chí Minh', 'Hà Nội', 'Huế', 'Đồng Nai']
     const [city, setCity] = useState('Chọn thành phố')
     let name = localStorage.getItem('firstName') ? localStorage.getItem('firstName').concat(localStorage.getItem('lastName')) : '';
     const usenavigate = useNavigate();
     const headerRef = useRef(null)
     const imageRef = useRef(null)
+    const getCityId = (cityName) => {
+        let tmp = 0
+        if (cityName == 'TP.Hồ Chí Minh') {
+            tmp = 1
+        }
+        if (cityName == 'Hà Nội') {
+            tmp = 2
+        }
+        if (cityName == 'Huế') {
+            tmp = 3
+        }
+        if (cityName == 'Đồng Nai') {
+            tmp = 4
+        }
+        return tmp
+    }
+
     const logOut = () => {
         localStorage.clear()
     }
 
+    useEffect(() => {
+        localStorage.setItem('cityId', getCityId(city))
+    }, [city])
     const checkScrollPosition = () => {
         // window.scrollY === 0
         if (headerRef.current) {

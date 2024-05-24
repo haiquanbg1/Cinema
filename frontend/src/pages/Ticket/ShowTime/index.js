@@ -40,11 +40,17 @@ function Showtime({ cinema_id, times, film, film_id }) {
                     <p>{cinema.address}</p>
                 </div>
 
-                {times.map((time, index) => (
+                {/* {times.map((time, index) => (
                     <div key={index} style={{ marginBottom: '20px' }}>
                         <Showtimeitem cinema={cinema} time={time.time} id={time.showtime_id} film={film} film_id={film_id} ></Showtimeitem>
                     </div>
-                ))}
+                ))} */}
+
+                <div className={cx('row')} style={{ display: 'flex' }}>
+                    {times.map((time, index) => (
+                        <Showtimeitem cinema={cinema} time={time.time} id={time.showtime_id} film={film} film_id={film_id} ></Showtimeitem>
+                    ))}
+                </div>
 
             </div>
         </div>

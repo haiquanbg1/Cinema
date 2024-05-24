@@ -31,6 +31,7 @@ function GetTicket3() {
             }
         }
         fetchAPI();
+
     }
         , [])
 
@@ -38,22 +39,16 @@ function GetTicket3() {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
-    // useEffect(() => {
-    //     return () => {
-    //         requestApi(`seat/delete?showtime_id=${id}`, 'delete')
-    //             .then(res => {
-    //                 console.log(res)
-    //             })
-    //             .catch((error) => {
-    //                 console.log(error)
-    //             })
-    //     }
-    // }, [])
+
 
     const handleClick = async () => {
         await requestApi(`/seat/booked?showtime_id=${id}`, 'post', { pay: price * (1 - (userRank - 1) * 0.05) })
-        navigate('/')
+            .then(res => {
+                console.log(res)
+                console.log('đã push')
+            })
         toast.success('Đặt vé thành công')
+        navigate('/')
     }
 
 
@@ -67,6 +62,7 @@ function GetTicket3() {
             })
         navigate(`/get-ticket/${film}/${id}`, { state: { film, id, cinema } })
     }
+
 
     return (<div className={cx('container', 'row')}>
 

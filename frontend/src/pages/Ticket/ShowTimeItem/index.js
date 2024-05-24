@@ -19,17 +19,17 @@ function Showtimeitem({ cinema, time, id, film, film_id }) {
     }
 
     return (
-        <div className='row row-small' onClick={() => handleClick()}>
-            <div className='col large-3'>
-                <div className={cx('show-time-container', 'col-inner')}>
-                    <div className={cx('showTimes')}>{time}</div>
-                    <div className={cx('meta')}>
-                        <span className={cx("type")}>Phụ đề</span>
-                        <span className={cx("format")}>2D</span>
-                    </div>
+        // <div className={cx('row', 'row-small', 'st-item')} onClick={() => handleClick()}>
+        <div className={cx('col', 'large-3', 'st-item')} onClick={() => handleClick()}>
+            <div className={cx('show-time-container', 'col-inner')}>
+                <div className={cx('showTimes')}>{time}</div>
+                <div className={cx('meta')}>
+                    <span className={cx("type")}>Phụ đề</span>
+                    <span className={cx("format")}>2D</span>
                 </div>
             </div>
         </div>
+        // </div>
     );
 }
 

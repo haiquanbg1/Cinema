@@ -58,7 +58,7 @@ const GetTicket1 = () => {
             let cinema_id = x.Room.cinema_id
             if (x.Film.title == params.id && Date == date) {
                 // console.log(1)
-                if (!tmp2.cinema_id) {
+                if (!tmp2[cinema_id]) {
                     tmp2[cinema_id] = []
                     tmp2[cinema_id].push({
                         time: Time,
@@ -72,6 +72,7 @@ const GetTicket1 = () => {
                 }
             }
         }
+        console.log(tmp2)
         for (let key in tmp2) {
             let tmp3 = {}
             tmp3.id = key
@@ -112,6 +113,8 @@ const GetTicket1 = () => {
 
         fetchAPI();
     }, [])
+
+    console.log(showTime)
 
     if (id != 0) {
         return (

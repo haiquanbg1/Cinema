@@ -195,6 +195,18 @@ function GetTicket2() {
     function formatNumber(num) {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
+    // useEffect(() => {
+    //     return () => {
+    //         requestApi(`seat/delete?showtime_id=${id}`, 'delete')
+    //             .then(res => {
+    //                 console.log(res)
+    //             })
+    //             .catch((error) => {
+    //                 console.log(error)
+    //             })
+    //         console.log('đã xóa')
+    //     }
+    // }, [])
 
 
     const addId = (id) => {
@@ -380,8 +392,6 @@ function GetTicket2() {
             })
             .catch(err => console.log(err))
 
-
-
         navigate(`/get-ticket/${film}/${id}/thanh-toan`, { state: { film, id, cinema, showTime, seats, price } })
     }
 
@@ -423,6 +433,16 @@ function GetTicket2() {
     // }, [])
 
     useEffect(() => {
+        // const Delete = async () => {
+        //     await requestApi(`seat/delete?showtime_id=${id}`, 'delete')
+        //         .then(res => {
+        //             console.log(res)
+        //         })
+        //         .catch((error) => {
+        //             console.log(error)
+        //         })
+        //     console.log('đã xóa')
+        // }
         const fetchAPI = async () => {
             try {
                 const res = await getShowTime(params.id)
@@ -435,7 +455,9 @@ function GetTicket2() {
                 console.log(err);
             }
         }
+        // Delete()
         fetchAPI();
+
     }, [])
 
     return (

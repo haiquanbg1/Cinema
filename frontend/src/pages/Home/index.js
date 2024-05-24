@@ -15,7 +15,6 @@ const getFilmList = async () => {
     let data = []
     await requestApi('film', 'get')
         .then((res) => {
-            console.log(res)
             for (let i = 0; i < res.data.data.length; i++) {
                 let categories = ""
                 res['data']['data'][i]['film_categories'].forEach(element => {
