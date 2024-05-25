@@ -12,9 +12,8 @@ const getCommentByCinemaId = async (cinema_id) => {
     }).sort([['time', 'descending']])
     var cmt = []
     for (var i = 0; i < result.length; i++) {
-        const u = await User.findOne({
-            id: result[i].user
-        })
+        const u = await User.findByPk(result[i].user)
+        console.log(result[i].user)
         const comment = {
             id: result[i].id,
             cinema: result[i].cinema,

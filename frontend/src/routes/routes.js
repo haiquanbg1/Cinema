@@ -8,8 +8,8 @@ import GetTicket3 from "~/pages/Ticket/GetTicket3";
 import GetTicket4 from "~/pages/Ticket/GetTicket4";
 import Cinema from '~/pages/Cinema';
 import CinemaDetails from '~/pages/CinemaDetails';
-
 import Register from "~/pages/Register";
+import Admin from '~/pages/Admin';
 
 
 // Public routes
@@ -22,7 +22,7 @@ const publicRoutes = [
     { path: config.routes.register, component: Register, layout: 'registerLayout' },
     { path: config.routes.cinema, component: Cinema, layout: 'cinemaLayout' },
     { path: config.routes.cinemaDetails, component: CinemaDetails, layout: 'cinemaLayout' },
-
+    { path: config.routes.admin, component: Admin, layout: 'registerLayout' }
 
 ];
 
