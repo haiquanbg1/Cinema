@@ -34,6 +34,7 @@ router.get('/seat/user/booking', isAuth, seat.getSeatUserBooking)
 router.get('/cinema', cinema.getAllCinema)
 router.get('/cinemaByCityId', cinema.getNameCinemaByCityId)
 router.get('/cinema/:cinema_id', cinema.getCinemaById)
+router.get('/cinema/statistic/pay', cinema.getPayAllCinema)
 
 //comment
 router.get('/comment', cinema.getAllComment);

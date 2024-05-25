@@ -1,5 +1,6 @@
-const { Cinema } = require('../models/index')
+const { Cinema, Room, Showtime, Booking } = require('../models/index')
 const redis = require("../methods/redis")
+const { Op } = require('sequelize');
 
 const getAllCinema = async () => {
     const result = await Cinema.findAll()
@@ -24,8 +25,99 @@ const getCinemaById = async (cinema_id) => {
     return result
 }
 
+const getPayAllCinema = async (month) => {
+    var startDate, endDate
+    switch (month) {
+        case 1: {
+            startDate = "2024-01-01 00:00:00"
+            endDate = "2024-01-31 23:59:59"
+            break
+        }
+        case 2: {
+            startDate = "2024-02-01 00:00:00"
+            endDate = "2024-02-28 23:59:59"
+            break
+        }
+        case 3: {
+            startDate = "2024-03-01 00:00:00"
+            endDate = "2024-03-31 23:59:59"
+            break
+        }
+        case 4: {
+            startDate = "2024-04-01 00:00:00"
+            endDate = "2024-04-31 23:59:59"
+            break
+        }
+        case 5: {
+            startDate = "2024-05-01 00:00:00"
+            endDate = "2024-05-31 23:59:59"
+            break
+        }
+        case 6: {
+            startDate = "2024-06-01 00:00:00"
+            endDate = "2024-06-30 23:59:59"
+            break
+        }
+        case 7: {
+            startDate = "2024-07-01 00:00:00"
+            endDate = "2024-07-31 23:59:59"
+            break
+        }
+        case 8: {
+            startDate = "2024-08-01 00:00:00"
+            endDate = "2024-08-31 23:59:59"
+            break
+        }
+        case 9: {
+            startDate = "2024-09-01 00:00:00"
+            endDate = "2024-09-30 23:59:59"
+            break
+        }
+        case 10: {
+            startDate = "2024-10-01 00:00:00"
+            endDate = "2024-10-31 23:59:59"
+            break
+        }
+        case 11: {
+            startDate = "2024-11-01 00:00:00"
+            endDate = "2024-11-30 23:59:59"
+            break
+        }
+        case 12: {
+            startDate = "2024-12-01 00:00:00"
+            endDate = "2024-12-31 23:59:59"
+            break
+        }
+    }
+    const result = await Cinema.findAll({
+        attributes: ['name'],
+        include: [{
+            model: Room,
+            includeIgnoreAttributes: false,
+            include: [{
+                model: Showtime,
+                includeIgnoreAttributes: false,
+                include: [{
+                    model: Booking,
+                    where: {
+                        createdAt: {
+                            [Op.between]: [startDate, endDate],
+                         },
+                    }
+                }]
+            }]
+        }]
+    })
+    return result
+}
+
+const getPayCinemaByMonth = async (cinema_id) => {
+
+}
+
 module.exports = {
     getAllCinema,
     getAllCinemaByCityId,
-    getCinemaById
+    getCinemaById,
+    getPayAllCinema
 }

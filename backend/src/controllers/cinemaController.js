@@ -95,6 +95,32 @@ const deleteComment = async (req, res) => {
     }
 }
 
+const getPayAllCinema = async (req, res) => {
+    try {
+        const result = await Cinema.getPayAllCinema(5)
+
+        var cinemas = []
+        result.forEach(element => {
+            var cinema = {}
+            cinema.name = element.name
+            cinema.pay = 0
+            element.Rooms.forEach(room => {
+                room.Showtimes.forEach(showtime => {
+                    showtime.Bookings.forEach(booking => {
+                        cinema.pay += booking.pay
+                    })
+                })
+            })
+            cinemas.push(cinema)
+        });
+
+        return successResponse(res, 200, "Thành công", cinemas)
+    } catch (error) {
+        console.log(error)
+        return errorResponse(res, 500, "Đã có lỗi xảy ra")
+    }
+}
+
 module.exports = {
     getAllCinema,
     getCinemaById,
@@ -103,5 +129,6 @@ module.exports = {
     getCommentByCinemaId,
     pushComment,
     updateComment,
-    deleteComment
+    deleteComment,
+    getPayAllCinema
 }
