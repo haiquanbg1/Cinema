@@ -114,7 +114,38 @@ const getPayAllCinema = async (req, res) => {
             cinemas.push(cinema)
         });
 
+        cinemas.sort(compare)
         return successResponse(res, 200, "Thành công", cinemas)
+    } catch (error) {
+        console.log(error)
+        return errorResponse(res, 500, "Đã có lỗi xảy ra")
+    }
+}
+
+const compare = (a, b) => {
+    return b.pay - a.pay
+}
+
+const getPayCinemaLast6Month = async (req, res) => {
+    try {
+        const month = 5
+        var payment = []
+        for (var i = Math.max(1, month - 5); i <= month; i++) {
+            const result = await Cinema.getPayCinemaById(req.query.cinema_id, i)
+            var cinema = {}
+            cinema.month = i
+            cinema.pay = 0
+            result.Rooms.forEach(room => {
+                room.Showtimes.forEach(showtime => {
+                    showtime.Bookings.forEach(booking => {
+                        cinema.pay += booking.pay
+                    })
+                })
+            })
+            payment.push(cinema)
+        }
+        // payment.sort(compare)
+        return successResponse(res, 200, "Thành công", payment)
     } catch (error) {
         console.log(error)
         return errorResponse(res, 500, "Đã có lỗi xảy ra")
@@ -130,5 +161,6 @@ module.exports = {
     pushComment,
     updateComment,
     deleteComment,
-    getPayAllCinema
+    getPayAllCinema,
+    getPayCinemaLast6Month
 }

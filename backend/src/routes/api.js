@@ -35,6 +35,7 @@ router.get('/cinema', cinema.getAllCinema)
 router.get('/cinemaByCityId', cinema.getNameCinemaByCityId)
 router.get('/cinema/:cinema_id', cinema.getCinemaById)
 router.get('/cinema/statistic/pay', cinema.getPayAllCinema)
+router.get('/cinema/statistic/pay6month', cinema.getPayCinemaLast6Month)
 
 //comment
 router.get('/comment', cinema.getAllComment);

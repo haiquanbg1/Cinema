@@ -3,10 +3,10 @@ require('dotenv').config()
 module.exports = {
   development: {
     username: 'root',
-    password: '@Hieuyb1223',
+    password: '',
     database: 'web',
     host: 'localhost',// docker
-    port: 3306, // docker
+    port: 3307, // docker
     dialect: 'mysql',
     dialectOptions: {
       bigNumberStrings: true
