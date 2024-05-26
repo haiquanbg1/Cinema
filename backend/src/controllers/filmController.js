@@ -76,11 +76,37 @@ const getFilmById = async (req, res) => {
     }
 }
 
+const getPayAllFilm = async (req, res) => {
+    try {
+        const month = '5'
+        const result = await Film.getPayAllFilm(month)
+        var payment = []
+
+        result.forEach(films => {
+            var film = {}
+            film.name = films.title
+            film.pay = 0
+            films.Showtimes.forEach(showtimes => {
+                showtimes.Bookings.forEach(bookings => {
+                    film.pay += bookings.pay
+                })
+            })
+            payment.push(film)
+        })
+
+        return successResponse(res, 200, "Thành công", payment)
+    } catch (error) {
+        console.log(error)
+        return errorResponse(res, 500, "Đã có lỗi xảy ra")
+    }
+}
+
 module.exports = {
     getFilm,
     postFilm,
     updateFilm,
     deleteFilm,
     getFilmById,
-    getFilmAPI
+    getFilmAPI,
+    getPayAllFilm
 }
