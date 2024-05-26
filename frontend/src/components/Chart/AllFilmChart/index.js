@@ -1,9 +1,9 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Rectangle } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Rectangle, ComposedChart, Line } from 'recharts';
 import { useState } from 'react';
 import classNames from 'classnames/bind';
 
-import styles from './AllCinemaChart.module.scss'
+import styles from './AllFilmChart.module.scss'
 
 const cx = classNames.bind(styles)
 
@@ -16,8 +16,8 @@ const CustomTick = ({ x, y, payload }) => {
     );
 };
 
-const AllCinemaChart = ({ data }) => {
-    // console.log(data)
+const AllFilmChart = ({ data }) => {
+    console.log(data)
     const [selectedData, setSelectedData] = useState(null);
 
     const handleClick = (e) => {
@@ -27,12 +27,13 @@ const AllCinemaChart = ({ data }) => {
     };
 
     return (
+
         <div className={cx('bar-container')}>
             <div className={cx('col', 'large-9')}>
-                <ResponsiveContainer width="90%" height={500}>
-                    <BarChart
+                <ResponsiveContainer width="90%" height={600}>
+                    <ComposedChart
                         width={500}
-                        height={500}
+                        height={600}
                         data={data}
                         margin={{
                             top: 5, right: 30, left: 20, bottom: 80, // Tăng khoảng trống dưới để chứa nhãn xoay
@@ -49,18 +50,19 @@ const AllCinemaChart = ({ data }) => {
                             dataKey="name"
                             onClick={handleClick}
                             interval={0} // Hiển thị tất cả các nhãn
-                            angle={-60} // Xoay nhãn để tiết kiệm không gian
+                            angle={-70} // Xoay nhãn để tiết kiệm không gian
                             textAnchor="end"
-                            height={120} // Tăng chiều cao để chứa nhãn xoay
+                            height={140} // Tăng chiều cao để chứa nhãn xoay
                             tick={{ dx: -10, dy: 10 }} // Điều chỉnh vị trí nhãn
-
+                            fontSize={12}
                         />
                         <YAxis />
                         <Tooltip />
                         {/* <Legend /> */}
                         <Bar dataKey="pay" fill="#8884d8" />
+                        <Line dataKey="pay" stroke="#72be43"></Line>
                         {/* <Bar dataKey="uv" fill="#82ca9d" /> */}
-                    </BarChart>
+                    </ComposedChart>
                 </ResponsiveContainer>
             </div>
 
@@ -69,14 +71,15 @@ const AllCinemaChart = ({ data }) => {
                 {selectedData && (
                     <div style={{ marginTop: '20px' }}>
                         <h3>Số liệu cụ thể</h3>
-                        <p>Rạp chiếu: {selectedData.name}</p>
+                        <p>Phim: {selectedData.name}</p>
                         <p>Tổng doanh thu: {selectedData.pay} đ</p>
                     </div>
                 )}
 
             </div>
         </div>
+
     );
 }
 
-export default AllCinemaChart;
+export default AllFilmChart;

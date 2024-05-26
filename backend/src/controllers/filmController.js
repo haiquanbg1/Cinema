@@ -78,7 +78,7 @@ const getFilmById = async (req, res) => {
 
 const getPayAllFilm = async (req, res) => {
     try {
-        const month = '5'
+        const month = req.query.month
         const result = await Film.getPayAllFilm(month)
         var payment = []
 

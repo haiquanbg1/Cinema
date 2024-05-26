@@ -25,3 +25,16 @@ export const getCinemaPay6Month = async (cinema_id) => {
         })
     return data
 }
+
+export const getFilmPay = async (month) => {
+    let data = []
+    // console.log(month)
+    await requestApi(`film/statistic/pay?month=${month}`, 'get')
+        .then(res => {
+            data = res
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    return data
+}

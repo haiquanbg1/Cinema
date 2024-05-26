@@ -1,5 +1,5 @@
 import React from 'react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Line, Bar } from 'recharts';
 import { useState } from 'react';
 import classNames from 'classnames/bind';
 
@@ -23,11 +23,12 @@ const CinemaMonthChart = ({ data }) => {
     const handleClick = (e) => {
         console.log(e)
         const clickedData = data.find(d => d.month == e.value);
+        console.log(clickedData)
         setSelectedData(clickedData);
     };
 
     return (
-        <div className={cx('bar-container')}>
+        <div style={{ display: 'flex' }} className={cx('container')}>
             <div className={cx('col', 'large-9')}>
                 <ResponsiveContainer width="90%" height={500}>
                     <AreaChart
@@ -59,6 +60,8 @@ const CinemaMonthChart = ({ data }) => {
                         <Tooltip />
                         {/* <Legend /> */}
                         <Area dataKey="pay" fill="#8884d8" />
+                        {/* <Line dataKey="pay" fill="#8884d8" /> */}
+
                         {/* <Bar dataKey="uv" fill="#82ca9d" /> */}
                     </AreaChart>
                 </ResponsiveContainer>
@@ -69,11 +72,10 @@ const CinemaMonthChart = ({ data }) => {
                 {selectedData && (
                     <div style={{ marginTop: '20px' }}>
                         <h3>Số liệu cụ thể</h3>
-                        <p>Name: {selectedData.month}</p>
-                        <p>Pay: {selectedData.pay}</p>
+                        <p>Tháng: {selectedData.month}</p>
+                        <p>Tổng doanh thu: {selectedData.pay} đ</p>
                     </div>
                 )}
-
             </div>
         </div>
     );
