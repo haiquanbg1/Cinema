@@ -13,6 +13,7 @@ router.post('/refresh_token', user.refreshToken)
 //film
 router.get('/film', film.getFilmAPI)
 router.get('/film/:film_id', film.getFilmById)
+router.get("/film/statistic/pay", film.getPayAllFilm)
 
 // user  
 router.post('/user/register', user.register)
