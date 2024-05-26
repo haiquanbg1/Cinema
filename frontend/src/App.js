@@ -8,7 +8,7 @@ import DefaultLayout from "~/components/Layout/DefaultLayout";
 import RegisterLayout from '~/components/Layout/RegisterLayout';
 import TicketLayout from "./components/Layout/TicketLayout";
 import CinemaLayout from "./components/Layout/CinemaLayout";
-
+import AdminLayout from "./components/Layout/AdminLayout";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
       <div className="App">
         <Routes>
           {publicRoutes.map((route, index) => {
-            const Layout = route.layout === 'registerLayout' ? RegisterLayout : route.layout === 'getTicketLayout' ? TicketLayout : route.layout === 'cinemaLayout' ? CinemaLayout : DefaultLayout
+            const Layout = route.layout === 'registerLayout' ? RegisterLayout : route.layout === 'getTicketLayout' ? TicketLayout : route.layout === 'cinemaLayout' ? CinemaLayout : route.layout === 'adminLayout' ? AdminLayout : DefaultLayout
             const Page = route.component;
             return (
               <Route

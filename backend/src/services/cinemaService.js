@@ -26,64 +26,65 @@ const getCinemaById = async (cinema_id) => {
 }
 
 const getPayAllCinema = async (month) => {
+    console.log(month)
     var startDate, endDate
     switch (month) {
-        case 1: {
+        case '1': {
             startDate = "2024-01-01 00:00:00"
             endDate = "2024-01-31 23:59:59"
             break
         }
-        case 2: {
+        case '2': {
             startDate = "2024-02-01 00:00:00"
             endDate = "2024-02-28 23:59:59"
             break
         }
-        case 3: {
+        case '3': {
             startDate = "2024-03-01 00:00:00"
             endDate = "2024-03-31 23:59:59"
             break
         }
-        case 4: {
+        case '4': {
             startDate = "2024-04-01 00:00:00"
             endDate = "2024-04-31 23:59:59"
             break
         }
-        case 5: {
+        case '5': {
             startDate = "2024-05-01 00:00:00"
             endDate = "2024-05-31 23:59:59"
             break
         }
-        case 6: {
+        case '6': {
             startDate = "2024-06-01 00:00:00"
             endDate = "2024-06-30 23:59:59"
             break
         }
-        case 7: {
+        case '7': {
             startDate = "2024-07-01 00:00:00"
             endDate = "2024-07-31 23:59:59"
             break
         }
-        case 8: {
+        case '8': {
             startDate = "2024-08-01 00:00:00"
             endDate = "2024-08-31 23:59:59"
             break
         }
-        case 9: {
+        case '9': {
             startDate = "2024-09-01 00:00:00"
             endDate = "2024-09-30 23:59:59"
             break
         }
-        case 10: {
+        case '10': {
             startDate = "2024-10-01 00:00:00"
             endDate = "2024-10-31 23:59:59"
             break
         }
-        case 11: {
+        case '11': {
             startDate = "2024-11-01 00:00:00"
             endDate = "2024-11-30 23:59:59"
             break
         }
-        case 12: {
+        case '12': {
             startDate = "2024-12-01 00:00:00"
             endDate = "2024-12-31 23:59:59"
             break
@@ -102,7 +103,7 @@ const getPayAllCinema = async (month) => {
                     where: {
                         createdAt: {
                             [Op.between]: [startDate, endDate],
-                         },
+                        },
                     }
                 }]
             }]
@@ -112,6 +113,7 @@ const getPayAllCinema = async (month) => {
 }
 
 const getPayCinemaById = async (cinema_id, month) => {
+    console.log(month, cinema_id)
     var startDate, endDate
     switch (month) {
         case 1: {
@@ -159,7 +161,7 @@ const getPayCinemaById = async (cinema_id, month) => {
             endDate = "2024-09-30 23:59:59"
             break
         }
-        case 10: {
+        case 9: {
             startDate = "2024-10-01 00:00:00"
             endDate = "2024-10-31 23:59:59"
             break
@@ -175,11 +177,11 @@ const getPayCinemaById = async (cinema_id, month) => {
             break
         }
     }
-
+    let c_id = Number(cinema_id)
     const result = await Cinema.findOne({
         attributes: ['name'],
         where: {
-            id: cinema_id
+            id: c_id
         },
         include: [{
             model: Room,
@@ -192,7 +194,7 @@ const getPayCinemaById = async (cinema_id, month) => {
                     where: {
                         createdAt: {
                             [Op.between]: [startDate, endDate],
-                         },
+                        },
                     }
                 }]
             }]
