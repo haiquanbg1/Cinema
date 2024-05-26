@@ -76,6 +76,10 @@ const getFilmById = async (req, res) => {
     }
 }
 
+const compare = (a, b) => {
+    return b.pay - a.pay
+}
+
 const getPayAllFilm = async (req, res) => {
     try {
         const month = '5'
@@ -93,6 +97,7 @@ const getPayAllFilm = async (req, res) => {
             })
             payment.push(film)
         })
+        payment.sort(compare)
 
         return successResponse(res, 200, "Thành công", payment)
     } catch (error) {
