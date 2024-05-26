@@ -22,7 +22,7 @@ const publicRoutes = [
     { path: config.routes.register, component: Register, layout: 'registerLayout' },
     { path: config.routes.cinema, component: Cinema, layout: 'cinemaLayout' },
     { path: config.routes.cinemaDetails, component: CinemaDetails, layout: 'cinemaLayout' },
-    { path: config.routes.admin, component: Admin, layout: 'registerLayout' }
+    { path: config.routes.admin, component: Admin, layout: 'adminLayout' }
 
 ];
 

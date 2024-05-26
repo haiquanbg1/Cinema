@@ -41,7 +41,7 @@ const deleteShowtime = async (req, res) => {
 
 const getShowtimeByFilmId = async (req, res) => {
     const city_id = req.body.city_id
-    result = await Showtime.getShowtimeByFilmId(req.query.film_id, city_id)
+    result = await Showtime.getShowtimeByFilmId(req.query.film_id, 2)
         .catch((err) => {
             console.log(err)
             return errorResponse(res, 500, "Đã có lỗi xảy ra")

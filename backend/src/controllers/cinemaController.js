@@ -58,7 +58,7 @@ const getCommentByCinemaId = async (req, res) => {
 }
 
 const pushComment = async (req, res) => {
-    const {content, rating, cinema} = req.body;
+    const { content, rating, cinema } = req.body;
     const comment = new Comment({
         user: req.user.id,
         cinema: cinema,
@@ -75,7 +75,7 @@ const pushComment = async (req, res) => {
 
 const updateComment = async (req, res) => {
     try {
-        const {content, rating, id} = req.body;
+        const { content, rating, id } = req.body;
         const update = { content: content, rating: rating };
         await Comment.findByIdAndUpdate(id, update)
         return successResponse(res, 200, "Thành công")
@@ -97,8 +97,8 @@ const deleteComment = async (req, res) => {
 
 const getPayAllCinema = async (req, res) => {
     try {
-        const result = await Cinema.getPayAllCinema(5)
 
+        const result = await Cinema.getPayAllCinema(req.query.month)
         var cinemas = []
         result.forEach(element => {
             var cinema = {}
@@ -128,7 +128,8 @@ const compare = (a, b) => {
 
 const getPayCinemaLast6Month = async (req, res) => {
     try {
-        const month = 5
+        console.log(req.query.cinema_id)
+        const month = 7
         var payment = []
         for (var i = Math.max(1, month - 5); i <= month; i++) {
             const result = await Cinema.getPayCinemaById(req.query.cinema_id, i)

@@ -97,9 +97,24 @@ a {
     max-width: 33.3333333333%;
 }
 
+.large-2 {
+    flex-basis: 16.6666666667%;
+    max-width: 16.6666666667%;
+}
+
+.large-10 {
+    flex-basis: 83.3333333333%;
+    max-width: 83.3333333333%;
+}
+
 .large-3 {
     flex-basis: 25%;
     max-width: 25%;
+}
+
+.large-9 {
+    flex-basis: 75%;
+    max-width: 75%;
 }
 
 .large-5 {
