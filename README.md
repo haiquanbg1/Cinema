@@ -1,22 +1,27 @@
 # Cinema
-Mô tả lại giao diện và các chức năng của một website đặt vé xem phim(bhd star).
-## Chức năng chính:
-### Khách hàng
-- Theo dõi lịch chiếu phim: phim sắp chiếu, đang chiếu.
-- Xem bài giới thiệu nội dung phim kèm video trailer.
-- Đặt vé, thanh toán vé.
-- Đánh giá chất lượng rạp: đánh sao, comment.
-### Quản trị viên
-- Thêm, sửa xóa phim, lịch chiếu phim.
-- Theo dõi doanh số của các phim và rạp theo từng tháng.
-## Công nghệ sử dụng:
+
+An overview of the interface and functionality of a movie ticket booking website (BHD Star).
+
+## Main Features:
+### Customer
+- Track movie schedules: upcoming and currently showing movies.
+- View movie descriptions with trailers.
+- Book tickets and complete payments.
+- Rate cinema quality: leave star ratings and comments.
+
+### Administrator
+- Add, edit, and delete movies and movie schedules.
+- Monitor monthly revenue for each movie and cinema location.
+
+## Technologies Used:
 ### Frontend
-- Reactjs
+- React.js
+
 ### Backend
-- Nodejs
-- Expressjs
+- Node.js
+- Express.js
 - Sequelize
-- Mysql
+- MySQL
 - Redis
-- Mongodb
+- MongoDB
 - Docker
